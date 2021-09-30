@@ -1,0 +1,42 @@
+.table-hover tr {
+    cursor: pointer;
+}
+
+tr, td, th {
+    border-style: none;
+}
+
+body {
+    background-attachment: fixed;
+    background-image: url("../aap.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.rounded-cos {
+    border-radius: 12px;
+    box-shadow: 1px 1px 12px 1px #00000013;
+}
+
+.table-primary td {
+    padding: 15px 10px 15px 10px;
+}
+
+.table-primary th {
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.groove {
+    border-style: groove;
+}
+
+.pop-up-box {
+    width: 45%;
+}
+
+.modal-open {
+    padding: 0px !important;
+    overflow-y: scroll !important;
+}
