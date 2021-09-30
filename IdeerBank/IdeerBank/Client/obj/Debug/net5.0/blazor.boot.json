@@ -196,12 +196,12 @@
       "netstandard.dll": "sha256-yOOty6BTX3e57YAEHK5a4nku\/lj0vi7jg\/eQZAjbDQk=",
       "System.Private.CoreLib.dll": "sha256-rraBQp6NevIQiELPVfDFDl5pv9QVJqCiZhB5bkpiZ88=",
       "IdeerBank.Shared.dll": "sha256-gj6lzMvE1LI4Z7UZVFSIIRbLteHQWFruys5HNYx6sJg=",
-      "IdeerBank.Client.dll": "sha256-bLwvllZnSS4xeLQKOVfNPVm7TeSXAPuXU7vB+MWGsD4="
+      "IdeerBank.Client.dll": "sha256-sl53ZL8AA216tYuH+L\/d4E7PiTQEJEZK57X9WJNKrVI="
     },
     "lazyAssembly": null,
     "pdb": {
       "IdeerBank.Shared.pdb": "sha256-2a\/WPsqgXkn3o7cDNzYiosYyGForDs7A1yUyCdorZDs=",
-      "IdeerBank.Client.pdb": "sha256-pLoMaaO4oE1izye4SZi6qm8N6Y7yNEXlesFh5WLX\/Y4="
+      "IdeerBank.Client.pdb": "sha256-QM+Xf3QX+KbmolDeRqGkCEbsgSZ\/taSKDza1WSxMR84="
     },
     "runtime": {
       "dotnet.timezones.blat": "sha256-L2vkcKzmXJtf+J7db5TbDMBckrgqJ5qc0ZzVIdRlm0I=",
