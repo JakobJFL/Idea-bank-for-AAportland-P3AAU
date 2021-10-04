@@ -7,11 +7,26 @@ tr, td, th {
 }
 
 body {
-    background-attachment: fixed;
+    overflow-y: scroll;
+}
+
+.bgImg {
+    background-attachment:fixed;
     background-image: url("../aap.jpg");
-    background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
+}
+
+.header-string {
+    margin: 0 30% 0 30%;
+    border: none;
+    height: 2px;
+    color: var(--bs-primary); 
+    background-color: var(--bs-primary);
+} 
+
+textarea {
+    resize: none;
 }
 
 .rounded-cos {
@@ -38,5 +53,4 @@ body {
 
 .modal-open {
     padding: 0px !important;
-    overflow-y: scroll !important;
 }

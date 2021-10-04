@@ -2204,9 +2204,9 @@ progress {
 .form-control:focus {
   color: #212529;
   background-color: #fff;
-  border-color: #86b7fe;
+  border-color: #63002910;
   outline: 0;
-  box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+  box-shadow: 0 0 0 0.25rem #6300293b;
 }
 .form-control::-webkit-date-and-time-value {
   height: 1.5em;
@@ -2380,9 +2380,9 @@ textarea.form-control-lg {
   }
 }
 .form-select:focus {
-  border-color: #86b7fe;
+  border-color: rgba(164, 0, 68, 0);
   outline: 0;
-  box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+  box-shadow: 0 0 0 0.25rem #63002959;
 }
 .form-select[multiple], .form-select[size]:not([size="1"]) {
   padding-right: 0.75rem;
@@ -2977,7 +2977,7 @@ textarea.form-control-lg {
   color: #fff;
   background-color: #8A0039;
   border-color: #8A0039;
-  box-shadow: 0 0 0 0.25rem rgba(99, 0, 41, 0.5);
+  box-shadow: 0 0 0 0.25rem #63002980;
 }
 .btn-check:checked + .btn-primary, .btn-check:active + .btn-primary, .btn-primary:active, .btn-primary.active, .show > .btn-primary.dropdown-toggle {
   color: #fff;
