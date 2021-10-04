@@ -53,4 +53,5 @@ textarea {
 
 .modal-open {
     padding: 0px !important;
+    overflow: inherit !important;
 }
