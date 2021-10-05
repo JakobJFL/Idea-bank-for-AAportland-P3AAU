@@ -1,4 +1,4 @@
-.table-hover tr {
+.table-hover tbody {
     cursor: pointer;
 }
 
@@ -53,5 +53,4 @@ textarea {
 
 .modal-open {
     padding: 0px !important;
-    overflow: inherit !important;
 }
