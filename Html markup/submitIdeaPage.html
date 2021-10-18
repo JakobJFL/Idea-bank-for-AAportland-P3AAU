@@ -120,7 +120,7 @@
                 <div class="row g-5">
                     <form class="needs-validation" novalidate>
                         <div class="row g-3">
-                            <div class="col-8">
+                            <div class="col-sm-8">
                                 <label for="projectName" class="form-label">Projektnavn<label
                                         class="text-danger">*</label></label>
                                 <div class="input-group has-validation">
@@ -130,9 +130,8 @@
                                 </div>
                             </div>
 
-                            <div class="col-4">
-                                <label for="initials" class="form-label">Initialer
-                                    <label class="text-danger">*</label>
+                            <div class="col-sm-4">
+                                <label for="initials" class="form-label">Initialer<label class="text-danger">*</label>
                                 </label>
                                 <div class="input-group has-validation">
                                     <input type="text" class="form-control" id="initials" placeholder="AAA">
@@ -142,55 +141,19 @@
 
                             <div class="col-12">
                                 <div class="form-group">
-                                    <label for="exampleFormControlTextarea1">Idébeskrivelse<label
-                                            class="text-danger">*</label></label>
+                                    <label for="exampleFormControlTextarea1">Idébeskrivelse<label class="text-danger">*</label>
+                                    </label>
                                     <textarea class="form-control" id="ideaDescription" rows="3"
                                         placeholder="Problemdefinition og afgrænsning"></textarea>
                                 </div>
                             </div>
-                            <div class="col-6">
-                                <div class="form-group">
-                                    <label for="exampleFormControlTextarea1">Plan</label>
-                                    <textarea class="form-control" id="ideaDescription" rows="3"
-                                        placeholder="Forventet varighed, ønsket start og/eller deadline"></textarea>
-                                </div>
-                            </div>
-                            <div class="col-6">
-                                <div class="form-group">
-                                    <label for="exampleFormControlTextarea1">Risiko</label>
-                                    <textarea class="form-control" id="risk" rows="3" placeholder="Eventuelle risici"></textarea>
-                                </div>
-                            </div>
-
-                            <div class="col-12">
-                                <div class="row">
-                                    <div class="form-group col">
-                                        <label for="exampleFormControlTextarea1">Resultat<label
-                                                class="text-danger">*</label></label>
-                                        <textarea class="form-control" id="result" rows="4"
-                                            placeholder="Forventet resultat"></textarea>
-                                    </div>
-                                    <div class="col">
-                                        <label for="initials" class="form-label">Program</label>
-                                        <div class="input-group has-validation">
-                                            <input type="text" class="form-control" id="initials" placeholder="Program">
-                                            <div class="invalid-feedback">Initialer er noget værre noget.</div>
-                                        </div>
-                                        <label for="initials" class="form-label">Team</label>
-                                        <div class="input-group has-validation">
-                                            <input type="text" class="form-control" id="initials"
-                                                placeholder="Hvem skal være med?">
-                                            <div class="invalid-feedback">Initialer er noget værre noget.</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
                             <div class="col-md-3">
-                                <label for="businessUnit" class="form-label">Forretningsenhed<label
-                                        class="text-danger">*</label></label>
+                                <div title="Den forretningsenhed som idéen vedrører">
+                                    <label for="businessUnit" class="form-label">Forretningsenhed</label>
+                                    <img src="svg/question-circle.svg">
+                                </div>
                                 <select class="form-select" id="businessUnit" required>
-                                    <option value="" disabled selected hidden>Vælg forretningsenhed</option>
+                                    <option value="" selected class="text-muted">Ikke angivet</option>
                                     <option value="">Aalborg Portland</option>
                                     <option value="">Unicon DK</option>
                                     <option value="">Unicon NO</option>
@@ -201,10 +164,12 @@
                                 </div>
                             </div>
                             <div class="col-md-3">
-                                <label for="department" class="form-label">Afdeling<label
-                                        class="text-danger">*</label></label>
-                                <select class="form-select" id="department" required>
-                                    <option value="" disabled selected hidden>Vælg afdeling</option>
+                                <div data-bs-toggle="tooltip" title="" data-bs-original-title="Den afdeling som idéen vedrører">
+                                    <label for="department" class="form-label">Afdeling</label> 
+                                    <img src="svg/question-circle.svg">
+                                </div>
+                                <select class="form-select" id="department">                                
+                                    <option value="" selected class="text-muted">Ikke angivet</option>
                                     <option>Salg</option>
                                     <option>SCM</option>
                                     <option>Produktion</option>
@@ -216,32 +181,30 @@
                                 <div class="invalid-feedback">
                                     Vælg venligst en afdeling
                                 </div>
-                            </div>
-
-                            <div class="col-md-3">
-                                <label for="businessUnit" class="form-label">Projekt type</label>
-                                <select class="form-select" id="businessUnit" required>
-                                    <option value="" disabled selected hidden>Vælg projekt type</option>
-                                    <option value="">Opgave</option>
-                                    <option value="">Funktionel (QP)</option>
-                                </select>
-                                <div class="invalid-feedback">
-                                    Vælg venligst en Projekt type.
+                            </div>  
+                            <div class="col-md-6">
+                                <label for="initials" class="form-label">Team</label>
+                                <div class="input-group has-validation">
+                                    <input type="text" class="form-control" id="initials"
+                                        placeholder="Hvem skal være med?">
+                                    <div class="invalid-feedback">Initialer er noget værre noget.</div>
                                 </div>
                             </div>
-
-                            <div class="col-md-3">
-                                <label for="priority" class="form-label">Prioritet</label>
-                                <select class="form-select" id="priority" required>
-                                    <option value="" disabled selected hidden>Vælg prioritet</option>
-                                    <option value="">Høj prioritet</option>
-                                    <option value="">Middel prioritet</option>
-                                    <option value="">Lav prioritet</option>
-                                </select>
-                                <div class="invalid-feedback">
-                                    Vurder prioritet
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="exampleFormControlTextarea1">Plan</label>
+                                    <textarea class="form-control" id="ideaDescription" rows="3"
+                                        placeholder="Forventet varighed, ønsket start og/eller deadline"></textarea>
                                 </div>
                             </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="exampleFormControlTextarea1">Forventet resultat</label>
+                                    <textarea class="form-control" id="ideaDescription" rows="3"
+                                        placeholder="Forventet resultat"></textarea>
+                                </div>
+                            </div>
+                                                
                         </div>
                         <hr class="my-4">
                         <div class="d-flex justify-content-between">
