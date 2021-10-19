@@ -90,6 +90,15 @@ using IdeaBank.Shared;
         {
         }
         #pragma warning restore 1998
+#nullable restore
+#line 77 "C:\Users\Jakob\Documents\GitHub\Ideer-bank-for-AAportland-P3AAU\IdeaBank\IdeaBank\Pages\Index.razor"
+                               
+                            private IdeaBank.Pages.Modal Modal { get; set; }
+                        
+
+#line default
+#line hidden
+#nullable disable
     }
 }
 #pragma warning restore 1591

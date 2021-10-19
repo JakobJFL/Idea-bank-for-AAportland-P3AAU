@@ -1,0 +1,190 @@
+﻿<div class="modal fade @ModalClass" tabindex="-1" role="dialog" style="display:@ModalDisplay">
+    <div class="modal-dialog modal-dialog-scrollable modal-m modal-xl" role="document" style="z-index:1055">
+        <div class="modal-content rounded-cos border-0">
+            <div class="modal-header bg-primary text-white">
+                <h5 class="modal-title">Admin Login</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" @onclick="() => Close()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body bg-light">
+                <div class="row g-2">
+                    <div class="row g-2">
+                        <div class="col-12">
+                            <div class="row mx-1">
+                                <div class="col">
+                                    <h6>Initialer</h6>
+                                    <p>HFU</p>
+                                </div>
+                                <div class="col">
+                                    <h6>Forretningsenhed</h6>
+                                    <p> Aalborg Portland</p>
+                                </div>
+                                <div class="col">
+                                    <h6>Afdeling</h6>
+                                    <p>Produktion</p>
+                                </div>
+                                <div class="col">
+                                    <h6>Prioritet</h6>
+                                    <p>Høj</p>
+                                </div>
+                                <div class="col">
+                                    <h6>Dato</h6>
+                                    <p>04/10/21</p>
+                                </div>
+                                <div class="col">
+                                    <h6>Status</h6>
+                                    <p>Oprettet</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title mb-2 text-muted"
+                                        style="margin-top: -0.5rem;">
+                                        Idébeskrivelse
+                                    </h5>
+                                    <p class="card-text">
+                                        Vores varmeovne skaber en masse spildvarme. Kunne man eventuelt
+                                        udnytte denne spildvarme til at opvarme vand til fjernvarme?
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title mb-2 text-muted"
+                                        style="margin-top: -0.5rem;">
+                                        Risiko
+                                    </h5>
+                                    <p class="card-text">
+                                        Det kan være dyrt at implementere, men kan være billigere i det lange løb.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title mb-2 text-muted"
+                                        style="margin-top: -0.5rem;">
+                                        Plan
+                                    </h5>
+                                    <p class="card-text">
+                                        Vi kan starte hurtigst muligt med at undersøge om det overhovedet er muligt
+                                        at udnytte denne spildvarme.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title mb-2 text-muted"
+                                        style="margin-top: -0.5rem;">
+                                        Forventet resultat
+                                    </h5>
+                                    <p class="card-text">
+                                        Det forventede resultat er at vi undgår energispild og i fremtiden kan spare penge på opvarmning og sælge til fjernvarme.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="card h-100">
+                                <div class="card-body">
+                                    <h5 class="card-title mb-2 text-muted"
+                                        style="margin-top: -0.5rem;">
+                                        Team
+                                    </h5>
+                                    <p class="card-text">
+                                        GII, HKU, HUA
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="p-2 my-3 bg-light rounded-cos">
+                    <div class="container-fluid">
+                        <h3 class="my-2">Kommentarspor</h3>
+                        <div class="d-flex flex-row mb-2">
+                            <textarea type="text" class="form-control rounded-cos my-1"
+                                      id="initials"
+                                      placeholder="Skriv din kommentar her"></textarea>
+                            <div>
+                                <input type="text"
+                                       class="form-control mx-2 my-1 rounded-cos" id="initials"
+                                       maxlength="4" placeholder="Initialer">
+                                <button class="btn btn-primary mx-2 my-1 rounded-cos w-100"
+                                        type="button">
+                                    Kommenter
+                                </button>
+                            </div>
+                        </div>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item bg-transparent mb-0 pb-0 mt-2">
+                                <h6 class="text-primary mb-0">
+                                    MLJ <small class="text-muted"
+                                               style="font-size: 0.8rem;">
+                                        For 20 timer
+                                        siden
+                                    </small>
+                                </h6>
+                                <p>
+                                    Jeg synes det er en spændende idé. Vil gerne høre mere
+                                    om hvad budgettet for sådan et projekt er?
+                                </p>
+                            </li>
+                            <li class="list-group-item bg-transparent mb-0 pb-0 mt-2">
+                                <h6 class="text-primary mb-0">
+                                    GII <small class="text-muted"
+                                               style="font-size: 0.8rem;"> For 1 dag siden</small>
+                                </h6>
+                                <p>Jeg har arbejdet med fjernvarme før og kender nogle der ved en masse om hvordan man opsætter en varmeveksler.</p>
+                            </li>
+                            <li class="list-group-item bg-transparent mb-0 pb-0 mt-2">
+                                <h6 class="text-primary mb-0">
+                                    KØL <small class="text-muted"
+                                               style="font-size: 0.8rem;"> For 1 dag siden</small>
+                                </h6>
+                                <p>
+                                    Et spændende forslag HFU.
+                                </p>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-backdrop fade @ModalClass" style="display: @ModalDisplay" @onclick="() => Close()"></div>
+</div>
+
+
+@code {
+    public Guid Guid = Guid.NewGuid();
+    public string ModalDisplay = "none;";
+    public string ModalClass = "";
+
+    public async Task Open()
+    {
+        StateHasChanged();
+        ModalDisplay = "block;";
+        await Task.Delay(250);
+        ModalClass = "show";
+        StateHasChanged();
+    }
+
+    public async Task Close()
+    {
+        ModalClass = "";
+        await Task.Delay(250);
+        ModalDisplay = "none;";
+        StateHasChanged();
+    }
+}
+
+
