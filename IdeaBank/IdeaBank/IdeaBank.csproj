@@ -4,4 +4,12 @@
     <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Content Remove="wwwroot\svg\NewFile.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Pages\NewFile.txt" />
+  </ItemGroup>
+
 </Project>

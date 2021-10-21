@@ -8,30 +8,27 @@
     "net5.0": []
   },
   "packageFolders": {
-    "C:\\Users\\JFL\\.nuget\\packages\\": {},
-    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
+    "C:\\Users\\Jakob\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\JFL\\Documents\\GitHub\\Idea-bank-for-AAportland-P3AAU\\IdeaBank\\IdeaBank\\IdeaBank.csproj",
+      "projectUniqueName": "C:\\Users\\Jakob\\Documents\\GitHub\\Ideer-bank-for-AAportland-P3AAU\\IdeaBank\\IdeaBank\\IdeaBank.csproj",
       "projectName": "IdeaBank",
-      "projectPath": "C:\\Users\\JFL\\Documents\\GitHub\\Idea-bank-for-AAportland-P3AAU\\IdeaBank\\IdeaBank\\IdeaBank.csproj",
-      "packagesPath": "C:\\Users\\JFL\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\JFL\\Documents\\GitHub\\Idea-bank-for-AAportland-P3AAU\\IdeaBank\\IdeaBank\\obj\\",
+      "projectPath": "C:\\Users\\Jakob\\Documents\\GitHub\\Ideer-bank-for-AAportland-P3AAU\\IdeaBank\\IdeaBank\\IdeaBank.csproj",
+      "packagesPath": "C:\\Users\\Jakob\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Jakob\\Documents\\GitHub\\Ideer-bank-for-AAportland-P3AAU\\IdeaBank\\IdeaBank\\obj\\",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
-      ],
       "configFilePaths": [
-        "C:\\Users\\JFL\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Jakob\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
         "net5.0"
       ],
       "sources": {
-        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {}
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+        "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
         "net5.0": {
@@ -66,7 +63,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.401\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.400\\RuntimeIdentifierGraph.json"
       }
     }
   }

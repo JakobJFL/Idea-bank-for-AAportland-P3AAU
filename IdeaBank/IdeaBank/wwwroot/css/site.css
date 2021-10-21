@@ -56,3 +56,11 @@ textarea {
 .modal-open {
     padding: 0px !important;
 }
+
+.cursor-de {
+    cursor: default;
+}
+
+.btn-close {
+    box-shadow: none !important
+}

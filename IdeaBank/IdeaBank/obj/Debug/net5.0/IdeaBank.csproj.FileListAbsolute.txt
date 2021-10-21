@@ -5,7 +5,6 @@ C:\Users\Jakob\Documents\GitHub\Ideer-bank-for-AAportland-P3AAU\IdeaBank\IdeaBan
 C:\Users\Jakob\Documents\GitHub\Ideer-bank-for-AAportland-P3AAU\IdeaBank\IdeaBank\obj\Debug\net5.0\IdeaBank.MvcApplicationPartsAssemblyInfo.cache
 C:\Users\Jakob\Documents\GitHub\Ideer-bank-for-AAportland-P3AAU\IdeaBank\IdeaBank\obj\Debug\net5.0\IdeaBank.RazorComponent.input.cache
 C:\Users\Jakob\Documents\GitHub\Ideer-bank-for-AAportland-P3AAU\IdeaBank\IdeaBank\obj\Debug\net5.0\RazorDeclaration\App.razor.g.cs
-C:\Users\Jakob\Documents\GitHub\Ideer-bank-for-AAportland-P3AAU\IdeaBank\IdeaBank\obj\Debug\net5.0\RazorDeclaration\Pages\Counter.razor.g.cs
 C:\Users\Jakob\Documents\GitHub\Ideer-bank-for-AAportland-P3AAU\IdeaBank\IdeaBank\obj\Debug\net5.0\RazorDeclaration\Pages\Index.razor.g.cs
 C:\Users\Jakob\Documents\GitHub\Ideer-bank-for-AAportland-P3AAU\IdeaBank\IdeaBank\obj\Debug\net5.0\RazorDeclaration\Shared\FooterLayout.razor.g.cs
 C:\Users\Jakob\Documents\GitHub\Ideer-bank-for-AAportland-P3AAU\IdeaBank\IdeaBank\obj\Debug\net5.0\RazorDeclaration\_Imports.razor.g.cs
@@ -24,14 +23,12 @@ C:\Users\Jakob\Documents\GitHub\Ideer-bank-for-AAportland-P3AAU\IdeaBank\IdeaBan
 C:\Users\Jakob\Documents\GitHub\Ideer-bank-for-AAportland-P3AAU\IdeaBank\IdeaBank\bin\Debug\net5.0\IdeaBank.pdb
 C:\Users\Jakob\Documents\GitHub\Ideer-bank-for-AAportland-P3AAU\IdeaBank\IdeaBank\bin\Debug\net5.0\IdeaBank.Views.dll
 C:\Users\Jakob\Documents\GitHub\Ideer-bank-for-AAportland-P3AAU\IdeaBank\IdeaBank\bin\Debug\net5.0\IdeaBank.Views.pdb
-C:\Users\Jakob\Documents\GitHub\Ideer-bank-for-AAportland-P3AAU\IdeaBank\IdeaBank\bin\Debug\net5.0\BootstrapBlazor.dll
 C:\Users\Jakob\Documents\GitHub\Ideer-bank-for-AAportland-P3AAU\IdeaBank\IdeaBank\obj\Debug\net5.0\RazorDeclaration\Pages\Modal.razor.g.cs
 C:\Users\Jakob\Documents\GitHub\Ideer-bank-for-AAportland-P3AAU\IdeaBank\IdeaBank\obj\Debug\net5.0\RazorDeclaration\IdeaBank.dll
 C:\Users\Jakob\Documents\GitHub\Ideer-bank-for-AAportland-P3AAU\IdeaBank\IdeaBank\obj\Debug\net5.0\IdeaBank.TagHelpers.input.cache
 C:\Users\Jakob\Documents\GitHub\Ideer-bank-for-AAportland-P3AAU\IdeaBank\IdeaBank\obj\Debug\net5.0\IdeaBank.TagHelpers.output.cache
 C:\Users\Jakob\Documents\GitHub\Ideer-bank-for-AAportland-P3AAU\IdeaBank\IdeaBank\obj\Debug\net5.0\IdeaBank.RazorCoreGenerate.cache
 C:\Users\Jakob\Documents\GitHub\Ideer-bank-for-AAportland-P3AAU\IdeaBank\IdeaBank\obj\Debug\net5.0\Razor\App.razor.g.cs
-C:\Users\Jakob\Documents\GitHub\Ideer-bank-for-AAportland-P3AAU\IdeaBank\IdeaBank\obj\Debug\net5.0\Razor\Pages\Counter.razor.g.cs
 C:\Users\Jakob\Documents\GitHub\Ideer-bank-for-AAportland-P3AAU\IdeaBank\IdeaBank\obj\Debug\net5.0\Razor\Pages\Index.razor.g.cs
 C:\Users\Jakob\Documents\GitHub\Ideer-bank-for-AAportland-P3AAU\IdeaBank\IdeaBank\obj\Debug\net5.0\Razor\Pages\Modal.razor.g.cs
 C:\Users\Jakob\Documents\GitHub\Ideer-bank-for-AAportland-P3AAU\IdeaBank\IdeaBank\obj\Debug\net5.0\Razor\Shared\FooterLayout.razor.g.cs
@@ -115,3 +112,5 @@ C:\Users\JFL\Documents\GitHub\Idea-bank-for-AAportland-P3AAU\IdeaBank\IdeaBank\o
 C:\Users\JFL\Documents\GitHub\Idea-bank-for-AAportland-P3AAU\IdeaBank\IdeaBank\obj\Debug\net5.0\IdeaBank.Views.pdb
 C:\Users\JFL\Documents\GitHub\Idea-bank-for-AAportland-P3AAU\IdeaBank\IdeaBank\obj\Debug\net5.0\IdeaBank.genruntimeconfig.cache
 C:\Users\JFL\Documents\GitHub\Idea-bank-for-AAportland-P3AAU\IdeaBank\IdeaBank\obj\Debug\net5.0\IdeaBank.csproj.CopyComplete
+C:\Users\Jakob\Documents\GitHub\Ideer-bank-for-AAportland-P3AAU\IdeaBank\IdeaBank\obj\Debug\net5.0\RazorDeclaration\Pages\NewIdea.razor.g.cs
+C:\Users\Jakob\Documents\GitHub\Ideer-bank-for-AAportland-P3AAU\IdeaBank\IdeaBank\obj\Debug\net5.0\Razor\Pages\NewIdea.razor.g.cs

@@ -1,11 +1,9 @@
-﻿<div class="modal fade @ModalClass" tabindex="-1" role="dialog" style="display:@ModalDisplay">
-    <div class="modal-dialog modal-dialog-scrollable modal-m modal-xl" role="document" style="z-index:1055">
+﻿<div class="modal fade @ModalClass cursor-de" tabindex="-1" style="display:@ModalDisplay;">
+    <div class="modal-dialog modal-dialog-scrollable modal-xl bg-transparent" role="document" style="z-index:1055">
         <div class="modal-content rounded-cos border-0">
             <div class="modal-header bg-primary text-white">
                 <h5 class="modal-title">Admin Login</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close" @onclick="() => Close()">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" @onclick="() => Close()"></button>
             </div>
             <div class="modal-body bg-light">
                 <div class="row g-2">
@@ -160,9 +158,8 @@
             </div>
         </div>
     </div>
-    <div class="modal-backdrop fade @ModalClass" style="display: @ModalDisplay" @onclick="() => Close()"></div>
+    <div class="modal-backdrop fade @ModalClass cursor-de" style="display: @ModalDisplay;" @onclick="() => Close()"></div>
 </div>
-
 
 @code {
     public Guid Guid = Guid.NewGuid();
