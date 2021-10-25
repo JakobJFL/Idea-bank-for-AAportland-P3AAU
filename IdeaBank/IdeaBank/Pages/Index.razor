@@ -1,173 +1,175 @@
 ﻿@page "/"
-<main>
-    <div class="bgImg">
-        <section class="py-4 text-center container">
-            <div class="row py-lg-5">
-                <div class="col-lg-6 col-md-6 mx-auto">
-                    <div class="d-flex flex-row justify-content-center"><h1 class="fw-light">Aalborg Portland Idébank</h1><h4 class="text-primary">Prototype</h4></div>
-                    <p class="fs-5 py-1">
-                        Velkommen til Aalborg Portland's idébank. Her er der mulighed for at indsende dine egne
-                        idéer til eventuelle forbedringer eller ændringer.
-                    </p>
-                    <NavLink href="/NewIdea">
-                        <button class="btn btn-lg btn-primary my-2 p-4">Tilføj ny idé</button>
-                    </NavLink>
+@using IBDataAccessLib.DataAccess;
+
+    <main>
+        <div class="bgImg">
+            <section class="py-4 text-center container">
+                <div class="row py-lg-5">
+                    <div class="col-lg-6 col-md-6 mx-auto">
+                        <div class="d-flex flex-row justify-content-center"><h1 class="fw-light">Aalborg Portland Idébank</h1><h4 class="text-primary">Prototype</h4></div>
+                        <p class="fs-5 py-1">
+                            Velkommen til Aalborg Portland's idébank. Her er der mulighed for at indsende dine egne
+                            idéer til eventuelle forbedringer eller ændringer.
+                        </p>
+                        <NavLink href="/NewIdea">
+                            <button class="btn btn-lg btn-primary my-2 p-4">Tilføj ny idé</button>
+                        </NavLink>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <section class="py-5 bg-light">
+            <div class="container">
+                <h2 class="text-center">kat</h2>
+                <p class="text-center">Klik på en idé for at læse mere </p>
+                <p class=" text-center text-danger mb-4">Da dette en mark-up, er det kun de to første idéer i listen, der kan klikkes på.</p>
+                <div class="row table-responsive rounded-cos">
+                    <table class="table my-0 table-primary table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th scope="col" class="bg-primary text-white">
+                                    Projektnavn <img src="/svg/filter.svg" />
+                                </th>
+                                <th scope="col" class="bg-primary text-white">
+                                    Forretningsenhed <img src="/svg/filter.svg" />
+                                </th>
+                                <th scope="col" class="bg-primary text-white">
+                                    Afdeling <img src="/svg/filter.svg" />
+                                </th>
+                                <th scope="col" class="bg-primary text-white">
+                                    Status <img src="/svg/filter.svg" />
+                                </th>
+                                <th scope="col" class="bg-primary text-white">
+                                    Prioritet <img src="/svg/filter.svg" />
+                                </th>
+                                <th scope="col" class="bg-primary text-white">
+                                    Dato <img src="/svg/sort-down.svg" />
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr title="Klik for at læse mere" @onclick="() => Modal.Open()">
+                                <td>Udnyttelse af spildvarme</td>
+                                <td>Aalborg Portland</td>
+                                <td>Produktion</td>
+                                <td>Oprettet</td>
+                                <td>Høj</td>
+                                <td>04/10/21</td>
+                            </tr>
+                            <Modal @ref="Modal"></Modal>
+                            @code {
+                                private IdeaBank.Pages.Modal Modal { get; set; }
+                            }
+                            <tr title="Klik for at læse mere" data-bs-toggle="modal" data-bs-target="#exampleModal2">
+                                <td>Teambuilding efter Corona</td>
+                                <td>Aalborg Portland</td>
+                                <td>HR</td>
+                                <td class="text-success">Godkendt</td>
+                                <td>Lav</td>
+                                <td>29/09/21</td>
+                            </tr>
+                            <tr title="Klik for at læse mere">
+                                <td>Tracking af cementproduktion gennem IOT devices</td>
+                                <td>Unicon NO</td>
+                                <td>SCM</td>
+                                <td>Oprettet</td>
+                                <td>Høj</td>
+                                <td>24/09/21</td>
+                            </tr>
+                            <tr title="Klik for at læse mere">
+                                <td>Ret robotproduktion</td>
+                                <td>Kudsk og Dahl</td>
+                                <td>Produktion</td>
+                                <td class="text-danger">Afvist</td>
+                                <td>Middel</td>
+                                <td>19/09/21</td>
+                            </tr>
+                            <tr title="Klik for at læse mere">
+                                <td>Miljørigtig cementproduktion</td>
+                                <td>Unicon NO</td>
+                                <td>Vedligehold</td>
+                                <td>Oprettet</td>
+                                <td>Lav</td>
+                                <td>09/09/21</td>
+                            </tr>
+                            <tr title="Klik for at læse mere">
+                                <td>Optimering af pausefordeling</td>
+                                <td>Unicon DK</td>
+                                <td>PMO & Transformation</td>
+                                <td class="text-success">Godkendt</td>
+                                <td>Middel</td>
+                                <td>20/08/21</td>
+                            </tr>
+                            <tr title="Klik for at læse mere">
+                                <td>Forbedring af varmeovn</td>
+                                <td>Unicon DK</td>
+                                <td>Vedligehold</td>
+                                <td>Oprettet</td>
+                                <td>Middel</td>
+                                <td>14/08/21</td>
+
+                            </tr>
+                            <tr title="Klik for at læse mere">
+                                <td>Return Concrete NO</td>
+                                <td>Unicon NO</td>
+                                <td>Produktion</td>
+                                <td class="text-success">Godkendt</td>
+                                <td>Høj</td>
+                                <td>13/08/21</td>
+                            </tr>
+                            <tr title="Klik for at læse mere">
+                                <td>Facility Management</td>
+                                <td>Aalborg Portland</td>
+                                <td>PMO & Transformation</td>
+                                <td>Oprettet</td>
+                                <td>Høj</td>
+                                <td>24/09/21</td>
+                            </tr>
+                            <tr title="Klik for at læse mere">
+                                <td>GAS - plan for usage and BC</td>
+                                <td>Kudsk og Dahl</td>
+                                <td>Produktion</td>
+                                <td class="text-danger">Afvist</td>
+                                <td>Middel</td>
+                                <td>19/09/21</td>
+                            </tr>
+                            <tr title="Klik for at læse mere">
+                                <td>Prøveudtagning</td>
+                                <td>Unicon NO</td>
+                                <td>Vedligehold</td>
+                                <td>Oprettet</td>
+                                <td>Lav</td>
+                                <td>09/09/21</td>
+                            </tr>
+                            <tr title="Klik for at læse mere">
+                                <td>Inventory Management</td>
+                                <td>Unicon NO</td>
+                                <td>Vedligehold</td>
+                                <td class="text-success">Godkendt</td>
+                                <td>Middel</td>
+                                <td>20/08/21</td>
+                            </tr>
+                            <tr title="Klik for at læse mere">
+                                <td>AP Warehouse: Repair flow spareparts (SAP warehouse)</td>
+                                <td>Aalborg Portland</td>
+                                <td>Vedligehold</td>
+                                <td>Oprettet</td>
+                                <td>Middel</td>
+                                <td>14/08/21</td>
+
+                            </tr>
+                            <tr title="Klik for at læse mere">
+                                <td>AP Warehouse: Change Warehouse setup in SAP</td>
+                                <td>Aalborg Portland</td>
+                                <td>Produktion</td>
+                                <td class="text-success">Godkendt</td>
+                                <td>Høj</td>
+                                <td>13/08/21</td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </section>
-    </div>
-
-    <section class="py-5 bg-light">
-        <div class="container">
-            <h2 class="text-center">Idéoversigt</h2>
-            <p class="text-center">Klik på en idé for at læse mere </p>
-            <p class=" text-center text-danger mb-4">Da dette en mark-up, er det kun de to første idéer i listen, der kan klikkes på.</p>
-            <div class="row table-responsive rounded-cos">
-                <table class="table my-0 table-primary table-striped table-hover">
-                    <thead>
-                        <tr>
-                            <th scope="col" class="bg-primary text-white">
-                                Projektnavn <img src="/svg/filter.svg" />
-                            </th>
-                            <th scope="col" class="bg-primary text-white">
-                                Forretningsenhed <img src="/svg/filter.svg" />
-                            </th>
-                            <th scope="col" class="bg-primary text-white">
-                                Afdeling <img src="/svg/filter.svg" />
-                            </th>
-                            <th scope="col" class="bg-primary text-white">
-                                Status <img src="/svg/filter.svg" />
-                            </th>
-                            <th scope="col" class="bg-primary text-white">
-                                Prioritet <img src="/svg/filter.svg" />
-                            </th>
-                            <th scope="col" class="bg-primary text-white">
-                                Dato <img src="/svg/sort-down.svg" />
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr title="Klik for at læse mere" @onclick="() => Modal.Open()">
-                            <td>Udnyttelse af spildvarme</td>
-                            <td>Aalborg Portland</td>
-                            <td>Produktion</td>
-                            <td>Oprettet</td>
-                            <td>Høj</td>
-                            <td>04/10/21</td>
-                        </tr>
-                        <Modal @ref="Modal"></Modal>
-                        @code {
-                            private IdeaBank.Pages.Modal Modal { get; set; }
-                        }
-                        <tr title="Klik for at læse mere" data-bs-toggle="modal" data-bs-target="#exampleModal2">
-                            <td>Teambuilding efter Corona</td>
-                            <td>Aalborg Portland</td>
-                            <td>HR</td>
-                            <td class="text-success">Godkendt</td>
-                            <td>Lav</td>
-                            <td>29/09/21</td>
-                        </tr>
-                        <tr title="Klik for at læse mere">
-                            <td>Tracking af cementproduktion gennem IOT devices</td>
-                            <td>Unicon NO</td>
-                            <td>SCM</td>
-                            <td>Oprettet</td>
-                            <td>Høj</td>
-                            <td>24/09/21</td>
-                        </tr>
-                        <tr title="Klik for at læse mere">
-                            <td>Ret robotproduktion</td>
-                            <td>Kudsk og Dahl</td>
-                            <td>Produktion</td>
-                            <td class="text-danger">Afvist</td>
-                            <td>Middel</td>
-                            <td>19/09/21</td>
-                        </tr>
-                        <tr title="Klik for at læse mere">
-                            <td>Miljørigtig cementproduktion</td>
-                            <td>Unicon NO</td>
-                            <td>Vedligehold</td>
-                            <td>Oprettet</td>
-                            <td>Lav</td>
-                            <td>09/09/21</td>
-                        </tr>
-                        <tr title="Klik for at læse mere">
-                            <td>Optimering af pausefordeling</td>
-                            <td>Unicon DK</td>
-                            <td>PMO & Transformation</td>
-                            <td class="text-success">Godkendt</td>
-                            <td>Middel</td>
-                            <td>20/08/21</td>
-                        </tr>
-                        <tr title="Klik for at læse mere">
-                            <td>Forbedring af varmeovn</td>
-                            <td>Unicon DK</td>
-                            <td>Vedligehold</td>
-                            <td>Oprettet</td>
-                            <td>Middel</td>
-                            <td>14/08/21</td>
-
-                        </tr>
-                        <tr title="Klik for at læse mere">
-                            <td>Return Concrete NO</td>
-                            <td>Unicon NO</td>
-                            <td>Produktion</td>
-                            <td class="text-success">Godkendt</td>
-                            <td>Høj</td>
-                            <td>13/08/21</td>
-                        </tr>
-                        <tr title="Klik for at læse mere">
-                            <td>Facility Management</td>
-                            <td>Aalborg Portland</td>
-                            <td>PMO & Transformation</td>
-                            <td>Oprettet</td>
-                            <td>Høj</td>
-                            <td>24/09/21</td>
-                        </tr>
-                        <tr title="Klik for at læse mere">
-                            <td>GAS - plan for usage and BC</td>
-                            <td>Kudsk og Dahl</td>
-                            <td>Produktion</td>
-                            <td class="text-danger">Afvist</td>
-                            <td>Middel</td>
-                            <td>19/09/21</td>
-                        </tr>
-                        <tr title="Klik for at læse mere">
-                            <td>Prøveudtagning</td>
-                            <td>Unicon NO</td>
-                            <td>Vedligehold</td>
-                            <td>Oprettet</td>
-                            <td>Lav</td>
-                            <td>09/09/21</td>
-                        </tr>
-                        <tr title="Klik for at læse mere">
-                            <td>Inventory Management</td>
-                            <td>Unicon NO</td>
-                            <td>Vedligehold</td>
-                            <td class="text-success">Godkendt</td>
-                            <td>Middel</td>
-                            <td>20/08/21</td>
-                        </tr>
-                        <tr title="Klik for at læse mere">
-                            <td>AP Warehouse: Repair flow spareparts (SAP warehouse)</td>
-                            <td>Aalborg Portland</td>
-                            <td>Vedligehold</td>
-                            <td>Oprettet</td>
-                            <td>Middel</td>
-                            <td>14/08/21</td>
-
-                        </tr>
-                        <tr title="Klik for at læse mere">
-                            <td>AP Warehouse: Change Warehouse setup in SAP</td>
-                            <td>Aalborg Portland</td>
-                            <td>Produktion</td>
-                            <td class="text-success">Godkendt</td>
-                            <td>Høj</td>
-                            <td>13/08/21</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </section>
-</main>
+    </main>

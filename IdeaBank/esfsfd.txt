@@ -1,0 +1,3 @@
+Scaffold-DBContext "server=.; Trusted_Connection=True; Database=IdeaBankDB" Microsoft.EntityFrameworkCore.SQLServer -OutputDir Models
+
+Scaffold-DBContext "server=(localdb)\\\\mssqllocaldb; Trusted_Connection=True; Database=IdeaBankDB" Microsoft.EntityFrameworkCore.SQLServer -Output Models
