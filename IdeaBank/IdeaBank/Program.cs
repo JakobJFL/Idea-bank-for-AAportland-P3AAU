@@ -1,3 +1,4 @@
+using IBDataAccessLib.DataAccess;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
@@ -14,6 +15,17 @@ namespace IdeaBank
         public static void Main(string[] args)
         {
             CreateHostBuilder(args).Build().Run();
+ 
+        }
+
+        public static void kat()
+        {
+            /*
+            IBDataAccessLib.Models.Idea test = new();
+            test.Project_name = 3;
+            IdeaContext db = new();
+            db.Ideas.Add(test);
+            db.SaveChanges();*/
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>

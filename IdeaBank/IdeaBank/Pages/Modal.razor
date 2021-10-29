@@ -1,8 +1,10 @@
-﻿<div class="modal fade @ModalClass cursor-de" tabindex="-1" style="display:@ModalDisplay;">
+﻿@using IBDataAccessLib.Models
+
+<div class="modal fade @ModalClass cursor-de" tabindex="-1" style="display:@ModalDisplay;">
     <div class="modal-dialog modal-dialog-scrollable modal-xl bg-transparent" role="document" style="z-index:1055">
         <div class="modal-content rounded-cos border-0">
             <div class="modal-header bg-primary text-white">
-                <h5 class="modal-title">Admin Login</h5>
+                <h5 class="modal-title">@_idea.ProjectName</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" @onclick="() => Close()"></button>
             </div>
             <div class="modal-body bg-light">
@@ -11,24 +13,24 @@
                         <div class="col-12">
                             <div class="row mx-1">
                                 <div class="col">
-                                    <h6>Initialer</h6>
+                                    <h6>@_idea.Initials</h6>
                                     <p>HFU</p>
                                 </div>
                                 <div class="col">
                                     <h6>Forretningsenhed</h6>
-                                    <p> Aalborg Portland</p>
+                                    <p>@_idea.BusinessUnit</p>
                                 </div>
                                 <div class="col">
                                     <h6>Afdeling</h6>
-                                    <p>Produktion</p>
+                                    <p>@_idea.Department</p>
                                 </div>
                                 <div class="col">
                                     <h6>Prioritet</h6>
-                                    <p>Høj</p>
+                                    <p>@_idea.Priority</p>
                                 </div>
                                 <div class="col">
                                     <h6>Dato</h6>
-                                    <p>04/10/21</p>
+                                    <p>@_idea.CreatedAt</p>
                                 </div>
                                 <div class="col">
                                     <h6>Status</h6>
@@ -165,6 +167,12 @@
     public Guid Guid = Guid.NewGuid();
     public string ModalDisplay = "none;";
     public string ModalClass = "";
+    public Idea _idea;
+
+    public Modal(Idea idea)
+    {
+        _idea = idea;
+    }
 
     public async Task Open()
     {

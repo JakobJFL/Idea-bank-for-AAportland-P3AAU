@@ -5,7 +5,9 @@ VisualStudioVersion = 16.0.31624.102
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IdeaBank", "IdeaBank\IdeaBank.csproj", "{775BDFBC-7F44-4E50-B66B-4FFCA0C3136F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IBDataAccessLib", "IBDataAccess\IBDataAccessLib.csproj", "{701F3DCB-2B20-4CBD-947A-F1901FD540A1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IBDataAccessLib", "IBDataAccess\IBDataAccessLib.csproj", "{701F3DCB-2B20-4CBD-947A-F1901FD540A1}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IBBusinessLogicLib", "IBBusinessLogicLib\IBBusinessLogicLib.csproj", "{8CBD0EB7-8906-4476-97C4-0C725939DD3A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{701F3DCB-2B20-4CBD-947A-F1901FD540A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{701F3DCB-2B20-4CBD-947A-F1901FD540A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{701F3DCB-2B20-4CBD-947A-F1901FD540A1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8CBD0EB7-8906-4476-97C4-0C725939DD3A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8CBD0EB7-8906-4476-97C4-0C725939DD3A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8CBD0EB7-8906-4476-97C4-0C725939DD3A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8CBD0EB7-8906-4476-97C4-0C725939DD3A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -4,14 +4,16 @@ using IBDataAccessLib.DataAccess;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace IBDataAccessLib.Migrations
 {
     [DbContext(typeof(Context))]
-    partial class IdeaContextModelSnapshot : ModelSnapshot
+    [Migration("20211026132656_InitialDBCreation")]
+    partial class InitialDBCreation
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -90,14 +92,8 @@ namespace IBDataAccessLib.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("BusinessUnitId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
-
-                    b.Property<int?>("DepartmentId")
-                        .HasColumnType("int");
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -144,10 +140,6 @@ namespace IBDataAccessLib.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("BusinessUnitId");
-
-                    b.HasIndex("DepartmentId");
-
                     b.ToTable("Ideas");
                 });
 
@@ -156,21 +148,6 @@ namespace IBDataAccessLib.Migrations
                     b.HasOne("IBDataAccessLib.Models.Idea", null)
                         .WithMany("Comments")
                         .HasForeignKey("IdeaId");
-                });
-
-            modelBuilder.Entity("IBDataAccessLib.Models.Idea", b =>
-                {
-                    b.HasOne("IBDataAccessLib.Models.BusinessUnit", "BusinessUnit")
-                        .WithMany()
-                        .HasForeignKey("BusinessUnitId");
-
-                    b.HasOne("IBDataAccessLib.Models.Department", "Department")
-                        .WithMany()
-                        .HasForeignKey("DepartmentId");
-
-                    b.Navigation("BusinessUnit");
-
-                    b.Navigation("Department");
                 });
 
             modelBuilder.Entity("IBDataAccessLib.Models.Idea", b =>
