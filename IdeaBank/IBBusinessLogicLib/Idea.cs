@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace IBBusinessLogicLib
+namespace BusinessLogicLib
 {
     public class Idea
     {

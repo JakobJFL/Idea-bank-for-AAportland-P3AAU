@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace IBDataAccessLib.Models
+namespace DataBaseLib.Models
 {
     public class Comment
     {

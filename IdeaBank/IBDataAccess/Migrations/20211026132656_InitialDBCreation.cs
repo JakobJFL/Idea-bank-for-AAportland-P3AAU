@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace IBDataAccessLib.Migrations
+namespace DataBaseLib.Migrations
 {
     public partial class InitialDBCreation : Migration
     {

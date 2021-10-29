@@ -1,9 +1,8 @@
 ﻿@page "/"
-@using IBBusinessLogicLib
-@using IBDataAccessLib.Models
-@using Microsoft.Extensions.Configuration 
+@using BusinessLogicLib
+@using Microsoft.Extensions.Configuration
 
-@inject dataAcces _data
+@inject DataAcces _data
 @inject IConfiguration _config
 
 
@@ -55,18 +54,19 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach (var idea in _data.loadData(_config.GetConnectionString("Default")))
+                        @foreach (var idea in _data.LoadIdeas(_config.GetConnectionString("Default")))
                         {
                             //Modal modal = new(idea);
                             //@onclick= "() => modal.Open()
                             <tr title="Klik for at læse mere">
                                 <td>@idea.ProjectName</td>
                             </tr>
-                    //<Modal @ref="modal"></Modal>
-                }
+                            //<Modal @ref="modal"></Modal>
+                        }
                     </tbody>
                 </table>
             </div>
         </div>
     </section>
 </main>
+

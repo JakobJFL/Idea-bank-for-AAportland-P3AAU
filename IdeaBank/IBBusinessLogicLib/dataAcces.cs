@@ -1,17 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using IBDataAccessLib.DataAccess;
-using IBDataAccessLib.Models;
+using DataBaseLib.DataAccess;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace IBBusinessLogicLib
+namespace BusinessLogicLib
 {
-    public class dataAcces
+    public interface IDataAcces
     {
-        private IContext _context;
-        public dataAcces(IContext context)
+        public List<Idea> LoadIdeas(string connectionString);
+    }
+    public class DataAcces : IDataAcces
+    {
+        /*
+        public DataAcces(IContext context)
         {
             _context = context;
             Console.WriteLine("HEKEOKD");
@@ -21,45 +24,42 @@ namespace IBBusinessLogicLib
                 Console.WriteLine(i.ProjectName);
             }
         }
-        public async Task<Idea> loadDataGet(string connectionString)
+        */
+        
+        public async Task<List<DataBaseLib.Models.Idea>> LoadIdeasAsync(string connectionString)
         {
-            {
-                using (var db = new DbContext())
-                {
-                    Idea model = await db.Idea.FirstAsync(vm.Id);
-
-                    vm.Title = model.Title;
-
-                    if (model.Avilable)
-                    {
-                        // How can call the **Category** property using await operator?
-                        vm.CategoryTitle = model.Category.Title;
-                    }
-                }
-            }
-
-            return View(vm);
-        }
-        public List<Idea> loadData(string connectionString)
-        {
-            using ()
-            {
-                var blogs = await _context.Blogs.Where(b => b.Rating > 3).ToListAsync();
-
-            }
             DbContextOptionsBuilder optionsBuilder = new DbContextOptionsBuilder<Context>();
             optionsBuilder.UseSqlServer(connectionString);
-            _context = new Context(optionsBuilder.Options);
-
-            List<Idea> ideas = new();
-            foreach (var i in _context.Ideas)
+            using (var db = new Context(optionsBuilder.Options))
             {
-                Idea idea = new();
-                idea.ProjectName = i.ProjectName;
-                ideas.Add(idea);
-                Console.WriteLine(i.ProjectName);
+                Task<List<DataBaseLib.Models.Idea>> ideas = db.Ideas.ToListAsync();
+                /*
+                foreach (var i in )
+                {
+                    Idea idea = new();
+                    idea.ProjectName = i.ProjectName;
+                    ideas.Add(idea);
+                }
+                */
+                return await ideas;
             }
-            return ideas;
+        }
+
+        public List<Idea> LoadIdeas(string connectionString)
+        {
+            DbContextOptionsBuilder optionsBuilder = new DbContextOptionsBuilder<Context>();
+            optionsBuilder.UseSqlServer(connectionString);
+            using (var db = new Context(optionsBuilder.Options))
+            {
+                List<Idea> ideas = new();
+                foreach (var i in db.Ideas)
+                {
+                    Idea idea = new();
+                    idea.ProjectName = i.ProjectName;
+                    ideas.Add(idea);
+                }
+                return ideas;
+            }
         }
     }
 }

@@ -21,7 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\IBBusinessLogicLib\IBBusinessLogicLib.csproj" />
+    <ProjectReference Include="..\IBBusinessLogicLib\BusinessLogicLib.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,4 +1,4 @@
-﻿using IBDataAccessLib.Models;
+﻿using DataBaseLib.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace IBDataAccessLib.DataAccess
+namespace DataBaseLib.DataAccess
 {
     public class Context : DbContext, IContext
     {

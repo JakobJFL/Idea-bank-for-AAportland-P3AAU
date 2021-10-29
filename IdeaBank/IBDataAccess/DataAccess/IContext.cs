@@ -1,7 +1,7 @@
-﻿using IBDataAccessLib.Models;
+﻿using DataBaseLib.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace IBDataAccessLib.DataAccess
+namespace DataBaseLib.DataAccess
 {
     public interface IContext
     {

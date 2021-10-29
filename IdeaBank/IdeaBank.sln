@@ -5,9 +5,9 @@ VisualStudioVersion = 16.0.31624.102
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IdeaBank", "IdeaBank\IdeaBank.csproj", "{775BDFBC-7F44-4E50-B66B-4FFCA0C3136F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IBDataAccessLib", "IBDataAccess\IBDataAccessLib.csproj", "{701F3DCB-2B20-4CBD-947A-F1901FD540A1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataBaseLib", "IBDataAccess\DataBaseLib.csproj", "{701F3DCB-2B20-4CBD-947A-F1901FD540A1}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IBBusinessLogicLib", "IBBusinessLogicLib\IBBusinessLogicLib.csproj", "{8CBD0EB7-8906-4476-97C4-0C725939DD3A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BusinessLogicLib", "IBBusinessLogicLib\BusinessLogicLib.csproj", "{8CBD0EB7-8906-4476-97C4-0C725939DD3A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
