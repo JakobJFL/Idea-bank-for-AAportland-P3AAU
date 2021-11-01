@@ -9,57 +9,26 @@ namespace BusinessLogicLib
 {
     public interface IDataAcces
     {
-        public List<Idea> LoadIdeas(string connectionString);
+        public Task<List<DataBaseLib.Models.Idea>> LoadAllIdeas(string connectionString);
+        public Task<DataBaseLib.Models.Idea> LoadIdeaByID(string connectionString, string id);
     }
     public class DataAcces : IDataAcces
     {
-        /*
-        public DataAcces(IContext context)
-        {
-            _context = context;
-            Console.WriteLine("HEKEOKD");
-
-            foreach (var i in _context.Ideas)
-            {
-                Console.WriteLine(i.ProjectName);
-            }
-        }
-        */
-        
-        public async Task<List<DataBaseLib.Models.Idea>> LoadIdeasAsync(string connectionString)
+        public async Task<List<DataBaseLib.Models.Idea>> LoadAllIdeas(string connectionString)
         {
             DbContextOptionsBuilder optionsBuilder = new DbContextOptionsBuilder<Context>();
             optionsBuilder.UseSqlServer(connectionString);
-            using (var db = new Context(optionsBuilder.Options))
-            {
-                Task<List<DataBaseLib.Models.Idea>> ideas = db.Ideas.ToListAsync();
-                /*
-                foreach (var i in )
-                {
-                    Idea idea = new();
-                    idea.ProjectName = i.ProjectName;
-                    ideas.Add(idea);
-                }
-                */
-                return await ideas;
-            }
+            using var db = new Context(optionsBuilder.Options);
+            return await db.Ideas.ToListAsync();
         }
 
-        public List<Idea> LoadIdeas(string connectionString)
+        public async Task<DataBaseLib.Models.Idea> LoadIdeaByID(string connectionString, string id)
         {
             DbContextOptionsBuilder optionsBuilder = new DbContextOptionsBuilder<Context>();
             optionsBuilder.UseSqlServer(connectionString);
-            using (var db = new Context(optionsBuilder.Options))
-            {
-                List<Idea> ideas = new();
-                foreach (var i in db.Ideas)
-                {
-                    Idea idea = new();
-                    idea.ProjectName = i.ProjectName;
-                    ideas.Add(idea);
-                }
-                return ideas;
-            }
+            using var db = new Context(optionsBuilder.Options);
+            string sql = "SELECT * FROM Ideas WHERE Id='" + id + "'";
+            return await db.Ideas.FromSqlRaw(sql).SingleAsync();
         }
     }
 }

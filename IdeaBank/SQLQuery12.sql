@@ -1,11 +1,11 @@
-CREATE TABLE Idea (
+﻿CREATE TABLE Ideas (
     Id INT NOT NULL IDENTITY(1,1) PRIMARY KEY,
-    project_name VARCHAR(100) NOT NULL,
-	initials VARCHAR(5) NOT NULL,
+    ProjectName VARCHAR(100) NOT NULL,
+	Initials VARCHAR(5) NOT NULL,
 	Description VARCHAR(1500) NOT NULL,
-	risk VARCHAR(1000),
-	team VARCHAR(100),
-	plan_description VARCHAR(1000),
+	Risk VARCHAR(1000),
+	Team VARCHAR(100),
+	PlanDescription VARCHAR(1000),
 	ExpectedResults VARCHAR(1000), 
 	[priority] INT,
 	[status] INT DEFAULT 1,

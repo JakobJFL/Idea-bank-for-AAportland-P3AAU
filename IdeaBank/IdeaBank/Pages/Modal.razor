@@ -1,4 +1,9 @@
 ﻿@using DataBaseLib.Models
+@using BusinessLogicLib
+@using Microsoft.Extensions.Configuration
+
+@inject DataAcces _data
+@inject IConfiguration _config
 
 <div class="modal fade @ModalClass cursor-de" tabindex="-1" style="display:@ModalDisplay;">
     <div class="modal-dialog modal-dialog-scrollable modal-xl bg-transparent" role="document" style="z-index:1055">
@@ -13,16 +18,16 @@
                         <div class="col-12">
                             <div class="row mx-1">
                                 <div class="col">
-                                    <h6>@_idea.Initials</h6>
-                                    <p>HFU</p>
+                                    <h6>Initialer</h6>
+                                    <p>@_idea.Initials</p>
                                 </div>
                                 <div class="col">
                                     <h6>Forretningsenhed</h6>
-                                    <p>@_idea.BusinessUnit</p>
+                                    <p>WIP</p>
                                 </div>
                                 <div class="col">
                                     <h6>Afdeling</h6>
-                                    <p>@_idea.Department</p>
+                                    <p>WIP</p>
                                 </div>
                                 <div class="col">
                                     <h6>Prioritet</h6>
@@ -34,7 +39,7 @@
                                 </div>
                                 <div class="col">
                                     <h6>Status</h6>
-                                    <p>Oprettet</p>
+                                    <p>@_idea.Status</p>
                                 </div>
                             </div>
                         </div>
@@ -46,8 +51,7 @@
                                         Idébeskrivelse
                                     </h5>
                                     <p class="card-text">
-                                        Vores varmeovne skaber en masse spildvarme. Kunne man eventuelt
-                                        udnytte denne spildvarme til at opvarme vand til fjernvarme?
+                                        @_idea.Description
                                     </p>
                                 </div>
                             </div>
@@ -60,7 +64,7 @@
                                         Risiko
                                     </h5>
                                     <p class="card-text">
-                                        Det kan være dyrt at implementere, men kan være billigere i det lange løb.
+                                        @_idea.Risk
                                     </p>
                                 </div>
                             </div>
@@ -73,8 +77,7 @@
                                         Plan
                                     </h5>
                                     <p class="card-text">
-                                        Vi kan starte hurtigst muligt med at undersøge om det overhovedet er muligt
-                                        at udnytte denne spildvarme.
+                                        @_idea.PlanDescription
                                     </p>
                                 </div>
                             </div>
@@ -87,7 +90,7 @@
                                         Forventet resultat
                                     </h5>
                                     <p class="card-text">
-                                        Det forventede resultat er at vi undgår energispild og i fremtiden kan spare penge på opvarmning og sælge til fjernvarme.
+                                        @_idea.ExpectedResults
                                     </p>
                                 </div>
                             </div>
@@ -100,7 +103,7 @@
                                         Team
                                     </h5>
                                     <p class="card-text">
-                                        GII, HKU, HUA
+                                        @_idea.Team
                                     </p>
                                 </div>
                             </div>
@@ -167,19 +170,15 @@
     public Guid Guid = Guid.NewGuid();
     public string ModalDisplay = "none;";
     public string ModalClass = "";
-    public Idea _idea;
+    public DataBaseLib.Models.Idea _idea = new();
 
-    public Modal(Idea idea)
-    {
-        _idea = idea;
-    }
-
-    public async Task Open()
+    public async Task Open(DataBaseLib.Models.Idea idea)
     {
         StateHasChanged();
         ModalDisplay = "block;";
         await Task.Delay(150);
         ModalClass = "show";
+        _idea = idea;
         StateHasChanged();
     }
 

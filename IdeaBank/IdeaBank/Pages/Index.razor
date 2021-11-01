@@ -5,68 +5,85 @@
 @inject DataAcces _data
 @inject IConfiguration _config
 
+<IdeaBank.Pages.Modal @ref="Modal"></IdeaBank.Pages.Modal>
 
-<main>
-    <div class="bgImg">
-        <section class="py-4 text-center container">
-            <div class="row py-lg-5">
-                <div class="col-lg-6 col-md-6 mx-auto">
-                    <div class="d-flex flex-row justify-content-center"><h1 class="fw-light">Aalborg Portland Idébank</h1><h4 class="text-primary">Prototype</h4></div>
-                    <p class="fs-5 py-1">
-                        Velkommen til Aalborg Portland's idébank. Her er der mulighed for at indsende dine egne
-                        idéer til eventuelle forbedringer eller ændringer.
-                    </p>
-                    <NavLink href="/NewIdea">
-                        <button class="btn btn-lg btn-primary my-2 p-4">Tilføj ny idé</button>
-                    </NavLink>
-                </div>
-            </div>
-        </section>
-    </div>
-
-    <section class="py-5 bg-light">
-        <div class="container">
-            <h2 class="text-center">kat</h2>
-            <p class="text-center">Klik på en idé for at læse mere </p>
-            <p class=" text-center text-danger mb-4">Da dette en mark-up, er det kun de to første idéer i listen, der kan klikkes på.</p>
-            <div class="row table-responsive rounded-cos">
-                <table class="table my-0 table-primary table-striped table-hover">
-                    <thead>
-                        <tr>
-                            <th scope="col" class="bg-primary text-white">
-                                Projektnavn <img src="/svg/filter.svg" />
-                            </th>
-                            <th scope="col" class="bg-primary text-white">
-                                Forretningsenhed <img src="/svg/filter.svg" />
-                            </th>
-                            <th scope="col" class="bg-primary text-white">
-                                Afdeling <img src="/svg/filter.svg" />
-                            </th>
-                            <th scope="col" class="bg-primary text-white">
-                                Status <img src="/svg/filter.svg" />
-                            </th>
-                            <th scope="col" class="bg-primary text-white">
-                                Prioritet <img src="/svg/filter.svg" />
-                            </th>
-                            <th scope="col" class="bg-primary text-white">
-                                Dato <img src="/svg/sort-down.svg" />
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var idea in _data.LoadIdeas(_config.GetConnectionString("Default")))
-                        {
-                            //Modal modal = new(idea);
-                            //@onclick= "() => modal.Open()
-                            <tr title="Klik for at læse mere">
-                                <td>@idea.ProjectName</td>
-                            </tr>
-                            //<Modal @ref="modal"></Modal>
-                        }
-                    </tbody>
-                </table>
+<div class="bgImg">
+    <section class="py-4 text-center container">
+        <div class="row py-lg-5">
+            <div class="col-lg-6 col-md-6 mx-auto">
+                <div class="d-flex flex-row justify-content-center"><h1 class="fw-light">Aalborg Portland Idébank</h1><h4 class="text-primary">Prototype</h4></div>
+                <p class="fs-5 py-1">
+                    Velkommen til Aalborg Portland's idébank. Her er der mulighed for at indsende dine egne
+                    idéer til eventuelle forbedringer eller ændringer.
+                </p>
+                <NavLink href="/NewIdea">
+                    <button class="btn btn-lg btn-primary my-2 p-4">Tilføj ny idé</button>
+                </NavLink>
             </div>
         </div>
     </section>
-</main>
+</div>
 
+<section class="py-5 bg-light">
+    <div class="container">
+        <h2 class="text-center">Idéoversigt</h2>
+        <p class="text-center">Klik på en idé for at læse mere </p>
+        <p class=" text-center text-danger mb-4">Da dette en mark-up, er det kun de to første idéer i listen, der kan klikkes på.</p>
+        <div class="row table-responsive rounded-cos">
+            <table class="table my-0 table-primary table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col" class="bg-primary text-white">
+                            Projektnavn <img src="/svg/filter.svg" />
+                        </th>
+                        <th scope="col" class="bg-primary text-white">
+                            Beskrivelse <img src="/svg/filter.svg" />
+                        </th>
+                        <th scope="col" class="bg-primary text-white">
+                            Plan <img src="/svg/filter.svg" />
+                        </th>
+                        <th scope="col" class="bg-primary text-white">
+                            Status <img src="/svg/filter.svg" />
+                        </th>
+                        <th scope="col" class="bg-primary text-white">
+                            Prioritet <img src="/svg/filter.svg" />
+                        </th>
+                        <th scope="col" class="bg-primary text-white">
+                            Oprettet <img src="/svg/sort-down.svg" />
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (data != null)
+                    {
+                        foreach (var idea in data)
+                        {
+                            <tr title="Klik for at læse mere" @onclick="() => Modal.Open(idea)">
+                                <td>@idea.ProjectName</td>
+                                <td>@idea.Description</td>
+                                <td>@idea.PlanDescription</td>
+                                <td>@idea.Status</td>
+                                <td>@idea.Priority</td>
+                                <td>@idea.CreatedAt</td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+
+@code {
+    public List<DataBaseLib.Models.Idea> data;
+    private IdeaBank.Pages.Modal Modal { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (data == null)
+        {
+            data = await _data.LoadAllIdeas(_config.GetConnectionString("Default"));
+            StateHasChanged();
+        }
+    }
+}
