@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DataBaseLib.Models
 {
-    public class Comment
+    public class CommentsTbl
     {
         public int Id { get; set; }
         [Required]

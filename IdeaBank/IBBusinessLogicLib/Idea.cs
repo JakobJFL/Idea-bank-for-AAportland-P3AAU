@@ -12,11 +12,10 @@ namespace BusinessLogicLib
         public string Department { get; set; }
         public string Risk { get; set; }
         public string Team { get; set; }
-        public string PlanDescription { get; set; }
+        public string Plan { get; set; }
         public string ExpectedResults { get; set; }
-        public bool IsHidden { get; set; }
-        public int Priority { get; set; }
-        public int Status { get; set; }
+        public string Priority { get; set; }
+        public string Status { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
     }

@@ -4,14 +4,16 @@ using DataBaseLib.DataAccess;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DataBaseLib.Migrations
 {
     [DbContext(typeof(Context))]
-    partial class IdeaContextModelSnapshot : ModelSnapshot
+    [Migration("20211101122454_FkFixed")]
+    partial class FkFixed
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -96,13 +98,16 @@ namespace DataBaseLib.Migrations
                     b.Property<int>("BusinessUnitRefId")
                         .HasColumnType("int");
 
+                    b.Property<int>("CommentsRefId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<int?>("DepartmentId")
                         .HasColumnType("int");
 
-                    b.Property<int>("DepartmentsTblRefId")
+                    b.Property<int>("DepartmentsRefId")
                         .HasColumnType("int");
 
                     b.Property<string>("Description")

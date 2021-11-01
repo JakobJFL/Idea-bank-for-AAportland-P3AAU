@@ -5,9 +5,9 @@ namespace DataBaseLib.DataAccess
 {
     public interface IContext
     {
-        DbSet<BusinessUnit> BusinessUnits { get; set; }
-        DbSet<Comment> Comments { get; set; }
-        DbSet<Department> Departments { get; set; }
-        DbSet<Idea> Ideas { get; set; }
+        DbSet<BusinessUnitsTbl> BusinessUnitsTbl { get; set; }
+        DbSet<CommentsTbl> CommentsTbl { get; set; }
+        DbSet<DepartmentsTbl> DepartmentsTbl { get; set; }
+        DbSet<IdeasTbl> IdeasTbl { get; set; }
     }
 }

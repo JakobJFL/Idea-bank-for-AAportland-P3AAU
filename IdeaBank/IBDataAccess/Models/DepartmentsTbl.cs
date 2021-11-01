@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace DataBaseLib.Models
 {
-    public class BusinessUnit
+    public class DepartmentsTbl
     {
         public int Id { get; set; }
         [Required]

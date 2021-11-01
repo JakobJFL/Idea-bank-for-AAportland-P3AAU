@@ -37,10 +37,10 @@
                             Projektnavn <img src="/svg/filter.svg" />
                         </th>
                         <th scope="col" class="bg-primary text-white">
-                            Beskrivelse <img src="/svg/filter.svg" />
+                            Business Unit <img src="/svg/filter.svg" />
                         </th>
                         <th scope="col" class="bg-primary text-white">
-                            Plan <img src="/svg/filter.svg" />
+                            Afdeling <img src="/svg/filter.svg" />
                         </th>
                         <th scope="col" class="bg-primary text-white">
                             Status <img src="/svg/filter.svg" />
@@ -56,12 +56,12 @@
                 <tbody>
                     @if (data != null)
                     {
-                        foreach (var idea in data)
+                        foreach (Idea idea in data)
                         {
                             <tr title="Klik for at læse mere" @onclick="() => Modal.Open(idea)">
                                 <td>@idea.ProjectName</td>
-                                <td>@idea.Description</td>
-                                <td>@idea.PlanDescription</td>
+                                <td>@idea.BusinessUnit</td>
+                                <td>@idea.Department</td>
                                 <td>@idea.Status</td>
                                 <td>@idea.Priority</td>
                                 <td>@idea.CreatedAt</td>
@@ -75,7 +75,7 @@
 </section>
 
 @code {
-    public List<DataBaseLib.Models.Idea> data;
+    public List<Idea> data;
     private IdeaBank.Pages.Modal Modal { get; set; }
 
     protected override async Task OnInitializedAsync()

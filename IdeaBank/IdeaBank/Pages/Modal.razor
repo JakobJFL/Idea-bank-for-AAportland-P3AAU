@@ -1,8 +1,6 @@
-﻿@using DataBaseLib.Models
-@using BusinessLogicLib
+﻿@using BusinessLogicLib
 @using Microsoft.Extensions.Configuration
 
-@inject DataAcces _data
 @inject IConfiguration _config
 
 <div class="modal fade @ModalClass cursor-de" tabindex="-1" style="display:@ModalDisplay;">
@@ -77,7 +75,7 @@
                                         Plan
                                     </h5>
                                     <p class="card-text">
-                                        @_idea.PlanDescription
+                                        @_idea.Plan
                                     </p>
                                 </div>
                             </div>
@@ -170,9 +168,9 @@
     public Guid Guid = Guid.NewGuid();
     public string ModalDisplay = "none;";
     public string ModalClass = "";
-    public DataBaseLib.Models.Idea _idea = new();
+    public Idea _idea = new();
 
-    public async Task Open(DataBaseLib.Models.Idea idea)
+    public async Task Open(Idea idea)
     {
         StateHasChanged();
         ModalDisplay = "block;";

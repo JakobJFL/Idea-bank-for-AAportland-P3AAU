@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace DataBaseLib.Models
 {
-    public class Idea
+    public class IdeasTbl
     {
         public int Id { get; set; }
         [Required]
@@ -19,8 +20,12 @@ namespace DataBaseLib.Models
         [Required]
         [MaxLength(1500)]
         public string Description { get; set; }
-        public BusinessUnit BusinessUnit { get; set; } = new();
-        public Department Department { get; set; } = new();
+        [ForeignKey("BusinessUnitRefId")]
+        public int BusinessUnitRefId { get; set; }
+        public BusinessUnitsTbl BusinessUnit { get; set; }
+        [ForeignKey("DepartmentsRefId")]
+        public int DepartmentsRefId { get; set; }
+        public DepartmentsTbl Department { get; set; } 
         [MaxLength(1000)]
         public string Risk { get; set; }
         [MaxLength(100)]
@@ -38,6 +43,8 @@ namespace DataBaseLib.Models
         public DateTime CreatedAt { get; set; } = DateTime.Now;
         [Required]
         public DateTime UpdatedAt { get; set; } = DateTime.Now;
-        public List<Comment> Comments { get; set; } = new();
+        [ForeignKey("CommentsRefId")]
+        public int CommentsRefId { get; set; }
+        public List<CommentsTbl> Comments { get; set; } = new();
     }
 }
