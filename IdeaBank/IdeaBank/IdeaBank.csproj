@@ -6,11 +6,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="Pages\NewIdea.razor" />
     <Content Remove="wwwroot\svg\NewFile.txt" />
   </ItemGroup>
 
   <ItemGroup>
     <None Remove="Pages\NewFile.txt" />
+    <None Remove="Pages\SubmitIdea" />
   </ItemGroup>
 
   <ItemGroup>

@@ -2,7 +2,7 @@
 @using BusinessLogicLib
 @using Microsoft.Extensions.Configuration
 
-@inject DataAcces _data
+@inject LoadFromDB _data
 @inject IConfiguration _config
 
 <IdeaBank.Pages.Modal @ref="Modal"></IdeaBank.Pages.Modal>
@@ -56,7 +56,7 @@
                 <tbody>
                     @if (data != null)
                     {
-                        foreach (Idea idea in data)
+                        foreach (ViewIdea idea in data)
                         {
                             <tr title="Klik for at læse mere" @onclick="() => Modal.Open(idea)">
                                 <td>@idea.ProjectName</td>
@@ -76,7 +76,7 @@
 
 
 @code {
-    public List<Idea> data;
+    public List<ViewIdea> data;
     private IdeaBank.Pages.Modal Modal { get; set; }
 
     protected override async Task OnInitializedAsync()

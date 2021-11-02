@@ -7,10 +7,6 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using DataBaseLib.DataAccess;
 using BusinessLogicLib;
 
@@ -30,7 +26,7 @@ namespace IdeaBank
         { 
             services.AddRazorPages();
             services.AddServerSideBlazor();
-            services.AddSingleton<DataAcces>();
+            services.AddSingleton<LoadFromDB>();
            
             
            
@@ -65,6 +61,14 @@ namespace IdeaBank
                 endpoints.MapBlazorHub();
                 endpoints.MapFallbackToPage("/_Host");
             });
+            configureDBTables();
+        }
+        public async void configureDBTables()
+        {
+            string connectionString = Configuration.GetConnectionString("Default");
+            DBTableConfiguration tableConfig = new();
+            if (await tableConfig.IsBuAndDepEmpty(connectionString))
+                tableConfig.SetDefaultTbls(connectionString);
         }
     }
 }

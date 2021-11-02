@@ -1,7 +1,7 @@
 ﻿@using BusinessLogicLib
 @using Microsoft.Extensions.Configuration
 
-@inject DataAcces _data
+@inject LoadFromDB _data
 @inject IConfiguration _config
 
 <div class="modal fade @ModalClass cursor-de" tabindex="-1" style="display:@ModalDisplay;">
@@ -157,9 +157,9 @@
     public Guid Guid = Guid.NewGuid();
     public string ModalDisplay = "none;";
     public string ModalClass = "";
-    public Idea _idea = new();
+    public BusinessLogicLib.ViewIdea _idea = new();
 
-    public async Task Open(Idea idea)
+    public async Task Open(BusinessLogicLib.ViewIdea idea)
     {
         StateHasChanged();
         ModalDisplay = "block;";

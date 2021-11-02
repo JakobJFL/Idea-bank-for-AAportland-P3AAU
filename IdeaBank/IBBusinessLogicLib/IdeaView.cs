@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace BusinessLogicLib
 {
-    public class Idea
+    public class ViewIdea : IIdea
     {
         public int Id { get; set; }
         public string ProjectName { get; set; }

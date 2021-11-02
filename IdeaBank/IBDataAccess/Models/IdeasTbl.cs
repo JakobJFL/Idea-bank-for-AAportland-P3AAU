@@ -12,46 +12,32 @@ namespace DataBaseLib.Models
     {
         [Key]
         public int Id { get; set; }
-
         [Required]
         [MaxLength(100)]
         public string ProjectName { get; set; }
-
         [Required]
         [MaxLength(5)]
         public string Initials { get; set; }
-
         [Required]
         [MaxLength(1500)]
         public string Description { get; set; }
-
-
         [MaxLength(1000)]
         public string Risk { get; set; }
-
         [MaxLength(100)]
         public string Team { get; set; }
-
         [MaxLength(1000)]
         public string PlanDescription { get; set; }
-
         [MaxLength(1000)]
         public string ExpectedResults { get; set; }
-
         [Required]
-        public bool IsHidden { get; set; } = false;
-
+        public bool IsHidden { get; set; }
         public int Priority { get; set; }
-
         [Required]
-        public int Status { get; set; } = 1;
-
+        public int Status { get; set; }
         [Required]
-        public DateTime CreatedAt { get; set; } = DateTime.Now;
-
+        public DateTime CreatedAt { get; set; }
         [Required]
-        public DateTime UpdatedAt { get; set; } = DateTime.Now;
-
+        public DateTime UpdatedAt { get; set; }
         public BusinessUnitsTbl BusinessUnit { get; set; }
         public DepartmentsTbl Department { get; set; }
     }
