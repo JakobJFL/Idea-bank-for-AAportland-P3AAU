@@ -1,4 +1,3 @@
-using IdeaBank.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Components;

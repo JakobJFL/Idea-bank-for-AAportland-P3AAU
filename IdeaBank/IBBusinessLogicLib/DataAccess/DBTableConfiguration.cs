@@ -8,8 +8,8 @@ namespace BusinessLogicLib
 {
     public class DBTableConfiguration
     {
-        private readonly string[] BusinessUnits = { "Aalborg Portland", "Unicon DK", "Unicon NO", "Kudsk & Dahl" };
-        private readonly string[] Departments = { "Salg", "SCM", "Produktion", "Vedligehold", "Finans", "HR", "PMO & Transformation" };
+        private readonly string[] BusinessUnits = { "Ikke Angivet", "Aalborg Portland", "Unicon DK", "Unicon NO", "Kudsk & Dahl" };
+        private readonly string[] Departments = { "Ikke Angivet", "Salg", "SCM", "Produktion", "Vedligehold", "Finans", "HR", "PMO & Transformation" };
         public void SetDefaultTbls(string connectionString)
         {
             DbContextOptionsBuilder optionsBuilder = new DbContextOptionsBuilder<Context>();

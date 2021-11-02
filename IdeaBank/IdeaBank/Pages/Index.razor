@@ -28,7 +28,6 @@
     <div class="container">
         <h2 class="text-center">Idéoversigt</h2>
         <p class="text-center">Klik på en idé for at læse mere </p>
-        <p class=" text-center text-danger mb-4">Da dette en mark-up, er det kun de to første idéer i listen, der kan klikkes på.</p>
         <div class="row table-responsive rounded-cos">
             <table class="table my-0 table-primary table-striped table-hover">
                 <thead>
@@ -64,7 +63,7 @@
                                 <td>@idea.Department</td>
                                 <td>@idea.Status</td>
                                 <td>@idea.Priority</td>
-                                <td>@idea.CreatedAt</td>
+                                <td>@idea.CreatedAt.ToShortDateString()</td>
                             </tr>
                         }
                     }

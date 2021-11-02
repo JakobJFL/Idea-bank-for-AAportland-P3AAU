@@ -27,87 +27,89 @@
 
                 <EditForm Model="@idea" OnValidSubmit="@HandleValidSubmit">
                     <DataAnnotationsValidator />
-                    <ValidationSummary/>
+                    <ValidationSummary />
                     <div class="row g-3">
                         <div class="col-sm-8">
-                            <label for="projectName" class="form-label">
+                            <label class="form-label">
                                 Projektnavn<label class="text-danger">*</label>
                             </label>
                             <div class="input-group">
-                                <InputText type="text" class="form-control" id="projectName" placeholder="Projektnavn" required @bind-Value="idea.ProjectName" DisplayName="Projektnavn"></InputText>
+                                <InputText type="text" class="form-control" placeholder="Projektnavn" required
+                                           @bind-Value="idea.ProjectName" DisplayName="Projektnavn"></InputText>
                             </div>
                         </div>
 
                         <div class="col-sm-4">
-                            <label for="initials" class="form-label">
+                            <label class="form-label">
                                 Initialer<label class="text-danger">*</label>
                             </label>
                             <div class="input-group">
-                                <InputText type="text" class="form-control" id="initials" placeholder="AAA" required @bind-Value="idea.Initials" />
+                                <InputText type="text" class="form-control" placeholder="AAA" required
+                                           @bind-Value="idea.Initials" maxlength=5 />
                                 <div class="invalid-feedback">Initialer er noget værre noget.</div>
                             </div>
                         </div>
 
                         <div class="col-12 mb-4">
                             <div class="form-group">
-                                <label for="ideaDescription">
+                                <label>
                                     Idébeskrivelse<label class="text-danger">*</label>
                                 </label>
-                                <InputTextArea class="form-control" id="ideaDescription" rows="3" placeholder="Problemdefinition og afgrænsning" required @bind-Value="idea.Description"></InputTextArea>
+                                <InputTextArea class="form-control" rows="3" placeholder="Problemdefinition og afgrænsning" required @bind-Value="idea.Description"></InputTextArea>
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div title="Den forretningsenhed som idéen vedrører">
-                                <label for="businessUnit" class="form-label">Forretningsenhed</label>
+                                <label class="form-label">Forretningsenhed</label>
                                 <img src="svg/question-circle.svg">
                             </div>
-                            <InputSelect class="form-select" id="businessUnit" required @bind-Value="idea.BusinessUnit">
-                                <option value="" selected class="text-muted">Ikke angivet</option>
-                                <option value="1">Aalborg Portland</option>
-                                <option value="2">Unicon DK</option>
-                                <option value="3">Unicon NO</option>
-                                <option value="4">Kudsk & Dahl</option>
+                            <InputSelect class="form-select" required @bind-Value="idea.BusinessUnit">
+                                <option value="1" selected class="text-muted">Ikke angivet</option>
+                                <option value="2">Aalborg Portland</option>
+                                <option value="3">Unicon DK</option>
+                                <option value="4">Unicon NO</option>
+                                <option value="5">Kudsk & Dahl</option>
                             </InputSelect>
                             <div class="invalid-feedback">
                                 Vælg venligst en forretningsenhed.
                             </div>
                         </div>
                         <div class="col-md-3">
-                            <div data-bs-toggle="tooltip" title="" data-bs-original-ti>
-                                <label for="department" class="form-label">Afdeling</label>
+                            <div title="Den afdeling som idéen vedrører">
+                                <label class="form-label">Afdeling</label>
                                 <img src="svg/question-circle.svg">
                             </div>
-                            <InputSelect class="form-select" id="department" @bind-Value="idea.Department">
-                                <option value="" selected class="text-muted">Ikke angivet</option>
-                                <option value="1">Salg</option>
-                                <option value="2">SCM</option>
-                                <option value="3">Produktion</option>
-                                <option value="4">Vedligehold</option>
-                                <option value="5">Finans</option>
-                                <option value="6">HR</option>
-                                <option value="7">PMO & Transformation</option>
+                            <InputSelect class="form-select" @bind-Value="idea.Department">
+                                <option value="1" selected class="text-muted">Ikke angivet</option>
+                                <option value="2">Salg</option>
+                                <option value="3">SCM</option>
+                                <option value="4">Produktion</option>
+                                <option value="5">Vedligehold</option>
+                                <option value="6">Finans</option>
+                                <option value="7">HR</option>
+                                <option value="8">PMO & Transformation</option>
                             </InputSelect>
                             <div class="invalid-feedback">
                                 Vælg venligst en afdeling
                             </div>
                         </div>
                         <div class="col-md-6">
-                            <label for="initials" class="form-label">Team</label>
+                            <label class="form-label">Team</label>
                             <div class="input-group has-validation">
-                                <InputText type="text" class="form-control" id="initials" placeholder="Hvem skal være med?" @bind-Value="idea.Team"></InputText>
+                                <InputText type="text" class="form-control" placeholder="Hvem skal være med?" @bind-Value="idea.Team"></InputText>
                                 <div class="invalid-feedback">Initialer er noget værre noget.</div>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="plan">Plan</label>
-                                <InputTextArea class="form-control" id="plan" rows="3" placeholder="Forventet varighed, ønsket start og/eller deadline" @bind-Value="idea.Plan"></InputTextArea>
+                                <label>Plan</label>
+                                <InputTextArea class="form-control" rows="3" placeholder="Forventet varighed, ønsket start og/eller deadline" @bind-Value="idea.Plan"></InputTextArea>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="expectedResults">Forventet resultat</label>
-                                <InputTextArea class="form-control" id="expectedResults" rows="3" placeholder="Forventet resultat" @bind-Value="idea.ExpectedResults"></InputTextArea>
+                                <label>Forventet resultat</label>
+                                <InputTextArea class="form-control" rows="3" placeholder="Forventet resultat" @bind-Value="idea.ExpectedResults"></InputTextArea>
                             </div>
                         </div>
 
@@ -117,7 +119,7 @@
                         <NavLink href="/">
                             <button class="btn my-2 btn-secondary btn-lg" type="button">Fortryd</button>
                         </NavLink>
-                        <button class="my-2 btn btn-primary btn-lg" type="submit">Indsend idé</button>
+                        <button type="submit" class="my-2 btn btn-primary btn-lg">Indsend idé</button>
                     </div>
                 </EditForm>
             </div>
@@ -133,6 +135,5 @@
         InsertToDB insert = new();
         insert.InsertIdea(_config.GetConnectionString("Default"), idea);
         NavManager.NavigateTo("/");
-        // Process the valid form
     }
 }

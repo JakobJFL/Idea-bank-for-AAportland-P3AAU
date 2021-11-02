@@ -26,4 +26,8 @@
     <ProjectReference Include="..\IBBusinessLogicLib\BusinessLogicLib.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Data\" />
+  </ItemGroup>
+
 </Project>

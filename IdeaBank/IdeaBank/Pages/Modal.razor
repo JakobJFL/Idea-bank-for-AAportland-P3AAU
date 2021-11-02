@@ -1,5 +1,6 @@
 ﻿@using BusinessLogicLib
 @using Microsoft.Extensions.Configuration
+@using Microsoft.AspNetCore.Components.Forms
 
 @inject LoadFromDB _data
 @inject IConfiguration _config
@@ -112,30 +113,30 @@
                 <div class="p-2 my-3 bg-light rounded-cos">
                     <div class="container-fluid">
                         <h3 class="my-2">Kommentarspor</h3>
-                        <div class="d-flex flex-row mb-2">
-                            <textarea type="text" class="form-control rounded-cos my-1"
-                                      id="initials"
-                                      placeholder="Skriv din kommentar her"></textarea>
-                            <div>
-                                <input type="text"
-                                       class="form-control mx-2 my-1 rounded-cos" id="initials"
-                                       maxlength="4" placeholder="Initialer">
-                                <button class="btn btn-primary mx-2 my-1 rounded-cos w-100"
-                                        type="button">
-                                    Kommenter
-                                </button>
+                        <EditForm Model="@comment" OnValidSubmit="@HandleValidSubmit">
+                            <DataAnnotationsValidator />
+                            <ValidationSummary />
+                            <div class="d-flex flex-row mb-2">
+                                <InputTextArea class="form-control rounded-cos my-1" required
+                                               placeholder="Skriv din kommentar her" @bind-Value="comment.Message"></InputTextArea>
+                                <div>
+                                    <InputText class="form-control mx-2 my-1 rounded-cos" required
+                                               maxlength="5" placeholder="Initialer" @bind-Value="comment.Initials"></InputText>
+                                    <button type="submit" class="btn btn-primary mx-2 my-1 rounded-cos w-100">Kommenter</button>
+                                </div>
                             </div>
-                        </div>
+                        </EditForm>
                         @if (_idea.Comments != null)
                         {
                             foreach (Comment c in _idea.Comments)
                             {
                                 <ul class="list-group list-group-flush">
                                     <li class="list-group-item bg-transparent mb-0 pb-0 mt-2">
-                                        <h6 class="text-primary mb-0">
+                                        <h6 class="text-primary mb-0 pb-0">
                                             @c.Initials <small class="text-muted"
-                                                                   style="font-size: 0.8rem;">
-                                                @c.CreatedAt
+                                                       style="font-size: 0.8rem;">
+                                                @c.CreatedAt.ToShortDateString()
+                                                @c.CreatedAt.ToShortTimeString()
                                             </small>
                                         </h6>
                                         <p>
@@ -143,6 +144,7 @@
                                         </p>
                                     </li>
                                 </ul>
+                                <hr class="py-0 my-0"/>
                             }
                         }
                     </div>
@@ -157,9 +159,10 @@
     public Guid Guid = Guid.NewGuid();
     public string ModalDisplay = "none;";
     public string ModalClass = "";
-    public BusinessLogicLib.ViewIdea _idea = new();
+    public ViewIdea _idea = new();
+    private Comment comment = new();
 
-    public async Task Open(BusinessLogicLib.ViewIdea idea)
+    public async Task Open(ViewIdea idea)
     {
         StateHasChanged();
         ModalDisplay = "block;";
@@ -177,6 +180,15 @@
         ModalDisplay = "none;";
         StateHasChanged();
     }
+    private async void HandleValidSubmit()
+    {
+        comment.CreatedAt = DateTime.Now;
+        comment.IdeaId = _idea.Id;
+        InsertToDB insert = new();
+        insert.InsertComment(_config.GetConnectionString("Default"), comment);
+        _idea.Comments = await _data.LoadComments(_config.GetConnectionString("Default"), _idea.Id);
+        comment.Initials = "";
+        comment.Message = "";
+        StateHasChanged();
+    }
 }
-
-

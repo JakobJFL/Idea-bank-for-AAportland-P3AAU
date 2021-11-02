@@ -1,12 +1,14 @@
-﻿using DataBaseLib.Models;
+﻿using DataBaseLib.DataAccess;
+using DataBaseLib.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 
 namespace BusinessLogicLib
 {
-    class DBConvert
+    static class DBConvert
     {
-        public List<Comment> TblToComment(List<CommentsTbl> dbComments)
+        public static List<Comment> TblToComment(List<CommentsTbl> dbComments)
         {
             List<Comment> comments = new();
             foreach (CommentsTbl i in dbComments)
@@ -18,10 +20,21 @@ namespace BusinessLogicLib
                 Comment.CreatedAt = i.CreatedAt;
                 comments.Add(Comment);
             }
+            comments.Reverse();
             return comments;
         }
+        public static CommentsTbl CommentToTbl(Comment comment)
+        {
+            CommentsTbl newComment = new();
+            newComment.Id = comment.Id;
+            newComment.Initials = comment.Initials;
+            newComment.Message = comment.Message;
+            newComment.CreatedAt = comment.CreatedAt;
+            newComment.IdeaId = comment.IdeaId;
+            return newComment;
+        }
 
-        public List<ViewIdea> TblToViewIdea(List<IdeasTbl> dbIdeas)
+        public static List<ViewIdea> TblToViewIdea(List<IdeasTbl> dbIdeas)
         {
             List<ViewIdea> ideas = new();
             foreach (IdeasTbl i in dbIdeas)
@@ -31,8 +44,8 @@ namespace BusinessLogicLib
                 idea.Initials = i.Initials;
                 idea.ProjectName = i.ProjectName;
                 idea.Description = i.Description;
-                idea.BusinessUnit = (i.BusinessUnit != null) ? i.BusinessUnit.Name : "Ikke angivet";
-                idea.Department = (i.Department != null) ? i.Department.Name : "Ikke angivet";
+                idea.BusinessUnit = i.BusinessUnit.Name;
+                idea.Department = i.Department.Name;
                 idea.Priority = GetPriorityStr(i.Priority);
                 idea.Status = GetStatusStr(i.Status);
                 idea.Plan = i.PlanDescription;
@@ -45,7 +58,7 @@ namespace BusinessLogicLib
             }
             return ideas;
         }
-        public IdeasTbl NewIdeaToTbl(NewIdea dbIdeas)
+        public static IdeasTbl NewIdeaToTbl(NewIdea dbIdeas)
         {
             IdeasTbl newIdea = new();
             newIdea.ProjectName = dbIdeas.ProjectName;
@@ -62,7 +75,7 @@ namespace BusinessLogicLib
             newIdea.UpdatedAt = DateTime.Now;
             return newIdea;
         }
-        public string GetPriorityStr(int index)
+        public static string GetPriorityStr(int index)
         {
             switch (index)
             {
@@ -72,7 +85,7 @@ namespace BusinessLogicLib
                 default: return "Ikke angivet";
             }
         }
-        public string GetStatusStr(int index)
+        public static string GetStatusStr(int index)
         {
             switch (index)
             {

@@ -16,8 +16,7 @@ namespace BusinessLogicLib
             optionsBuilder.UseSqlServer(connectionString);
             using Context db = new (optionsBuilder.Options);
             List<IdeasTbl> dbIdeas = await db.IdeasTbl.Include(b => b.BusinessUnit).Include(d => d.Department).ToListAsync();
-            DBConvert convert = new();
-            return convert.TblToViewIdea(dbIdeas);
+            return DBConvert.TblToViewIdea(dbIdeas);
         }
 
         public async Task<List<Comment>> LoadComments(string connectionString, int id)
@@ -26,8 +25,7 @@ namespace BusinessLogicLib
             optionsBuilder.UseSqlServer(connectionString);
             using Context db = new (optionsBuilder.Options);
             List<CommentsTbl> dbComments = await db.CommentsTbl.Where(c => c.IdeaId == id).ToListAsync();
-            DBConvert convert = new();
-            return convert.TblToComment(dbComments);
+            return DBConvert.TblToComment(dbComments);
         }
     }
 }
