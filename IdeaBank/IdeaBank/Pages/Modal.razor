@@ -1,6 +1,7 @@
 ﻿@using BusinessLogicLib
 @using Microsoft.Extensions.Configuration
 
+@inject DataAcces _data
 @inject IConfiguration _config
 
 <div class="modal fade @ModalClass cursor-de" tabindex="-1" style="display:@ModalDisplay;">
@@ -21,11 +22,11 @@
                                 </div>
                                 <div class="col">
                                     <h6>Forretningsenhed</h6>
-                                    <p>WIP</p>
+                                    <p>@_idea.BusinessUnit</p>
                                 </div>
                                 <div class="col">
                                     <h6>Afdeling</h6>
-                                    <p>WIP</p>
+                                    <p>@_idea.Department</p>
                                 </div>
                                 <div class="col">
                                     <h6>Prioritet</h6>
@@ -125,37 +126,25 @@
                                 </button>
                             </div>
                         </div>
-                        <ul class="list-group list-group-flush">
-                            <li class="list-group-item bg-transparent mb-0 pb-0 mt-2">
-                                <h6 class="text-primary mb-0">
-                                    MLJ <small class="text-muted"
-                                               style="font-size: 0.8rem;">
-                                        For 20 timer
-                                        siden
-                                    </small>
-                                </h6>
-                                <p>
-                                    Jeg synes det er en spændende idé. Vil gerne høre mere
-                                    om hvad budgettet for sådan et projekt er?
-                                </p>
-                            </li>
-                            <li class="list-group-item bg-transparent mb-0 pb-0 mt-2">
-                                <h6 class="text-primary mb-0">
-                                    GII <small class="text-muted"
-                                               style="font-size: 0.8rem;"> For 1 dag siden</small>
-                                </h6>
-                                <p>Jeg har arbejdet med fjernvarme før og kender nogle der ved en masse om hvordan man opsætter en varmeveksler.</p>
-                            </li>
-                            <li class="list-group-item bg-transparent mb-0 pb-0 mt-2">
-                                <h6 class="text-primary mb-0">
-                                    KØL <small class="text-muted"
-                                               style="font-size: 0.8rem;"> For 1 dag siden</small>
-                                </h6>
-                                <p>
-                                    Et spændende forslag HFU.
-                                </p>
-                            </li>
-                        </ul>
+                        @if (_idea.Comments != null)
+                        {
+                            foreach (Comment c in _idea.Comments)
+                            {
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item bg-transparent mb-0 pb-0 mt-2">
+                                        <h6 class="text-primary mb-0">
+                                            @c.Initials <small class="text-muted"
+                                                                   style="font-size: 0.8rem;">
+                                                @c.CreatedAt
+                                            </small>
+                                        </h6>
+                                        <p>
+                                            @c.Message
+                                        </p>
+                                    </li>
+                                </ul>
+                            }
+                        }
                     </div>
                 </div>
             </div>
@@ -177,6 +166,7 @@
         await Task.Delay(150);
         ModalClass = "show";
         _idea = idea;
+        _idea.Comments = await _data.LoadComments(_config.GetConnectionString("Default"), _idea.Id);
         StateHasChanged();
     }
 

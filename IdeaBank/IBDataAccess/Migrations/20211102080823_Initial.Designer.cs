@@ -4,14 +4,16 @@ using DataBaseLib.DataAccess;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DataBaseLib.Migrations
 {
     [DbContext(typeof(Context))]
-    partial class IdeaContextModelSnapshot : ModelSnapshot
+    [Migration("20211102080823_Initial")]
+    partial class Initial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -46,7 +48,7 @@ namespace DataBaseLib.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("IdeasTblId")
+                    b.Property<int>("IdeaId")
                         .HasColumnType("int");
 
                     b.Property<string>("Initials")
@@ -57,11 +59,9 @@ namespace DataBaseLib.Migrations
                     b.Property<string>("Message")
                         .IsRequired()
                         .HasMaxLength(1500)
-                        .HasColumnType("nvarchar(1500)");
+                        .HasColumnType("varchar(1500)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("IdeasTblId");
 
                     b.ToTable("CommentsTbl");
                 });
@@ -93,16 +93,10 @@ namespace DataBaseLib.Migrations
                     b.Property<int?>("BusinessUnitId")
                         .HasColumnType("int");
 
-                    b.Property<int>("BusinessUnitRefId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<int?>("DepartmentId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("DepartmentsTblRefId")
                         .HasColumnType("int");
 
                     b.Property<string>("Description")
@@ -157,21 +151,14 @@ namespace DataBaseLib.Migrations
                     b.ToTable("IdeasTbl");
                 });
 
-            modelBuilder.Entity("DataBaseLib.Models.CommentsTbl", b =>
-                {
-                    b.HasOne("DataBaseLib.Models.IdeasTbl", null)
-                        .WithMany("Comments")
-                        .HasForeignKey("IdeasTblId");
-                });
-
             modelBuilder.Entity("DataBaseLib.Models.IdeasTbl", b =>
                 {
                     b.HasOne("DataBaseLib.Models.BusinessUnitsTbl", "BusinessUnit")
-                        .WithMany()
+                        .WithMany("Ideas")
                         .HasForeignKey("BusinessUnitId");
 
                     b.HasOne("DataBaseLib.Models.DepartmentsTbl", "Department")
-                        .WithMany()
+                        .WithMany("Ideas")
                         .HasForeignKey("DepartmentId");
 
                     b.Navigation("BusinessUnit");
@@ -179,9 +166,14 @@ namespace DataBaseLib.Migrations
                     b.Navigation("Department");
                 });
 
-            modelBuilder.Entity("DataBaseLib.Models.IdeasTbl", b =>
+            modelBuilder.Entity("DataBaseLib.Models.BusinessUnitsTbl", b =>
                 {
-                    b.Navigation("Comments");
+                    b.Navigation("Ideas");
+                });
+
+            modelBuilder.Entity("DataBaseLib.Models.DepartmentsTbl", b =>
+                {
+                    b.Navigation("Ideas");
                 });
 #pragma warning restore 612, 618
         }

@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using DataBaseLib.DataAccess;
 using DataBaseLib.Models;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace BusinessLogicLib
 {
@@ -13,9 +14,33 @@ namespace BusinessLogicLib
         {
             DbContextOptionsBuilder optionsBuilder = new DbContextOptionsBuilder<Context>();
             optionsBuilder.UseSqlServer(connectionString);
-            using Context db = new Context(optionsBuilder.Options);
-            List<IdeasTbl> dbIdeas = await db.IdeasTbl.ToListAsync();
+            using Context db = new (optionsBuilder.Options);
+            List<IdeasTbl> dbIdeas = await db.IdeasTbl.Include(b => b.BusinessUnit).Include(d => d.Department).ToListAsync();
             return ConvertTblToIdea(dbIdeas);
+        }
+
+        public async Task<List<Comment>> LoadComments(string connectionString, int id)
+        {
+            DbContextOptionsBuilder optionsBuilder = new DbContextOptionsBuilder<Context>();
+            optionsBuilder.UseSqlServer(connectionString);
+            using Context db = new (optionsBuilder.Options);
+            List<CommentsTbl> dbComments = await db.CommentsTbl.Where(c => c.IdeaId == id).ToListAsync();
+            return ConvertTblToComment(dbComments);
+        }
+
+        public List<Comment> ConvertTblToComment(List<CommentsTbl> dbComments)
+        {
+            List<Comment> comments = new();
+            foreach (CommentsTbl i in dbComments)
+            {
+                Comment Comment = new();
+                Comment.Id = i.Id;
+                Comment.Initials = i.Initials;
+                Comment.Message = i.Message;
+                Comment.CreatedAt = i.CreatedAt;
+                comments.Add(Comment);
+            }
+            return comments;
         }
 
         public List<Idea> ConvertTblToIdea(List<IdeasTbl> dbIdeas)
@@ -29,9 +54,9 @@ namespace BusinessLogicLib
                 idea.ProjectName = i.ProjectName;
                 idea.Description = i.Description;
                 idea.BusinessUnit = i.BusinessUnit.Name;
-                idea.Department = Convert.ToString(i.BusinessUnitRefId);
-                idea.Priority = getPriorityStr(i.Priority);
-                idea.Status = getStatusStr(i.Status);
+                idea.Department = i.Department.Name;
+                idea.Priority = GetPriorityStr(i.Priority);
+                idea.Status = GetStatusStr(i.Status);
                 idea.Plan = i.PlanDescription;
                 idea.Risk = i.Risk;
                 idea.Team = i.Team;
@@ -42,7 +67,7 @@ namespace BusinessLogicLib
             }
             return ideas;
         }
-        public string getPriorityStr(int index)
+        public string GetPriorityStr(int index)
         {
             switch(index)
             {
@@ -52,7 +77,7 @@ namespace BusinessLogicLib
                 default: return "Ikke angivet";
             }
         }
-        public string getStatusStr(int index)
+        public string GetStatusStr(int index)
         {
             switch (index)
             {
@@ -63,6 +88,7 @@ namespace BusinessLogicLib
                 default: throw new ArgumentException("index for getStatusStr was not within range");
             }
         }
+
         /*
         public async Task<DataBaseLib.Models.Idea> LoadIdeaByID(string connectionString, string id)
         {

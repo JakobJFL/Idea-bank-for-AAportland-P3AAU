@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace BusinessLogicLib
 {
@@ -18,5 +19,6 @@ namespace BusinessLogicLib
         public string Status { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
+        public List<Comment> Comments { get; set; }
     }
 }
