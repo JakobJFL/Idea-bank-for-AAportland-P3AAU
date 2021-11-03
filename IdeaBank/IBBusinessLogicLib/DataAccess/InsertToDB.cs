@@ -3,12 +3,13 @@ using DataBaseLib.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace BusinessLogicLib
 {
     public class InsertToDB
     {
-        public async void InsertIdea(string connectionString, NewIdea idea)
+        public async Task InsertIdea(string connectionString, NewIdea idea)
         {
             DbContextOptionsBuilder optionsBuilder = new DbContextOptionsBuilder<Context>();
             optionsBuilder.UseSqlServer(connectionString);
@@ -18,8 +19,8 @@ namespace BusinessLogicLib
             // https://stackoverflow.com/a/60807518
             dbIdea.Department = await db.DepartmentsTbl.Where(x => x.Id == idea.Department).FirstAsync();
             dbIdea.BusinessUnit = await db.BusinessUnitsTbl.Where(x => x.Id == idea.BusinessUnit).FirstAsync();
-            
-            db.IdeasTbl.Add(dbIdea);
+
+            await db.IdeasTbl.AddAsync(dbIdea);
             db.SaveChanges();
         }
         public void InsertComment(string connectionString, Comment comment)

@@ -124,10 +124,18 @@
 @code {
     private NewIdea idea = new();
 
-    private void HandleValidSubmit()
+    private async void HandleValidSubmit()
     {
-        InsertToDB insert = new();
-        insert.InsertIdea(_config.GetConnectionString("Default"), idea);
-        NavManager.NavigateTo("/");
+        try
+        {
+            InsertToDB insert = new();
+            await insert.InsertIdea(_config.GetConnectionString("Default"), idea);
+            NavManager.NavigateTo("/");
+        } 
+        catch
+        {
+            // skriv en fejl besked til brugern 
+        }
+
     }
 }
