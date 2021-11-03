@@ -36,7 +36,7 @@
                                 </div>
                                 <div class="col">
                                     <h6>Dato</h6>
-                                    <p>@_idea.CreatedAt</p>
+                                    <p>@_idea.CreatedAt.ToShortDateString()</p>
                                 </div>
                                 <div class="col">
                                     <h6>Status</h6>
@@ -52,7 +52,7 @@
                                         Idébeskrivelse
                                     </h5>
                                     <p class="card-text">
-                                        @_idea.Description
+                                        @((MarkupString)_idea.Description)
                                     </p>
                                 </div>
                             </div>
@@ -170,6 +170,7 @@
         await Task.Delay(150);
         ModalClass = "show";
         _idea = idea;
+        _idea.Description = _idea.Description.Replace( "\r\n", "<br />" ).Replace( "\n", "<br />" );
         _idea.Comments = await _data.LoadComments(_config.GetConnectionString("Default"), _idea.Id);
         StateHasChanged();
     }
