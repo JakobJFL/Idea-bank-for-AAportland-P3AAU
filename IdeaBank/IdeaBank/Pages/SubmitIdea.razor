@@ -24,18 +24,16 @@
             <p>Bemærk at du ikke kan foretage ændringer efter den er gemt.</p>
             <p class="mb-4 text-danger">*Skal udfyldes</p>
             <div class="row g-5">
-
                 <EditForm Model="@idea" OnValidSubmit="@HandleValidSubmit">
                     <DataAnnotationsValidator />
                     <ValidationSummary />
                     <div class="row g-3">
                         <div class="col-sm-8">
-                            <label class="form-label">
-                                Projektnavn<label class="text-danger">*</label>
+                            <label class="form-label">Projektnavn<label class="text-danger">*</label>
                             </label>
                             <div class="input-group">
                                 <InputText type="text" class="form-control" placeholder="Projektnavn" required
-                                           @bind-Value="idea.ProjectName" DisplayName="Projektnavn"></InputText>
+                                           @bind-Value="idea.ProjectName"  maxlength=75 DisplayName="Projektnavn"></InputText>
                             </div>
                         </div>
 
@@ -55,7 +53,7 @@
                                 <label>
                                     Idébeskrivelse<label class="text-danger">*</label>
                                 </label>
-                                <InputTextArea class="form-control" rows="3" placeholder="Problemdefinition og afgrænsning" required @bind-Value="idea.Description"></InputTextArea>
+                                <InputTextArea class="form-control" rows="3" maxlength=1500 placeholder="Problemdefinition og afgrænsning" required @bind-Value="idea.Description"></InputTextArea>
                             </div>
                         </div>
                         <div class="col-md-3">
@@ -70,9 +68,6 @@
                                 <option value="4">Unicon NO</option>
                                 <option value="5">Kudsk & Dahl</option>
                             </InputSelect>
-                            <div class="invalid-feedback">
-                                Vælg venligst en forretningsenhed.
-                            </div>
                         </div>
                         <div class="col-md-3">
                             <div title="Den afdeling som idéen vedrører">
@@ -95,21 +90,20 @@
                         </div>
                         <div class="col-md-6">
                             <label class="form-label">Team</label>
-                            <div class="input-group has-validation">
-                                <InputText type="text" class="form-control" placeholder="Hvem skal være med?" @bind-Value="idea.Team"></InputText>
-                                <div class="invalid-feedback">Initialer er noget værre noget.</div>
+                            <div class="input-group">
+                                <InputText type="text" class="form-control" maxlength=75 placeholder="Hvem skal være med?" @bind-Value="idea.Team"></InputText>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Plan</label>
-                                <InputTextArea class="form-control" rows="3" placeholder="Forventet varighed, ønsket start og/eller deadline" @bind-Value="idea.Plan"></InputTextArea>
+                                <InputTextArea class="form-control" rows="3" maxlength=500 placeholder="Forventet varighed, ønsket start og/eller deadline" @bind-Value="idea.Plan"></InputTextArea>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Forventet resultat</label>
-                                <InputTextArea class="form-control" rows="3" placeholder="Forventet resultat" @bind-Value="idea.ExpectedResults"></InputTextArea>
+                                <InputTextArea class="form-control" rows="3" maxlength=500 placeholder="Forventet resultat" @bind-Value="idea.ExpectedResults"></InputTextArea>
                             </div>
                         </div>
 

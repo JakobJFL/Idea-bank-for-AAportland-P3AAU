@@ -21,13 +21,13 @@ namespace DataBaseLib.Models
         [Required]
         [MaxLength(1500)]
         public string Description { get; set; }
-        [MaxLength(1000)]
+        [MaxLength(500)]
         public string Risk { get; set; }
-        [MaxLength(100)]
+        [MaxLength(75)]
         public string Team { get; set; }
-        [MaxLength(1000)]
+        [MaxLength(500)]
         public string PlanDescription { get; set; }
-        [MaxLength(1000)]
+        [MaxLength(500)]
         public string ExpectedResults { get; set; }
         [Required]
         public bool IsHidden { get; set; }

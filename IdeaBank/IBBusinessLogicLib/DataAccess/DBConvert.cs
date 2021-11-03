@@ -64,8 +64,6 @@ namespace BusinessLogicLib
             newIdea.ProjectName = dbIdeas.ProjectName;
             newIdea.Initials = dbIdeas.Initials;
             newIdea.Description = dbIdeas.Description;
-            //newIdea.BusinessUnit.Id = dbIdeas.BusinessUnit;
-           // newIdea.Department.Id = dbIdeas.Description;
             newIdea.Team = dbIdeas.Team;
             newIdea.PlanDescription = dbIdeas.Plan;
             newIdea.ExpectedResults = dbIdeas.ExpectedResults;

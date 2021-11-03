@@ -5,7 +5,7 @@ namespace BusinessLogicLib
     public class NewIdea : IIdea
     {
         [Required]
-        [StringLength(100, ErrorMessage = "Projektnavn må max være 100 tegn")]
+        [StringLength(75, ErrorMessage = "Projektnavn må max være 75 tegn")]
         public string ProjectName { get; set; }
 
         [Required]
