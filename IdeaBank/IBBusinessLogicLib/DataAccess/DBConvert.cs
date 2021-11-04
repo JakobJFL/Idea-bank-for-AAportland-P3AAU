@@ -1,6 +1,4 @@
-﻿using DataBaseLib.DataAccess;
-using DataBaseLib.Models;
-using Microsoft.EntityFrameworkCore;
+﻿using DataBaseLib.Models;
 using System;
 using System.Collections.Generic;
 
@@ -20,7 +18,6 @@ namespace BusinessLogicLib
                 Comment.CreatedAt = i.CreatedAt;
                 comments.Add(Comment);
             }
-            comments.Reverse();
             return comments;
         }
         public static CommentsTbl CommentToTbl(Comment comment)
@@ -28,7 +25,7 @@ namespace BusinessLogicLib
             CommentsTbl newComment = new();
             newComment.Id = comment.Id;
             newComment.Initials = comment.Initials;
-            newComment.Message = comment.Message;
+            newComment.Message = StrLineToBr(comment.Message);
             newComment.CreatedAt = comment.CreatedAt;
             newComment.IdeaId = comment.IdeaId;
             return newComment;
@@ -43,15 +40,15 @@ namespace BusinessLogicLib
                 idea.Id = i.Id;
                 idea.Initials = i.Initials;
                 idea.ProjectName = i.ProjectName;
-                idea.Description = i.Description;
+                idea.Description = StrLineToBr(i.Description);
                 idea.BusinessUnit = i.BusinessUnit.Name;
                 idea.Department = i.Department.Name;
                 idea.Priority = GetPriorityStr(i.Priority);
                 idea.Status = GetStatusStr(i.Status);
-                idea.Plan = i.PlanDescription;
-                idea.Risk = i.Risk;
+                idea.Plan = StrLineToBr(i.PlanDescription);
+                idea.Risk = StrLineToBr(i.Risk);
                 idea.Team = i.Team;
-                idea.ExpectedResults = i.ExpectedResults;
+                idea.ExpectedResults = StrLineToBr(i.ExpectedResults);
                 idea.CreatedAt = i.CreatedAt;
                 idea.UpdatedAt = i.UpdatedAt;
                 ideas.Add(idea);
@@ -73,7 +70,7 @@ namespace BusinessLogicLib
             newIdea.UpdatedAt = DateTime.Now;
             return newIdea;
         }
-        public static string GetPriorityStr(int index)
+        private static string GetPriorityStr(int index)
         {
             switch (index)
             {
@@ -83,16 +80,23 @@ namespace BusinessLogicLib
                 default: return "Ikke angivet";
             }
         }
-        public static string GetStatusStr(int index)
+        private static string GetStatusStr(int index)
         {
             switch (index)
             {
                 case 1: return "Oprettet";
                 case 2: return "Godkendt";
-                case 3: return "Afvist";
+                case 3: return "Afvist"; // Skirv noget andet her!
                 case 4: return "Afsluttet";
                 default: throw new ArgumentException("index for getStatusStr was not within range");
             }
+        }
+
+        private static string StrLineToBr(string str)
+        {
+            if (str != null)
+                return str.Replace("\r\n", "<br />").Replace("\n", "<br />");
+            return null;
         }
     }
 }

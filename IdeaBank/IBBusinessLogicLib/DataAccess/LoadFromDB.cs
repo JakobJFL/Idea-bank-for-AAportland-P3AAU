@@ -15,7 +15,11 @@ namespace BusinessLogicLib
             DbContextOptionsBuilder optionsBuilder = new DbContextOptionsBuilder<Context>();
             optionsBuilder.UseSqlServer(connectionString);
             using Context db = new (optionsBuilder.Options);
-            List<IdeasTbl> dbIdeas = await db.IdeasTbl.Include(b => b.BusinessUnit).Include(d => d.Department).ToListAsync();
+            List<IdeasTbl> dbIdeas = await db.IdeasTbl
+                .Include(b => b.BusinessUnit)
+                .Include(d => d.Department)
+                .OrderByDescending(s => s.CreatedAt)
+                .ToListAsync();
             return DBConvert.TblToViewIdea(dbIdeas);
         }
 
@@ -24,7 +28,10 @@ namespace BusinessLogicLib
             DbContextOptionsBuilder optionsBuilder = new DbContextOptionsBuilder<Context>();
             optionsBuilder.UseSqlServer(connectionString);
             using Context db = new (optionsBuilder.Options);
-            List<CommentsTbl> dbComments = await db.CommentsTbl.Where(c => c.IdeaId == id).ToListAsync();
+            List<CommentsTbl> dbComments = await db.CommentsTbl
+                .Where(c => c.IdeaId == id)
+                .OrderByDescending(s => s.Id)
+                .ToListAsync();
             return DBConvert.TblToComment(dbComments);
         }
     }

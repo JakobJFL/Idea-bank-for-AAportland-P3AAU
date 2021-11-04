@@ -17,8 +17,12 @@ namespace BusinessLogicLib
             IdeasTbl dbIdea = DBConvert.NewIdeaToTbl(idea);
 
             // https://stackoverflow.com/a/60807518
-            dbIdea.Department = await db.DepartmentsTbl.Where(x => x.Id == idea.Department).FirstAsync();
-            dbIdea.BusinessUnit = await db.BusinessUnitsTbl.Where(x => x.Id == idea.BusinessUnit).FirstAsync();
+            dbIdea.Department = await db.DepartmentsTbl
+                .Where(x => x.Id == idea.Department)
+                .FirstAsync();
+            dbIdea.BusinessUnit = await db.BusinessUnitsTbl
+                .Where(x => x.Id == idea.BusinessUnit)
+                .FirstAsync();
 
             await db.IdeasTbl.AddAsync(dbIdea);
             db.SaveChanges();

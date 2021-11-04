@@ -64,7 +64,7 @@
                                         Forventet resultat
                                     </h5>
                                     <p class="card-text">
-                                        @_idea.ExpectedResults
+                                        @((MarkupString)_idea.ExpectedResults)
                                     </p>
                                 </div>
                             </div>
@@ -77,7 +77,7 @@
                                             Plan
                                         </h5>
                                         <p class="card-text">
-                                            @_idea.Plan
+                                            @((MarkupString)_idea.Plan)
                                         </p>
                                     </div>
                                 </div>
@@ -90,7 +90,7 @@
                                             Risiko
                                         </h5>
                                         <p class="card-text">
-                                            @_idea.Risk
+                                            @((MarkupString)_idea.Risk)
                                         </p>
                                     </div>
                                 </div>
@@ -116,7 +116,6 @@
                         <h3 class="my-2">Kommentarspor</h3>
                         <EditForm Model="@comment" OnValidSubmit="@HandleValidSubmit">
                             <DataAnnotationsValidator />
-                            <ValidationSummary />
                             <div class="d-flex flex-row mb-2">
                                 <InputTextArea class="form-control rounded-cos my-1" required
                                                placeholder="Skriv din kommentar her" @bind-Value="comment.Message"></InputTextArea>
@@ -141,7 +140,7 @@
                                             </small>
                                         </h6>
                                         <p>
-                                            @c.Message
+                                            @((MarkupString) c.Message)
                                         </p>
                                     </li>
                                 </ul>
@@ -170,7 +169,6 @@
         await Task.Delay(150);
         ModalClass = "show";
         _idea = idea;
-        _idea.Description = _idea.Description.Replace( "\r\n", "<br />" ).Replace( "\n", "<br />" );
         _idea.Comments = await _data.LoadComments(_config.GetConnectionString("Default"), _idea.Id);
         StateHasChanged();
     }
