@@ -1,4 +1,4 @@
-﻿using DataBaseLib.DataAccess;
+using DataBaseLib.DataAccess;
 using DataBaseLib.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
@@ -8,25 +8,25 @@ namespace BusinessLogicLib
 {
     public class DBTableConfiguration
     {
-        private readonly string[] BusinessUnits = { "Ikke Angivet", "Aalborg Portland", "Unicon DK", "Unicon NO", "Kudsk & Dahl" };
-        private readonly string[] Departments = { "Ikke Angivet", "Salg", "SCM", "Produktion", "Vedligehold", "Finans", "HR", "PMO & Transformation" };
+        private readonly string[] _businessUnits = { "Ikke Angivet", "Aalborg Portland", "Unicon DK", "Unicon NO", "Kudsk & Dahl" };
+        private readonly string[] _departments = { "Ikke Angivet", "Salg", "SCM", "Produktion", "Vedligehold", "Finans", "HR", "PMO & Transformation" };
         public void SetDefaultTbls(string connectionString)
         {
             DbContextOptionsBuilder optionsBuilder = new DbContextOptionsBuilder<Context>();
             optionsBuilder.UseSqlServer(connectionString);
             using Context db = new(optionsBuilder.Options);
-            for (int i = 0; i < Departments.Length; i++)
+            for (int i = 0; i < _departments.Length; i++)
             {
                 DepartmentsTbl dep = new();
                 dep.Id = i+1;
-                dep.Name = Departments[i];
+                dep.Name = _departments[i];
                 db.DepartmentsTbl.Add(dep);
             }
-            for (int i = 0; i < BusinessUnits.Length; i++)
+            for (int i = 0; i < _businessUnits.Length; i++)
             {
                 BusinessUnitsTbl bu = new();
                 bu.Id = i+1;
-                bu.Name = BusinessUnits[i];
+                bu.Name = _businessUnits[i];
                 db.BusinessUnitsTbl.Add(bu);
             }
             try

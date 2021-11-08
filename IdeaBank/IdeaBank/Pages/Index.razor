@@ -1,113 +1,134 @@
-﻿@page "/"
+@page "/"
+@using BusinessLogicLib.Interfaces
 @using BusinessLogicLib
 @using Microsoft.Extensions.Configuration
+@using BusinessLogicLib.Models;
 
-@inject LoadFromDB _data
+@inject IIdeasDataAccess _ideas
 @inject IConfiguration _config
 
 <Modal @ref="_Modal"></Modal>
 
 <div class="bgImg">
-    <section class="py-4 text-center container">
-        <div class="row py-lg-5">
-            <div class="col-lg-6 col-md-6 mx-auto">
-                <div class="d-flex flex-row justify-content-center"><h1 class="fw-light">Aalborg Portland Idébank</h1><h4 class="text-primary">Prototype</h4></div>
-                <p class="fs-5 py-1">
-                    Velkommen til Aalborg Portland's idébank. Her er der mulighed for at indsende dine egne
-                    idéer til eventuelle forbedringer eller ændringer.
-                </p>
-                <NavLink href="/NewIdea">
-                    <button class="btn btn-lg btn-primary my-2 p-4">Tilføj ny idé</button>
-                </NavLink>
-            </div>
-        </div>
-    </section>
+  <section class="py-4 text-center container">
+    <div class="row py-lg-5">
+      <div class="col-lg-6 col-md-6 mx-auto">
+        <div class="d-flex flex-row justify-content-center"><h1 class="fw-light">Aalborg Portland Idébank</h1></div>
+        <p class="fs-5 py-1">
+          Velkommen til Aalborg Portland's idébank. Her er der mulighed for at indsende dine egne
+          idéer til eventuelle forbedringer eller ændringer.
+        </p>
+        <NavLink href="/NewIdea">
+          <button class="btn btn-lg btn-primary my-2 p-4">Tilføj ny idé</button>
+        </NavLink>
+      </div>
+    </div>
+  </section>
 </div>
 
 <section class="py-5 bg-light">
-    <div class="container">
-        <h2 class="text-center">Idéoversigt</h2>
-        <p class="text-center mb-5">Klik på en idé for at læse mere </p>
-        <EditForm EditContext="@EditContext">
-            <DataAnnotationsValidator />
-            <div class="row table-responsive rounded-cos">
-                <table class="table my-0 table-primary table-striped table-hover">
-                    <thead>
-                        <tr>
-                            <th scope="col" class="bg-primary text-white">
-                                Projektnavn <img src="/svg/filter.svg" />
-                            </th>
+  <div class="container">
+    <h2 class="text-center">Idéoversigt</h2>
+    <p class="text-center mb-5">Klik på en idé for at læse mere </p>
+    <EditForm EditContext="@EditContext">
+      <DataAnnotationsValidator />
+      <div class="row table-responsive rounded-cos">
+        <table class="table my-0 table-primary table-striped table-hover">
+          <thead>
+            <tr>
+              <th scope="col" style="min-width: 150px;" class="bg-primary text-white select-filter-text">
+                Projektnavn <img src="/svg/filter.svg" />
+              </th>
 
-                            <th scope="col" class="bg-primary text-white">
-                                <InputSelect class="btn form-select select-filter" @bind-Value="idea.BusinessUnit">
-                                    <option value="0">Forretningsenheder</option>
-                                    <option value="1" selected>Kun Ikke Angivet</option>
-                                    <option value="2">Kun Aalborg Portland</option>
-                                    <option value="3">Kun Unicon DK</option>
-                                    <option value="4">Kun Unicon NO</option>
-                                    <option value="5">Kun Kudsk & Dahl</option>
-                                </InputSelect>
-                            </th>
-
-                            <th scope="col" class="bg-primary text-white">
-                                Afdeling <img src="/svg/filter.svg" />
-                            </th>
-                            <th scope="col" class="bg-primary text-white">
-                                Status <img src="/svg/filter.svg" />
-                            </th>
-                            <th scope="col" class="bg-primary text-white">
-                                Prioritet <img src="/svg/filter.svg" />
-                            </th>
-                            <th scope="col" class="bg-primary text-white">
-                                Oprettet <img src="/svg/sort-down.svg" />
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @if (data != null)
-                        {
-                            foreach (ViewIdea idea in data)
-                            {
-                                <tr title="Klik for at læse mere" @onclick="() => _Modal.Open(idea)">
-                                    <td>@idea.ProjectName</td>
-                                    <td>@idea.BusinessUnit</td>
-                                    <td>@idea.Department</td>
-                                    <td>@idea.Status</td>
-                                    <td>@idea.Priority</td>
-                                    <td>@idea.CreatedAt.ToShortDateString()</td>
-                                </tr>
-                            }
-                        }
-                    </tbody>
-                </table>
-            </div>
-        </EditForm>
-    </div>
+              <th scope="col" style="width: 220px;" class="bg-primary text-white select-filter-text">
+                <InputSelect class="btn form-select select-filter" @bind-Value="FilterIdea.BusinessUnit">
+                  <option value="0" selected>Forretningsenheder</option>
+                  <option value="1">Kun Ikke Angivet</option>
+                  <option value="2">Kun Aalborg Portland</option>
+                  <option value="3">Kun Unicon DK</option>
+                  <option value="4">Kun Unicon NO</option>
+                  <option value="5">Kun Kudsk & Dahl</option>
+                </InputSelect>
+              </th>
+              <th scope="col" style="width: 150px;"  class="bg-primary text-white select-filter-text">
+                <InputSelect class="btn form-select select-filter" @bind-Value="FilterIdea.Department">
+                  <option value="0" selected>Afdelinger</option>
+                  <option value="1">Kun Ikke Angivet</option>
+                  <option value="2">Kun Aalborg Portland</option>
+                  <option value="3">Kun Unicon DK</option>
+                  <option value="4">Kun Unicon NO</option>
+                  <option value="5">Kun Kudsk & Dahl</option>
+                </InputSelect>
+              </th>
+              <th scope="col" style="width: 120px;"  class="bg-primary text-white select-filter-text">
+                <InputSelect class="btn form-select select-filter" @bind-Value="FilterIdea.Status">
+                  <option value="0" selected>Status</option>
+                  <option value="1">Oprettet</option>
+                  <option value="2">Godkendt</option>
+                  <option value="3">Afvist</option>
+                  <option value="4">Afsluttet</option>
+                </InputSelect>
+              </th>
+              <th scope="col" style="width: 138px;" class="bg-primary text-white select-filter-text">
+                <InputSelect class="btn form-select select-filter" @bind-Value="FilterIdea.Priority">
+                  <option value="0" selected>Prioritet</option>
+                  <option value="1">Lav</option>
+                  <option value="2">Mellem</option>
+                  <option value="3">Høj</option>
+                  <option value="4">Ikke angivet</option>
+                </InputSelect>
+              </th>
+              <th scope="col" style="width: 110px;" class="bg-primary text-white select-filter-text">
+                Oprettet <img src="/svg/sort-down.svg" />
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            @if (IdeaList != null)
+            {
+              foreach (ViewIdea idea in IdeaList)
+              {
+                <tr title="Klik for at læse mere" @onclick="() => _Modal.Open(idea)">
+                  <td style="min-width: 150px;" class="select-filter-text">@idea.ProjectName</td>
+                  <td >@idea.BusinessUnit</td>
+                  <td >@idea.Department</td>
+                  <td>@idea.Status</td>
+                  <td >@idea.Priority</td>
+                  <td >@idea.CreatedAt.ToShortDateString()</td>
+                </tr>
+              }
+            }
+          </tbody>
+        </table>
+      </div>
+    </EditForm>
+  </div>
 </section>
 
 
 @code {
     private EditContext EditContext;
 
-    public List<ViewIdea> data;
+    public List<ViewIdea> IdeaList;
     private IdeaBank.Pages.Modal _Modal { get; set; }
-    private FilterIdea idea = new();
+    private FilterIdea FilterIdea = new();
 
     protected override async Task OnInitializedAsync()
     {
-        EditContext = new EditContext(idea);
-        EditContext.OnFieldChanged += EditContext_OnFieldChanged;
+      EditContext = new EditContext(FilterIdea);
+      EditContext.OnFieldChanged += EditContext_OnFieldChanged;
 
-        if (data == null)
-        {
-            _data.ConnectionString = _config.GetConnectionString("Default");
-            data = await _data.LoadAllIdeas();
-            StateHasChanged();
-        }
+      if (IdeaList == null)
+      {
+        //_data.ConnectionString = _config.GetConnectionString("Default");
+        IdeaList = await _ideas.GetWFilter(FilterIdea);
+        StateHasChanged();
+      }
     }
     // Note: The OnFieldChanged event is raised for each field in the model
     private async void EditContext_OnFieldChanged(object sender, FieldChangedEventArgs e)
     {
-        data = await _data.LoadIdeas(idea);
+      IdeaList = await _ideas.GetWFilter(FilterIdea);
+      StateHasChanged();
     }
 }

@@ -1,4 +1,4 @@
-﻿using DataBaseLib.DataAccess;
+using DataBaseLib.DataAccess;
 using DataBaseLib.Models;
 using Microsoft.EntityFrameworkCore;
 using RepositoryLib.Interfaces;
@@ -17,58 +17,59 @@ namespace RepositoryLib.Implementations
             Context = context;
         }
         public Context Context { get; }
-
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="businessUnitID"></param>
+        /// <param name="id"></param>
         /// <returns></returns>
-        public async Task<IEnumerable<IdeasTbl>> ListAsync(int businessUnitID)
+        public async Task<IEnumerable<IdeasTbl>> ListAsync(int id)
         {
             return await Context.IdeasTbl
                 .Include(b => b.BusinessUnit)
                 .Include(d => d.Department)
-                .Where(f => businessUnitID == 0 || businessUnitID == f.BusinessUnit.Id)
+                .Where(f => id == 0 || id == f.BusinessUnit.Id)
                 .OrderByDescending(s => s.CreatedAt)
                 .ToListAsync();
         }
-
-        public Task AddAsync(IdeasTbl model)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="model"></param>
+        /// <param name="departmentId"></param>
+        /// <param name="businessUnitId"></param>
+        /// <returns></returns>
+        public async Task AddAsync(IdeasTbl model, int departmentId, int businessUnitId)
         {
-            throw new NotImplementedException();
-        }
+            model.Department = await Context.DepartmentsTbl
+               .Where(d => d.Id == departmentId)
+               .FirstAsync();
+            model.BusinessUnit = await Context.BusinessUnitsTbl
+                .Where(b => b.Id == businessUnitId)
+                .FirstAsync();
 
+            await Context.IdeasTbl.AddAsync(model);
+            Context.SaveChanges();
+        }
         public Task AddRangeAsync(IEnumerable<IdeasTbl> metrics)
         {
             throw new NotImplementedException();
         }
 
-        public Task<IdeasTbl> FindByIdAsync(string id)
+        public Task<IdeasTbl> FindByIdAsync(int id)
         {
             throw new NotImplementedException();
         }
 
-        public void Remove(IdeasTbl model)
+        public Task RemoveByIdAsync(int id)
         {
             throw new NotImplementedException();
         }
-
-        public Task RemoveByIdAsync(string id)
-        {
-            throw new NotImplementedException();
-        }
-
         public void Update(IdeasTbl model)
         {
             throw new NotImplementedException();
         }
 
-        public void UpdateRange(IEnumerable<IdeasTbl> models)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<IEnumerable<IdeasTbl>> ListAsync()
+        public Task AddAsync(IdeasTbl model)
         {
             throw new NotImplementedException();
         }

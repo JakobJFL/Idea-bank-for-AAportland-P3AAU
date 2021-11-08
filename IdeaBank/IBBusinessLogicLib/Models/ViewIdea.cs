@@ -1,9 +1,7 @@
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
-using DataBaseLib.Models;
 
-namespace BusinessLogicLib
+namespace BusinessLogicLib.Models
 {
     public class ViewIdea : Idea
     {

@@ -120,3 +120,7 @@ textarea {
 .select-filter > option:checked {
     color: #575757;
 }
+
+.select-filter-text {
+    word-wrap: break-word;
+}

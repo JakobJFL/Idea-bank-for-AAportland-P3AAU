@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,13 +8,11 @@ namespace RepositoryLib.Interfaces
 {
     public interface IRepository<T>
     {
-        Task<IEnumerable<T>> ListAsync();
+        Task<IEnumerable<T>> ListAsync(int id);
         Task AddAsync(T model);
         Task AddRangeAsync(IEnumerable<T> metrics);
-        Task<T> FindByIdAsync(string id);
-        void Remove(T model);
-        Task RemoveByIdAsync(string id);
+        Task<T> FindByIdAsync(int id);
+        Task RemoveByIdAsync(int id);
         void Update(T model);
-        void UpdateRange(IEnumerable<T> models);
     }
 }

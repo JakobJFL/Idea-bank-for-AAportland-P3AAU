@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace BusinessLogicLib
+namespace BusinessLogicLib.Models
 {
     public abstract class Idea
     {

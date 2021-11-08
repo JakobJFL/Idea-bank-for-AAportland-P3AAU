@@ -1,16 +1,15 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using DataBaseLib.DataAccess;
-using BusinessLogicLib;
+using BusinessLogicLib.Interfaces;
 using RepositoryLib.Interfaces;
 using RepositoryLib.Implementations;
-
+using BusinessLogicLib.Service;
+using BusinessLogicLib;
 
 namespace IdeaBank
 {
@@ -29,7 +28,9 @@ namespace IdeaBank
             services.AddRazorPages();
             services.AddServerSideBlazor();
             services.AddScoped<IIdeaRepository, IdeaRepository>();
-            services.AddScoped<LoadFromDB>();
+            services.AddScoped<ICommentsRepository, CommentsRepository>();
+            services.AddScoped<IIdeasDataAccess, IdeasDataAccess>();
+            services.AddScoped<ICommentsDataAccess, CommentsDataAccess>();
 
             services.AddDbContext<Context>(options =>
             {
@@ -62,9 +63,9 @@ namespace IdeaBank
                 endpoints.MapBlazorHub();
                 endpoints.MapFallbackToPage("/_Host");
             });
-            configureDBTables();
+            ConfigureDBTables();
         }
-        public async void configureDBTables()
+        public async void ConfigureDBTables()
         {
             string connectionString = Configuration.GetConnectionString("Default");
             DBTableConfiguration tableConfig = new();
