@@ -91,6 +91,32 @@ textarea {
     color: white;
 }
 
-    .blazor-error-boundary::after {
-        content: "An error has occurred."
-    }
+.blazor-error-boundary::after {
+    content: "An error has occurred."
+}
+
+.select-filter {
+    color: white;
+    border: 0;
+    font-weight: bold;
+    padding: 0px 8px 0px 0px;
+
+  
+}
+
+.select-filter:focus {
+    outline: none;
+    box-shadow: none;
+}
+
+.select-filter:hover {
+    color: #bfbfbf;
+}
+
+.select-filter > option {
+    color: black;
+}
+
+.select-filter > option:checked {
+    color: #575757;
+}

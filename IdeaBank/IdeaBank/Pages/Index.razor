@@ -5,7 +5,7 @@
 @inject LoadFromDB _data
 @inject IConfiguration _config
 
-<IdeaBank.Pages.Modal @ref="Modal"></IdeaBank.Pages.Modal>
+<Modal @ref="_Modal"></Modal>
 
 <div class="bgImg">
     <section class="py-4 text-center container">
@@ -28,62 +28,86 @@
     <div class="container">
         <h2 class="text-center">Idéoversigt</h2>
         <p class="text-center mb-5">Klik på en idé for at læse mere </p>
-        <div class="row table-responsive rounded-cos">
-            <table class="table my-0 table-primary table-striped table-hover">
-                <thead>
-                    <tr>
-                        <th scope="col" class="bg-primary text-white">
-                            Projektnavn <img src="/svg/filter.svg" />
-                        </th>
-                        <th scope="col" class="bg-primary text-white">
-                            Forretningsenhed <img src="/svg/filter.svg" />
-                        </th>
-                        <th scope="col" class="bg-primary text-white">
-                            Afdeling <img src="/svg/filter.svg" />
-                        </th>
-                        <th scope="col" class="bg-primary text-white">
-                            Status <img src="/svg/filter.svg" />
-                        </th>
-                        <th scope="col" class="bg-primary text-white">
-                            Prioritet <img src="/svg/filter.svg" />
-                        </th>
-                        <th scope="col" class="bg-primary text-white">
-                            Oprettet <img src="/svg/sort-down.svg" />
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @if (data != null)
-                    {
-                        foreach (ViewIdea idea in data)
+        <EditForm EditContext="@EditContext">
+            <DataAnnotationsValidator />
+            <div class="row table-responsive rounded-cos">
+                <table class="table my-0 table-primary table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th scope="col" class="bg-primary text-white">
+                                Projektnavn <img src="/svg/filter.svg" />
+                            </th>
+
+                            <th scope="col" class="bg-primary text-white">
+                                <InputSelect class="btn form-select select-filter" @bind-Value="idea.BusinessUnit">
+                                    <option value="0">Forretningsenheder</option>
+                                    <option value="1" selected>Kun Ikke Angivet</option>
+                                    <option value="2">Kun Aalborg Portland</option>
+                                    <option value="3">Kun Unicon DK</option>
+                                    <option value="4">Kun Unicon NO</option>
+                                    <option value="5">Kun Kudsk & Dahl</option>
+                                </InputSelect>
+                            </th>
+
+                            <th scope="col" class="bg-primary text-white">
+                                Afdeling <img src="/svg/filter.svg" />
+                            </th>
+                            <th scope="col" class="bg-primary text-white">
+                                Status <img src="/svg/filter.svg" />
+                            </th>
+                            <th scope="col" class="bg-primary text-white">
+                                Prioritet <img src="/svg/filter.svg" />
+                            </th>
+                            <th scope="col" class="bg-primary text-white">
+                                Oprettet <img src="/svg/sort-down.svg" />
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (data != null)
                         {
-                            <tr title="Klik for at læse mere" @onclick="() => Modal.Open(idea)">
-                                <td>@idea.ProjectName</td>
-                                <td>@idea.BusinessUnit</td>
-                                <td>@idea.Department</td>
-                                <td>@idea.Status</td>
-                                <td>@idea.Priority</td>
-                                <td>@idea.CreatedAt.ToShortDateString()</td>
-                            </tr>
+                            foreach (ViewIdea idea in data)
+                            {
+                                <tr title="Klik for at læse mere" @onclick="() => _Modal.Open(idea)">
+                                    <td>@idea.ProjectName</td>
+                                    <td>@idea.BusinessUnit</td>
+                                    <td>@idea.Department</td>
+                                    <td>@idea.Status</td>
+                                    <td>@idea.Priority</td>
+                                    <td>@idea.CreatedAt.ToShortDateString()</td>
+                                </tr>
+                            }
                         }
-                    }
-                </tbody>
-            </table>
-        </div>
+                    </tbody>
+                </table>
+            </div>
+        </EditForm>
     </div>
 </section>
 
 
 @code {
+    private EditContext EditContext;
+
     public List<ViewIdea> data;
-    private IdeaBank.Pages.Modal Modal { get; set; }
+    private IdeaBank.Pages.Modal _Modal { get; set; }
+    private FilterIdea idea = new();
 
     protected override async Task OnInitializedAsync()
     {
+        EditContext = new EditContext(idea);
+        EditContext.OnFieldChanged += EditContext_OnFieldChanged;
+
         if (data == null)
         {
-            data = await _data.LoadAllIdeas(_config.GetConnectionString("Default"));
+            _data.ConnectionString = _config.GetConnectionString("Default");
+            data = await _data.LoadAllIdeas();
             StateHasChanged();
         }
+    }
+    // Note: The OnFieldChanged event is raised for each field in the model
+    private async void EditContext_OnFieldChanged(object sender, FieldChangedEventArgs e)
+    {
+        data = await _data.LoadIdeas(idea);
     }
 }

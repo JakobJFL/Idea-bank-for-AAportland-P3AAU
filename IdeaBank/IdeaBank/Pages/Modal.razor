@@ -169,7 +169,7 @@
         await Task.Delay(150);
         ModalClass = "show";
         _idea = idea;
-        _idea.Comments = await _data.LoadComments(_config.GetConnectionString("Default"), _idea.Id);
+        _idea.Comments = await _data.LoadComments(_idea.Id);
         StateHasChanged();
     }
 
@@ -186,7 +186,7 @@
         comment.IdeaId = _idea.Id;
         InsertToDB insert = new();
         insert.InsertComment(_config.GetConnectionString("Default"), comment);
-        _idea.Comments = await _data.LoadComments(_config.GetConnectionString("Default"), _idea.Id);
+        _idea.Comments = await _data.LoadComments(_idea.Id);
         comment.Initials = "";
         comment.Message = "";
         StateHasChanged();

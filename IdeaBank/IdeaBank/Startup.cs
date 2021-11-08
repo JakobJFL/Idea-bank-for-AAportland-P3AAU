@@ -8,6 +8,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using DataBaseLib.DataAccess;
 using BusinessLogicLib;
+using RepositoryLib.Interfaces;
+using RepositoryLib.Implementations;
+
 
 namespace IdeaBank
 {
@@ -25,10 +28,9 @@ namespace IdeaBank
         { 
             services.AddRazorPages();
             services.AddServerSideBlazor();
-            services.AddSingleton<LoadFromDB>();
-           
-            
-           
+            services.AddScoped<IIdeaRepository, IdeaRepository>();
+            services.AddScoped<LoadFromDB>();
+
             services.AddDbContext<Context>(options =>
             {
                 options.UseSqlServer(Configuration.GetConnectionString("Default"));
