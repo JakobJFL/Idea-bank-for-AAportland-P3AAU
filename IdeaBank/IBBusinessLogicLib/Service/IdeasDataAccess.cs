@@ -28,7 +28,6 @@ namespace BusinessLogicLib.Service
         {
             await Repository.AddAsync(DBConvert.NewIdeaToTbl(idea), idea.Department, idea.BusinessUnit);
         }
-
         public Task Edit(ViewIdea idea)
         {
             throw new NotImplementedException();

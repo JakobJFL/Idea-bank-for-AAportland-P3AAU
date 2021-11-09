@@ -29,6 +29,8 @@ namespace IdeaBank
             services.AddServerSideBlazor();
             services.AddScoped<IIdeaRepository, IdeaRepository>();
             services.AddScoped<ICommentsRepository, CommentsRepository>();
+            services.AddScoped<ITblsConfigRepository, TblsConfigRepository>();
+            services.AddScoped<IDBTableConfiguration, DBTableConfiguration>();
             services.AddScoped<IIdeasDataAccess, IdeasDataAccess>();
             services.AddScoped<ICommentsDataAccess, CommentsDataAccess>();
 
@@ -36,7 +38,6 @@ namespace IdeaBank
             {
                 options.UseSqlServer(Configuration.GetConnectionString("Default"));
             });            
-       
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -63,14 +64,6 @@ namespace IdeaBank
                 endpoints.MapBlazorHub();
                 endpoints.MapFallbackToPage("/_Host");
             });
-            ConfigureDBTables();
-        }
-        public async void ConfigureDBTables()
-        {
-            string connectionString = Configuration.GetConnectionString("Default");
-            DBTableConfiguration tableConfig = new();
-            if (await tableConfig.IsBuAndDepEmpty(connectionString))
-                tableConfig.SetDefaultTbls(connectionString);
         }
     }
 }

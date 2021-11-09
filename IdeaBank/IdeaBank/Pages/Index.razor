@@ -1,13 +1,7 @@
 @page "/"
-@using BusinessLogicLib.Interfaces
-@using BusinessLogicLib
-@using Microsoft.Extensions.Configuration
 @using BusinessLogicLib.Models;
 
-@inject IIdeasDataAccess _ideas
-@inject IConfiguration _config
-
-<Modal @ref="_Modal"></Modal>
+<Modal @ref="Modal"></Modal>
 
 <div class="bgImg">
   <section class="py-4 text-center container">
@@ -30,7 +24,7 @@
   <div class="container">
     <h2 class="text-center">Idéoversigt</h2>
     <p class="text-center mb-5">Klik på en idé for at læse mere </p>
-    <EditForm EditContext="@EditContext">
+    <EditForm EditContext="@_editContext">
       <DataAnnotationsValidator />
       <div class="row table-responsive rounded-cos">
         <table class="table my-0 table-primary table-striped table-hover">
@@ -41,7 +35,7 @@
               </th>
 
               <th scope="col" style="width: 220px;" class="bg-primary text-white select-filter-text">
-                <InputSelect class="btn form-select select-filter" @bind-Value="FilterIdea.BusinessUnit">
+                <InputSelect class="btn form-select select-filter" @bind-Value="_filterIdea.BusinessUnit">
                   <option value="0" selected>Forretningsenheder</option>
                   <option value="1">Kun Ikke Angivet</option>
                   <option value="2">Kun Aalborg Portland</option>
@@ -50,8 +44,8 @@
                   <option value="5">Kun Kudsk & Dahl</option>
                 </InputSelect>
               </th>
-              <th scope="col" style="width: 150px;"  class="bg-primary text-white select-filter-text">
-                <InputSelect class="btn form-select select-filter" @bind-Value="FilterIdea.Department">
+              <th scope="col" style="width: 150px;" class="bg-primary text-white select-filter-text">
+                <InputSelect class="btn form-select select-filter" @bind-Value="_filterIdea.Department">
                   <option value="0" selected>Afdelinger</option>
                   <option value="1">Kun Ikke Angivet</option>
                   <option value="2">Kun Aalborg Portland</option>
@@ -60,8 +54,8 @@
                   <option value="5">Kun Kudsk & Dahl</option>
                 </InputSelect>
               </th>
-              <th scope="col" style="width: 120px;"  class="bg-primary text-white select-filter-text">
-                <InputSelect class="btn form-select select-filter" @bind-Value="FilterIdea.Status">
+              <th scope="col" style="width: 120px;" class="bg-primary text-white select-filter-text">
+                <InputSelect class="btn form-select select-filter" @bind-Value="_filterIdea.Status">
                   <option value="0" selected>Status</option>
                   <option value="1">Oprettet</option>
                   <option value="2">Godkendt</option>
@@ -70,7 +64,7 @@
                 </InputSelect>
               </th>
               <th scope="col" style="width: 138px;" class="bg-primary text-white select-filter-text">
-                <InputSelect class="btn form-select select-filter" @bind-Value="FilterIdea.Priority">
+                <InputSelect class="btn form-select select-filter" @bind-Value="_filterIdea.Priority">
                   <option value="0" selected>Prioritet</option>
                   <option value="1">Lav</option>
                   <option value="2">Mellem</option>
@@ -88,13 +82,13 @@
             {
               foreach (ViewIdea idea in IdeaList)
               {
-                <tr title="Klik for at læse mere" @onclick="() => _Modal.Open(idea)">
+                <tr title="Klik for at læse mere" @onclick="() => Modal.Open(idea)">
                   <td style="min-width: 150px;" class="select-filter-text">@idea.ProjectName</td>
-                  <td >@idea.BusinessUnit</td>
-                  <td >@idea.Department</td>
+                  <td>@idea.BusinessUnit</td>
+                  <td>@idea.Department</td>
                   <td>@idea.Status</td>
-                  <td >@idea.Priority</td>
-                  <td >@idea.CreatedAt.ToShortDateString()</td>
+                  <td>@idea.Priority</td>
+                  <td>@idea.CreatedAt.ToShortDateString()</td>
                 </tr>
               }
             }
@@ -105,30 +99,3 @@
   </div>
 </section>
 
-
-@code {
-    private EditContext EditContext;
-
-    public List<ViewIdea> IdeaList;
-    private IdeaBank.Pages.Modal _Modal { get; set; }
-    private FilterIdea FilterIdea = new();
-
-    protected override async Task OnInitializedAsync()
-    {
-      EditContext = new EditContext(FilterIdea);
-      EditContext.OnFieldChanged += EditContext_OnFieldChanged;
-
-      if (IdeaList == null)
-      {
-        //_data.ConnectionString = _config.GetConnectionString("Default");
-        IdeaList = await _ideas.GetWFilter(FilterIdea);
-        StateHasChanged();
-      }
-    }
-    // Note: The OnFieldChanged event is raised for each field in the model
-    private async void EditContext_OnFieldChanged(object sender, FieldChangedEventArgs e)
-    {
-      IdeaList = await _ideas.GetWFilter(FilterIdea);
-      StateHasChanged();
-    }
-}

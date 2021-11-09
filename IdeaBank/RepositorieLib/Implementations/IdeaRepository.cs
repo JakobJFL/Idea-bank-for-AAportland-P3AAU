@@ -31,13 +31,6 @@ namespace RepositoryLib.Implementations
                 .OrderByDescending(s => s.CreatedAt)
                 .ToListAsync();
         }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="model"></param>
-        /// <param name="departmentId"></param>
-        /// <param name="businessUnitId"></param>
-        /// <returns></returns>
         public async Task AddAsync(IdeasTbl model, int departmentId, int businessUnitId)
         {
             model.Department = await Context.DepartmentsTbl

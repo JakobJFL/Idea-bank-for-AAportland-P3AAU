@@ -1,10 +1,5 @@
-@using BusinessLogicLib.Interfaces
 @using BusinessLogicLib.Models;
-@using Microsoft.Extensions.Configuration
 @using Microsoft.AspNetCore.Components.Forms
-
-@inject ICommentsDataAccess _comments
-@inject IConfiguration _config
 
 <div class="modal fade @ModalClass cursor-de" tabindex="-1" style="display:@ModalDisplay;">
   <div class="modal-dialog modal-dialog-scrollable modal-xl bg-transparent" role="document" style="z-index:1055">
@@ -47,52 +42,32 @@
             <div class="col-12">
               <div class="card">
                 <div class="card-body">
-                  <h5 class="card-title mb-2 text-muted"
-                      style="margin-top: -0.5rem;">
-                    Idébeskrivelse
-                  </h5>
-                  <p class="card-text">
-                    @((MarkupString)_idea.Description)
-                  </p>
+                  <h5 class="card-title mb-2 text-muted" style="margin-top: -0.5rem;"> Idébeskrivelse</h5>
+                  <p class="card-text">@((MarkupString)_idea.Description)</p>
                 </div>
               </div>
             </div>
             <div class="col-6">
               <div class="card">
                 <div class="card-body">
-                  <h5 class="card-title mb-2 text-muted"
-                      style="margin-top: -0.5rem;">
-                    Forventet resultat
-                  </h5>
-                  <p class="card-text">
-                    @((MarkupString)_idea.ExpectedResults)
-                  </p>
+                  <h5 class="card-title mb-2 text-muted" style="margin-top: -0.5rem;">Forventet resultat</h5>
+                  <p class="card-text">@((MarkupString)_idea.ExpectedResults)</p>
                 </div>
               </div>
             </div>
             <div class="col-6">
               <div class="card">
                 <div class="card-body">
-                  <h5 class="card-title mb-2 text-muted"
-                      style="margin-top: -0.5rem;">
-                    Plan
-                  </h5>
-                  <p class="card-text">
-                    @((MarkupString)_idea.Plan)
-                  </p>
+                  <h5 class="card-title mb-2 text-muted"style="margin-top: -0.5rem;">Plan</h5>
+                  <p class="card-text">@((MarkupString)_idea.Plan)</p>
                 </div>
               </div>
             </div>
             <div class="col-6">
               <div class="card">
                 <div class="card-body">
-                  <h5 class="card-title mb-2 text-muted"
-                      style="margin-top: -0.5rem;">
-                    Risiko
-                  </h5>
-                  <p class="card-text">
-                    @((MarkupString)_idea.Risk)
-                  </p>
+                  <h5 class="card-title mb-2 text-muted"style="margin-top: -0.5rem;">Risiko</h5>
+                  <p class="card-text">@((MarkupString)_idea.Risk)</p>
                 </div>
               </div>
             </div>
@@ -100,13 +75,8 @@
             <div class="col-6">
               <div class="card h-100">
                 <div class="card-body">
-                  <h5 class="card-title mb-2 text-muted"
-                      style="margin-top: -0.5rem;">
-                    Team
-                  </h5>
-                  <p class="card-text">
-                    @_idea.Team
-                  </p>
+                  <h5 class="card-title mb-2 text-muted" style="margin-top: -0.5rem;">Team</h5>
+                  <p class="card-text">@_idea.Team</p>
                 </div>
               </div>
             </div>
@@ -115,14 +85,12 @@
         <div class="p-2 my-3 bg-light rounded-cos">
           <div class="container-fluid">
             <h3 class="my-2">Kommentarspor</h3>
-            <EditForm Model="@comment" OnValidSubmit="@HandleValidSubmit">
+            <EditForm Model="@_comment" OnValidSubmit="@HandleValidSubmit">
               <DataAnnotationsValidator />
               <div class="d-flex flex-row mb-2">
-                <InputTextArea class="form-control rounded-cos my-1" required
-                               placeholder="Skriv din kommentar her" @bind-Value="comment.Message"></InputTextArea>
+                <InputTextArea class="form-control rounded-cos my-1" required placeholder="Skriv din kommentar her" @bind-Value="_comment.Message"></InputTextArea>
                 <div>
-                  <InputText class="form-control mx-2 my-1 rounded-cos" required
-                             maxlength="5" placeholder="Initialer" @bind-Value="comment.Initials"></InputText>
+                  <InputText class="form-control mx-2 my-1 rounded-cos" required maxlength="5" placeholder="Initialer" @bind-Value="_comment.Initials"></InputText>
                   <button type="submit" class="btn btn-primary mx-2 my-1 rounded-cos w-100">Kommenter</button>
                 </div>
               </div>
@@ -134,15 +102,13 @@
       <ul class="list-group list-group-flush">
         <li class="list-group-item bg-transparent mb-0 pb-0 mt-2">
           <h6 class="text-primary mb-0 pb-0">
-            @c.Initials <small class="text-muted"
-                               style="font-size: 0.8rem;">
+            @c.Initials
+            <small class="text-muted" style="font-size: 0.8rem;">
               @c.CreatedAt.ToShortDateString()
               @c.CreatedAt.ToShortTimeString()
             </small>
           </h6>
-          <p>
-            @((MarkupString) c.Message)
-          </p>
+          <p> @((MarkupString) c.Message)</p>
         </li>
       </ul>
                 <hr class="py-0 my-0" />}
@@ -154,38 +120,3 @@
   </div>
   <div class="modal-backdrop fade @ModalClass cursor-de" style="display: @ModalDisplay;" @onclick="() => Close()"></div>
 </div>
-
-@code { public Guid Guid = Guid.NewGuid();
-    public string ModalDisplay = "none;";
-    public string ModalClass = "";
-    private ViewIdea _idea = new();
-    private Comment comment = new();
-
-    public async Task Open(ViewIdea idea)
-    {
-      StateHasChanged();
-      ModalDisplay = "block;";
-      await Task.Delay(150);
-      ModalClass = "show";
-      _idea = idea;
-      _idea.Comments = await _comments.GetWFilter(this._idea.Id);
-      StateHasChanged();
-    }
-
-    public async Task Close()
-    {
-      ModalClass = "";
-      await Task.Delay(250);
-      ModalDisplay = "none;";
-      StateHasChanged();
-    }
-    private async void HandleValidSubmit()
-    {
-      comment.CreatedAt = DateTime.Now;
-      comment.IdeaId = _idea.Id;
-      _comments.Insert(comment);
-      _idea.Comments = await _comments.GetWFilter(_idea.Id);
-      comment.Initials = "";
-      comment.Message = "";
-      StateHasChanged();
-    } }
