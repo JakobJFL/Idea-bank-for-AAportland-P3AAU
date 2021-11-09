@@ -1,22 +1,24 @@
-﻿using DataBaseLib.Models;
+using DataBaseLib.Models;
 using System;
 using System.Collections.Generic;
+using BusinessLogicLib.Models;
+
 
 namespace BusinessLogicLib
 {
-    static class DBConvert
+    public static class DBConvert // internal???
     {
         public static List<Comment> TblToComment(List<CommentsTbl> dbComments)
         {
             List<Comment> comments = new();
             foreach (CommentsTbl i in dbComments)
             {
-                Comment Comment = new();
-                Comment.Id = i.Id;
-                Comment.Initials = i.Initials;
-                Comment.Message = i.Message;
-                Comment.CreatedAt = i.CreatedAt;
-                comments.Add(Comment);
+                Comment comment = new();
+                comment.Id = i.Id;
+                comment.Initials = i.Initials;
+                comment.Message = i.Message;
+                comment.CreatedAt = i.CreatedAt;
+                comments.Add(comment);
             }
             return comments;
         }
@@ -55,16 +57,16 @@ namespace BusinessLogicLib
             }
             return ideas;
         }
-        public static IdeasTbl NewIdeaToTbl(NewIdea dbIdeas)
+        public static IdeasTbl NewIdeaToTbl(NewIdea idea)
         {
             IdeasTbl newIdea = new();
-            newIdea.ProjectName = dbIdeas.ProjectName;
-            newIdea.Initials = dbIdeas.Initials;
-            newIdea.Description = dbIdeas.Description;
-            newIdea.Team = dbIdeas.Team;
-            newIdea.PlanDescription = dbIdeas.Plan;
-            newIdea.ExpectedResults = dbIdeas.ExpectedResults;
-            newIdea.IsHidden = dbIdeas.IsHidden;
+            newIdea.ProjectName = idea.ProjectName;
+            newIdea.Initials = idea.Initials;
+            newIdea.Description = idea.Description;
+            newIdea.Team = idea.Team;
+            newIdea.PlanDescription = idea.Plan;
+            newIdea.ExpectedResults = idea.ExpectedResults;
+            newIdea.IsHidden = idea.IsHidden;
             newIdea.Status = 1;
             newIdea.CreatedAt = DateTime.Now;
             newIdea.UpdatedAt = DateTime.Now;

@@ -91,6 +91,51 @@ textarea {
     color: white;
 }
 
-    .blazor-error-boundary::after {
-        content: "An error has occurred."
-    }
+.blazor-error-boundary::after {
+    content: "An error has occurred."
+}
+
+.select-filter {
+    color: white;
+    border: 0;
+    font-weight: bold;
+    padding: 0px 8px 0px 0px;
+
+  
+}
+
+.select-filter:focus {
+    outline: none;
+    box-shadow: none;
+}
+
+.select-filter:hover {
+    color: #bfbfbf;
+}
+
+.select-filter > option {
+    color: black;
+}
+
+.select-filter > option:checked {
+    color: #575757;
+}
+
+.select-filter-text {
+    word-wrap: break-word;
+}
+
+.sort-select {
+  cursor: pointer;
+  color: #fff;
+  transition: all 0.3s 0s ease;
+}
+
+.sort-select:hover {
+  color: #bfbfbf;
+}
+
+.max-w-500 {
+  max-width: 500px;
+}
+

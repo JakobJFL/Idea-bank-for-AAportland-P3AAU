@@ -99,8 +99,8 @@ namespace DataBaseLib.Migrations
                         .HasColumnType("nvarchar(1500)");
 
                     b.Property<string>("ExpectedResults")
-                        .HasMaxLength(1000)
-                        .HasColumnType("nvarchar(1000)");
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
 
                     b.Property<string>("Initials")
                         .IsRequired()
@@ -111,8 +111,8 @@ namespace DataBaseLib.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("PlanDescription")
-                        .HasMaxLength(1000)
-                        .HasColumnType("nvarchar(1000)");
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
 
                     b.Property<int>("Priority")
                         .HasColumnType("int");
@@ -123,15 +123,15 @@ namespace DataBaseLib.Migrations
                         .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("Risk")
-                        .HasMaxLength(1000)
-                        .HasColumnType("nvarchar(1000)");
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
 
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
                     b.Property<string>("Team")
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasMaxLength(75)
+                        .HasColumnType("nvarchar(75)");
 
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("datetime2");
