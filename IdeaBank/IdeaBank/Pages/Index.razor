@@ -43,14 +43,11 @@
               <th scope="col" style="min-width: 150px;" class="sort-select bg-primary select-filter-text" @onclick="ChangeProjectNameSort">
                 Projektnavn
                 @if (_filterIdea.Sorting == Sort.ProjectNameAsc)
-                {
-        <img src="/svg/sort-up.svg" /> }
-      else if (_filterIdea.Sorting == Sort.ProjectNameDesc)
-      {
-  <img src="/svg/sort-down.svg" /> }
-else
-{
-  <img src="/svg/filter.svg" />}
+                {<img src="/svg/sort-up.svg" />}
+                else if (_filterIdea.Sorting == Sort.ProjectNameDesc)
+                {<img src="/svg/sort-down.svg" />}
+                else
+                {<img src="/svg/filter.svg" />}
               </th>
 
               <th scope="col" style="width: 220px;" class="bg-primary text-white select-filter-text">
@@ -97,26 +94,20 @@ else
               <th scope="col" style="width: 110px;" class="sort-select bg-primary select-filter-text" @onclick="ChangeCreatedAtSort">
                 Oprettet
                 @if (_filterIdea.Sorting == Sort.CreatedAtAsc)
-                {
-        <img src="/svg/sort-up.svg" /> }
-      else if (_filterIdea.Sorting == Sort.CreatedAtDesc)
-      {
-  <img src="/svg/sort-down.svg" /> }
-else
-{
-  <img src="/svg/filter.svg" />}
+                {<img src="/svg/sort-up.svg" />}
+                else if (_filterIdea.Sorting == Sort.CreatedAtDesc)
+                {<img src="/svg/sort-down.svg" />}
+                else
+                {<img src="/svg/filter.svg" />}
               </th>
               <th scope="col" style="width: 160px;" class="sort-select bg-primary select-filter-text" @onclick="ChangeUpdatedAtSort">
                 Sidst opdateret
                 @if (_filterIdea.Sorting == Sort.UpdatedAtAsc)
-                {
-        <img src="/svg/sort-up.svg" /> }
-      else if (_filterIdea.Sorting == Sort.UpdatedAtDesc)
-      {
-  <img src="/svg/sort-down.svg" /> }
-else
-{
-  <img src="/svg/filter.svg" />}
+                {<img src="/svg/sort-up.svg" />}
+                else if (_filterIdea.Sorting == Sort.UpdatedAtDesc)
+                {<img src="/svg/sort-down.svg" /> }
+                else
+                {<img src="/svg/filter.svg" />}
               </th>
             </tr>
           </thead>
@@ -125,15 +116,16 @@ else
             {
               foreach (ViewIdea idea in IdeaList)
               {
-    <tr title="Klik for at læse mere" @onclick="() => Modal.Open(idea)">
-      <td style="min-width: 150px;" class="select-filter-text">@idea.ProjectName</td>
-      <td>@idea.BusinessUnit</td>
-      <td>@idea.Department</td>
-      <td>@idea.Status</td>
-      <td>@idea.Priority</td>
-      <td>@idea.CreatedAt.ToShortDateString()</td>
-      <td>@idea.UpdatedAt.ToShortDateString()</td>
-    </tr>}
+                <tr title="Klik for at læse mere" @onclick="() => Modal.Open(idea)">
+                  <td style="min-width: 150px;" class="select-filter-text">@idea.ProjectName</td>
+                  <td>@idea.BusinessUnit</td>
+                  <td>@idea.Department</td>
+                  <td>@idea.Status</td>
+                  <td>@idea.Priority</td>
+                  <td>@idea.CreatedAt.ToShortDateString()</td>
+                  <td>@idea.UpdatedAt.ToShortDateString()</td>
+                </tr>
+              }
             }
           </tbody>
         </table>
@@ -141,4 +133,3 @@ else
     </EditForm>
   </div>
 </section>
-
