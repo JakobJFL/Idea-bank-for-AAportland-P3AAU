@@ -124,3 +124,14 @@ textarea {
 .select-filter-text {
     word-wrap: break-word;
 }
+
+.sort-select {
+  cursor: pointer;
+  color: #fff;
+  transition: all 0.3s 0s ease;
+}
+
+.sort-select:hover {
+  color: #bfbfbf;
+}
+

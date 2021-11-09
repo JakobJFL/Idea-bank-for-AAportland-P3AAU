@@ -22,14 +22,40 @@ namespace RepositoryLib.Implementations
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public async Task<IEnumerable<IdeasTbl>> ListAsync(int id)
+        ///
+        public async Task<IEnumerable<IdeasTbl>> ListAsync(FilterIdea idea)
         {
-            return await Context.IdeasTbl
+            IQueryable<IdeasTbl> ideas = Context.IdeasTbl
                 .Include(b => b.BusinessUnit)
                 .Include(d => d.Department)
-                .Where(f => id == 0 || id == f.BusinessUnit.Id)
-                .OrderByDescending(s => s.CreatedAt)
-                .ToListAsync();
+                .Where(f => idea.BusinessUnit == 0 || idea.BusinessUnit == f.BusinessUnit.Id)
+                .Where(f => idea.Department == 0 || idea.Department == f.Department.Id)
+                .Where(f => idea.Priority == 0 || idea.Priority == f.Priority)
+                .Where(f => idea.Status == 0 || idea.Status == f.Status);
+            switch (idea.Sorting)
+            {
+                case Sort.ProjectNameAsc:
+                    ideas = ideas.OrderBy(s => s.ProjectName);
+                    break;
+                case Sort.ProjectNameDesc:
+                    ideas = ideas.OrderByDescending(s => s.ProjectName);
+                    break;
+                case Sort.CreatedAtAsc:
+                    ideas = ideas.OrderBy(s => s.CreatedAt);
+                    break;
+                case Sort.CreatedAtDesc:
+                    ideas = ideas.OrderByDescending(s => s.CreatedAt);
+                    break;
+                case Sort.UpdatedAtAsc:
+                    ideas = ideas.OrderBy(s => s.UpdatedAt);
+                    break;
+                case Sort.UpdatedAtDesc:
+                    ideas = ideas.OrderByDescending(s => s.UpdatedAt);
+                    break;
+                default:
+                    throw new ArgumentException("Skriv noget her");
+            }
+            return await ideas.ToListAsync();
         }
         public async Task AddAsync(IdeasTbl model, int departmentId, int businessUnitId)
         {

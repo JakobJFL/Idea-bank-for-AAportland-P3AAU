@@ -31,7 +31,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\IBBusinessLogicLib\BusinessLogicLib.csproj" />
-    <ProjectReference Include="..\RepositorieLib\RepositoryLib.csproj" />
   </ItemGroup>
 
 </Project>

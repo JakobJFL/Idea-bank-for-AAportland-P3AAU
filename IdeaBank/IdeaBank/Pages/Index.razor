@@ -1,5 +1,6 @@
 @page "/"
 @using BusinessLogicLib.Models;
+@using DataBaseLib.Models;
 
 <Modal @ref="Modal"></Modal>
 
@@ -30,8 +31,17 @@
         <table class="table my-0 table-primary table-striped table-hover">
           <thead>
             <tr>
-              <th scope="col" style="min-width: 150px;" class="bg-primary text-white select-filter-text">
-                Projektnavn <img src="/svg/filter.svg" />
+              <th scope="col" style="min-width: 150px;" class="sort-select bg-primary select-filter-text" @onclick="ChangeProjectNameSort">
+                Projektnavn
+                @if (_filterIdea.Sorting == Sort.ProjectNameAsc)
+                {
+            <img src="/svg/sort-up.svg" /> }
+                    else if (_filterIdea.Sorting == Sort.ProjectNameDesc)
+                    {
+            <img src="/svg/sort-down.svg" /> }
+                    else
+                    {
+            <img src="/svg/filter.svg" />}
               </th>
 
               <th scope="col" style="width: 220px;" class="bg-primary text-white select-filter-text">
@@ -48,10 +58,13 @@
                 <InputSelect class="btn form-select select-filter" @bind-Value="_filterIdea.Department">
                   <option value="0" selected>Afdelinger</option>
                   <option value="1">Kun Ikke Angivet</option>
-                  <option value="2">Kun Aalborg Portland</option>
-                  <option value="3">Kun Unicon DK</option>
-                  <option value="4">Kun Unicon NO</option>
-                  <option value="5">Kun Kudsk & Dahl</option>
+                  <option value="2">Kun Salg</option>
+                  <option value="3">Kun SCM</option>
+                  <option value="4">Kun Produktion</option>
+                  <option value="5">Kun Vedligehold</option>
+                  <option value="6">Finans</option>
+                  <option value="7">HR</option>
+                  <option value="8">PMO & Transformation</option>
                 </InputSelect>
               </th>
               <th scope="col" style="width: 120px;" class="bg-primary text-white select-filter-text">
@@ -72,8 +85,32 @@
                   <option value="4">Ikke angivet</option>
                 </InputSelect>
               </th>
-              <th scope="col" style="width: 110px;" class="bg-primary text-white select-filter-text">
-                Oprettet <img src="/svg/sort-down.svg" />
+              <th scope="col" style="width: 110px;" class="sort-select bg-primary select-filter-text" @onclick="ChangeCreatedAtSort">
+                Oprettet
+                @if (_filterIdea.Sorting == Sort.CreatedAtAsc)
+                {
+            <img src="/svg/sort-up.svg" /> }
+                    else if (_filterIdea.Sorting == Sort.CreatedAtDesc)
+                    {
+            <img src="/svg/sort-down.svg" /> }
+                    else
+                    {
+            <img src="/svg/filter.svg" />}
+              </th>
+              <th scope="col" style="width: 160px;" class="sort-select bg-primary select-filter-text" @onclick="ChangeUpdatedAtSort">
+                Sidst opdateret
+                @if (_filterIdea.Sorting == Sort.UpdatedAtAsc)
+                {
+                  <img src="/svg/sort-up.svg" />
+                }
+                else if (_filterIdea.Sorting == Sort.UpdatedAtDesc)
+                {
+                  <img src="/svg/sort-down.svg" />
+                }
+                else
+                {
+                  <img src="/svg/filter.svg" />
+                }
               </th>
             </tr>
           </thead>
@@ -82,14 +119,15 @@
             {
               foreach (ViewIdea idea in IdeaList)
               {
-                <tr title="Klik for at læse mere" @onclick="() => Modal.Open(idea)">
-                  <td style="min-width: 150px;" class="select-filter-text">@idea.ProjectName</td>
-                  <td>@idea.BusinessUnit</td>
-                  <td>@idea.Department</td>
-                  <td>@idea.Status</td>
-                  <td>@idea.Priority</td>
-                  <td>@idea.CreatedAt.ToShortDateString()</td>
-                </tr>
+            <tr title="Klik for at læse mere" @onclick="() => Modal.Open(idea)">
+              <td style="min-width: 150px;" class="select-filter-text">@idea.ProjectName</td>
+              <td>@idea.BusinessUnit</td>
+              <td>@idea.Department</td>
+              <td>@idea.Status</td>
+              <td>@idea.Priority</td>
+              <td>@idea.CreatedAt.ToShortDateString()</td>
+              <td>@idea.UpdatedAt.ToShortDateString()</td>
+            </tr>
               }
             }
           </tbody>
