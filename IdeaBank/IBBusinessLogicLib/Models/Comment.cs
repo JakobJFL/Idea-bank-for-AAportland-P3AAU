@@ -1,7 +1,7 @@
-﻿using System;
+using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace BusinessLogicLib
+namespace BusinessLogicLib.Models
 {
     public class Comment
     {

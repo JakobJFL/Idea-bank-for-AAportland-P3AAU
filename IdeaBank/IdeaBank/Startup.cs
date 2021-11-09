@@ -1,12 +1,14 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using DataBaseLib.DataAccess;
+using BusinessLogicLib.Interfaces;
+using RepositoryLib.Interfaces;
+using RepositoryLib.Implementations;
+using BusinessLogicLib.Service;
 using BusinessLogicLib;
 
 namespace IdeaBank
@@ -25,15 +27,17 @@ namespace IdeaBank
         { 
             services.AddRazorPages();
             services.AddServerSideBlazor();
-            services.AddSingleton<LoadFromDB>();
-           
-            
-           
+            services.AddScoped<IIdeaRepository, IdeaRepository>();
+            services.AddScoped<ICommentsRepository, CommentsRepository>();
+            services.AddScoped<ITblsConfigRepository, TblsConfigRepository>();
+            services.AddScoped<IDBTableConfiguration, DBTableConfiguration>();
+            services.AddScoped<IIdeasDataAccess, IdeasDataAccess>();
+            services.AddScoped<ICommentsDataAccess, CommentsDataAccess>();
+
             services.AddDbContext<Context>(options =>
             {
                 options.UseSqlServer(Configuration.GetConnectionString("Default"));
             });            
-       
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -60,14 +64,6 @@ namespace IdeaBank
                 endpoints.MapBlazorHub();
                 endpoints.MapFallbackToPage("/_Host");
             });
-            configureDBTables();
-        }
-        public async void configureDBTables()
-        {
-            string connectionString = Configuration.GetConnectionString("Default");
-            DBTableConfiguration tableConfig = new();
-            if (await tableConfig.IsBuAndDepEmpty(connectionString))
-                tableConfig.SetDefaultTbls(connectionString);
         }
     }
 }

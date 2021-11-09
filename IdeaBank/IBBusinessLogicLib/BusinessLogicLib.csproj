@@ -12,7 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\IBDataAccess\DataBaseLib.csproj" />
+    <ProjectReference Include="..\RepositorieLib\RepositoryLib.csproj" />
   </ItemGroup>
 
 </Project>

@@ -6,6 +6,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Data\**" />
+    <Content Remove="Data\**" />
+    <EmbeddedResource Remove="Data\**" />
+    <None Remove="Data\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Remove="Pages\NewIdea.razor" />
     <Content Remove="wwwroot\svg\NewFile.txt" />
   </ItemGroup>
@@ -24,10 +31,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\IBBusinessLogicLib\BusinessLogicLib.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Data\" />
   </ItemGroup>
 
 </Project>
