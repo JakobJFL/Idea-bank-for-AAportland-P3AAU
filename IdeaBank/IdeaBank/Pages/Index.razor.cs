@@ -29,15 +29,13 @@ namespace IdeaBank.Pages
             
             if (IdeaList == null)
             {
-                IdeaList = await Ideas.GetWFilter(_filterIdea);
-                StateHasChanged();
+                await Update();
             }
         }
         // Note: The OnFieldChanged event is raised for each field in the model
         private async void EditContext_OnFieldChanged(object sender, FieldChangedEventArgs e)
         {
-            IdeaList = await Ideas.GetWFilter(_filterIdea);
-            StateHasChanged();
+            await Update();
         }
         private async void ChangeProjectNameSort()
         {
@@ -45,8 +43,7 @@ namespace IdeaBank.Pages
                 _filterIdea.Sorting = Sort.ProjectNameDesc;
             else
                 _filterIdea.Sorting = Sort.ProjectNameAsc;
-            IdeaList = await Ideas.GetWFilter(_filterIdea);
-            StateHasChanged();
+            await Update();
         }
         private async void ChangeCreatedAtSort()
         {
@@ -54,8 +51,7 @@ namespace IdeaBank.Pages
                 _filterIdea.Sorting = Sort.CreatedAtDesc;
             else
                 _filterIdea.Sorting = Sort.CreatedAtAsc;
-            IdeaList = await Ideas.GetWFilter(_filterIdea);
-            StateHasChanged();
+            await Update();
         }
 
         private async void ChangeUpdatedAtSort()
@@ -64,8 +60,24 @@ namespace IdeaBank.Pages
                 _filterIdea.Sorting = Sort.UpdatedAtDesc;
             else
                 _filterIdea.Sorting = Sort.UpdatedAtAsc;
+            await Update();
+        }
+
+        private async Task Update()
+        {
             IdeaList = await Ideas.GetWFilter(_filterIdea);
             StateHasChanged();
+        }
+
+        private async void Reset()
+        {
+            _filterIdea.BusinessUnit = 0;
+            _filterIdea.Department = 0;
+            _filterIdea.Priority = 0;
+            _filterIdea.Status = 0;
+            _filterIdea.SearchStr = "";
+            _filterIdea.Sorting = Sort.CreatedAtDesc;
+            await Update();
         }
     }
 }

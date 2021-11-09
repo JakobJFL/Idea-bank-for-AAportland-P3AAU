@@ -135,3 +135,7 @@ textarea {
   color: #bfbfbf;
 }
 
+.max-w-500 {
+  max-width: 500px;
+}
+

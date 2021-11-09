@@ -14,7 +14,7 @@
           idéer til eventuelle forbedringer eller ændringer.
         </p>
         <NavLink href="/NewIdea">
-          <button class="btn btn-lg btn-primary my-2 p-4">Tilføj ny idé</button>
+          <button class="btn btn-lg btn-primary my-2 p-4 rounded-cos">Tilføj ny idé</button>
         </NavLink>
       </div>
     </div>
@@ -22,12 +22,21 @@
 </div>
 
 <section class="py-5 bg-light">
-  <div class="container">
+  <div class="container p-0">
     <h2 class="text-center">Idéoversigt</h2>
     <p class="text-center mb-5">Klik på en idé for at læse mere </p>
+    <div class="d-flex justify-content-between mb-1">
+      <EditForm Model="@_filterIdea" OnValidSubmit="@Update">
+        <div class="d-flex max-w-500">
+          <InputText class="form-control me-2 rounded-cos" type="search" @bind-Value="_filterIdea.SearchStr" placeholder="Søg" aria-label="Søg" />
+          <button class="btn btn-outline-secondary rounded-cos" type="submit">Søg</button>
+        </div>
+      </EditForm>
+        <button class="btn btn-outline-primary mb-1 rounded-cos" @onclick="Reset">Nulstil</button>
+    </div>
     <EditForm EditContext="@_editContext">
       <DataAnnotationsValidator />
-      <div class="row table-responsive rounded-cos">
+      <div class="table-responsive rounded-cos">
         <table class="table my-0 table-primary table-striped table-hover">
           <thead>
             <tr>
@@ -35,13 +44,13 @@
                 Projektnavn
                 @if (_filterIdea.Sorting == Sort.ProjectNameAsc)
                 {
-            <img src="/svg/sort-up.svg" /> }
-                    else if (_filterIdea.Sorting == Sort.ProjectNameDesc)
-                    {
-            <img src="/svg/sort-down.svg" /> }
-                    else
-                    {
-            <img src="/svg/filter.svg" />}
+        <img src="/svg/sort-up.svg" /> }
+      else if (_filterIdea.Sorting == Sort.ProjectNameDesc)
+      {
+  <img src="/svg/sort-down.svg" /> }
+else
+{
+  <img src="/svg/filter.svg" />}
               </th>
 
               <th scope="col" style="width: 220px;" class="bg-primary text-white select-filter-text">
@@ -89,28 +98,25 @@
                 Oprettet
                 @if (_filterIdea.Sorting == Sort.CreatedAtAsc)
                 {
-            <img src="/svg/sort-up.svg" /> }
-                    else if (_filterIdea.Sorting == Sort.CreatedAtDesc)
-                    {
-            <img src="/svg/sort-down.svg" /> }
-                    else
-                    {
-            <img src="/svg/filter.svg" />}
+        <img src="/svg/sort-up.svg" /> }
+      else if (_filterIdea.Sorting == Sort.CreatedAtDesc)
+      {
+  <img src="/svg/sort-down.svg" /> }
+else
+{
+  <img src="/svg/filter.svg" />}
               </th>
               <th scope="col" style="width: 160px;" class="sort-select bg-primary select-filter-text" @onclick="ChangeUpdatedAtSort">
                 Sidst opdateret
                 @if (_filterIdea.Sorting == Sort.UpdatedAtAsc)
                 {
-                  <img src="/svg/sort-up.svg" />
-                }
-                else if (_filterIdea.Sorting == Sort.UpdatedAtDesc)
-                {
-                  <img src="/svg/sort-down.svg" />
-                }
-                else
-                {
-                  <img src="/svg/filter.svg" />
-                }
+        <img src="/svg/sort-up.svg" /> }
+      else if (_filterIdea.Sorting == Sort.UpdatedAtDesc)
+      {
+  <img src="/svg/sort-down.svg" /> }
+else
+{
+  <img src="/svg/filter.svg" />}
               </th>
             </tr>
           </thead>
@@ -119,16 +125,15 @@
             {
               foreach (ViewIdea idea in IdeaList)
               {
-            <tr title="Klik for at læse mere" @onclick="() => Modal.Open(idea)">
-              <td style="min-width: 150px;" class="select-filter-text">@idea.ProjectName</td>
-              <td>@idea.BusinessUnit</td>
-              <td>@idea.Department</td>
-              <td>@idea.Status</td>
-              <td>@idea.Priority</td>
-              <td>@idea.CreatedAt.ToShortDateString()</td>
-              <td>@idea.UpdatedAt.ToShortDateString()</td>
-            </tr>
-              }
+    <tr title="Klik for at læse mere" @onclick="() => Modal.Open(idea)">
+      <td style="min-width: 150px;" class="select-filter-text">@idea.ProjectName</td>
+      <td>@idea.BusinessUnit</td>
+      <td>@idea.Department</td>
+      <td>@idea.Status</td>
+      <td>@idea.Priority</td>
+      <td>@idea.CreatedAt.ToShortDateString()</td>
+      <td>@idea.UpdatedAt.ToShortDateString()</td>
+    </tr>}
             }
           </tbody>
         </table>

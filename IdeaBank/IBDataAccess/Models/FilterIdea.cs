@@ -16,5 +16,7 @@ namespace DataBaseLib.Models
         public int Priority { get; set; }
         public int Status { get; set; }
         public Sort Sorting { get; set; } = Sort.CreatedAtDesc;
+        public string SearchStr { get; set; } = "";
+
     }
 }

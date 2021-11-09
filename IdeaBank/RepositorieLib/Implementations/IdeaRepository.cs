@@ -32,6 +32,10 @@ namespace RepositoryLib.Implementations
                 .Where(f => idea.Department == 0 || idea.Department == f.Department.Id)
                 .Where(f => idea.Priority == 0 || idea.Priority == f.Priority)
                 .Where(f => idea.Status == 0 || idea.Status == f.Status);
+            if (!string.IsNullOrEmpty(idea.SearchStr))
+            {
+                ideas = ideas.Where(f => f.ProjectName.Contains(idea.SearchStr));
+            }
             switch (idea.Sorting)
             {
                 case Sort.ProjectNameAsc:
