@@ -10,17 +10,17 @@ namespace BusinessLogicLib
     {
         public static List<Comment> TblToComment(List<CommentsTbl> dbComments)
         {
-            List<Comment> comments = new();
-            foreach (CommentsTbl i in dbComments)
-            {
-                Comment comment = new();
-                comment.Id = i.Id;
-                comment.Initials = i.Initials;
-                comment.Message = i.Message;
-                comment.CreatedAt = i.CreatedAt;
-                comments.Add(comment);
-            }
-            return comments;
+                List<Comment> comments = new();
+                foreach (CommentsTbl i in dbComments)
+                {
+                    Comment comment = new();
+                    comment.Id = i.Id;
+                    comment.Initials = i.Initials;
+                    comment.Message = i.Message;
+                    comment.CreatedAt = i.CreatedAt;
+                    comments.Add(comment);
+                }
+                return comments;
         }
         public static CommentsTbl CommentToTbl(Comment comment)
         {

@@ -3,8 +3,11 @@
         <RouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)" />
     </Found>
     <NotFound>
-        <LayoutView Layout="@typeof(MainLayout)">
-            <p>Sorry, there's nothing at this address.</p>
-        </LayoutView>
+      <LayoutView Layout="@typeof(SecondaryLayout)">
+          <h3 class="text-center" style="margin-top: 10%">Undskyld, men der er intet på denne addresse.</h3>
+          <center>
+              <img style="margin-top: 2%" src="confusedstickman.png" />
+          </center>
+      </LayoutView>
     </NotFound>
 </Router>

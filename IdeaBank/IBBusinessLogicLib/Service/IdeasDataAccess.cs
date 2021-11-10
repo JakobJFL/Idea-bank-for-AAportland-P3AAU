@@ -19,12 +19,26 @@ namespace BusinessLogicLib.Service
 
         public async Task<List<ViewIdea>> GetWFilter(FilterIdea idea)
         {
-            List<IdeasTbl> ideas = (await Repository.ListAsync(idea)).ToList();
-            return DBConvert.TblToViewIdea(ideas);
+            try
+            {
+                List<IdeasTbl> ideas = (await Repository.ListAsync(idea)).ToList();
+                return DBConvert.TblToViewIdea(ideas);
+            }
+            catch
+            {
+                throw new Exception("GetWFilter failed");
+            }
         }
         public async Task Insert(NewIdea idea)
         {
-            await Repository.AddAsync(DBConvert.NewIdeaToTbl(idea), idea.Department, idea.BusinessUnit);
+            try
+            {
+                await Repository.AddAsync(DBConvert.NewIdeaToTbl(idea), idea.Department, idea.BusinessUnit);
+            }
+            catch
+            {
+                throw new Exception("Insert failed");
+            }
         }
         public Task Edit(ViewIdea idea)
         {

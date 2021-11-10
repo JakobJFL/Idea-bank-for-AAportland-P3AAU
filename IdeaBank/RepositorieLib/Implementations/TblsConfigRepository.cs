@@ -39,7 +39,7 @@ namespace RepositoryLib.Implementations
             catch (DbUpdateException ex)
             {
                 //FIX Exception  HERE
-                throw new DbUpdateException("FUCK KAT " + ex.Message);
+                throw new DbUpdateException("Updating tables in database failed." + ex.Message);
             }
         }
         public async Task<bool> IsBuAndDepEmpty()

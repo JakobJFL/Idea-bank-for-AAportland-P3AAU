@@ -1,6 +1,5 @@
 @page "/NewIdea"
 @using Microsoft.Extensions.Configuration
-@using BusinessLogicLib.Models;
 @using BusinessLogicLib.Interfaces;
 
 @inject NavigationManager NavManager
@@ -134,22 +133,3 @@
     </div>
   </section>
 </main>
-
-@code {
-    private NewIdea idea = new();
-
-    private async void HandleValidSubmit()
-    {
-      await _ideas.Insert(idea);
-      NavManager.NavigateTo("/");
-      try
-      {
-
-      }
-      catch
-      {
-        // skriv en fejl besked til brugern
-      }
-
-    }
-}
