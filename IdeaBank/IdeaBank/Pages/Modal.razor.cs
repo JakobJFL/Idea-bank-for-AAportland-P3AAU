@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Components;
 
 namespace IdeaBank.Pages
 {
-    public partial class Modal
+    public partial class Modal : ComponentBase
     {
         [Inject]
         public ICommentsDataAccess Comments { get; set; }

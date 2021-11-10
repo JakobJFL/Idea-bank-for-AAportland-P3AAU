@@ -1,3 +1,4 @@
+
 using BusinessLogicLib.Interfaces;
 using BusinessLogicLib.Models;
 using Microsoft.AspNetCore.Components.Forms;
@@ -8,7 +9,7 @@ using DataBaseLib.Models;
 
 namespace IdeaBank.Pages
 {
-    public partial class Index
+    public partial class Index : ComponentBase
     {
         [Inject]
         private IIdeasDataAccess Ideas { get; set; }
@@ -19,7 +20,7 @@ namespace IdeaBank.Pages
         public List<ViewIdea> IdeaList;
         private Modal Modal { get; set; }
         private FilterIdea _filterIdea = new();
-
+        
         protected override async Task OnInitializedAsync()
         {
             _editContext = new EditContext(_filterIdea);
@@ -32,6 +33,7 @@ namespace IdeaBank.Pages
                 await Update();
             }
         }
+        
         // Note: The OnFieldChanged event is raised for each field in the model
         private async void EditContext_OnFieldChanged(object sender, FieldChangedEventArgs e)
         {

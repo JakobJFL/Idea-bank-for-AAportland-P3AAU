@@ -104,9 +104,9 @@ textarea {
   
 }
 
-.select-filter:focus {
-    outline: none;
-    box-shadow: none;
+.noFocus:focus {
+  outline: none;
+  box-shadow: none;
 }
 
 .select-filter:hover {

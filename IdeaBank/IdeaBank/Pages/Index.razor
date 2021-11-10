@@ -1,135 +1,148 @@
 @page "/"
-@using BusinessLogicLib.Models;
-@using DataBaseLib.Models;
+@using BusinessLogicLib.Models
+@using DataBaseLib.Models
+@using Microsoft.AspNetCore.Components.Authorization
+@using Microsoft.AspNetCore.Identity
+@using Microsoft.AspNetCore.Authorization
+@using Microsoft.AspNetCore.Http
+@using Microsoft.AspNetCore.Authentication
 
 <Modal @ref="Modal"></Modal>
 
 <div class="bgImg">
-  <section class="py-4 text-center container">
-    <div class="row py-lg-5">
-      <div class="col-lg-6 col-md-6 mx-auto">
-        <div class="d-flex flex-row justify-content-center"><h1 class="fw-light">Aalborg Portland Idébank</h1></div>
-        <p class="fs-5 py-1">
-          Velkommen til Aalborg Portland's idébank. Her er der mulighed for at indsende dine egne
-          idéer til eventuelle forbedringer eller ændringer.
-        </p>
-        <NavLink href="/NewIdea">
-          <button class="btn btn-lg btn-primary my-2 p-4 rounded-cos">Tilføj ny idé</button>
-        </NavLink>
-      </div>
-    </div>
-  </section>
+    <section class="py-4 text-center container">
+        <div class="row py-lg-5">
+            <div class="col-lg-6 col-md-6 mx-auto">
+                <div class="d-flex flex-row justify-content-center"><h1 class="fw-light">Aalborg Portland Idébank</h1></div>
+                <p class="fs-5 py-1">
+                    Velkommen til Aalborg Portland's idébank. Her er der mulighed for at indsende dine egne
+                    idéer til eventuelle forbedringer eller ændringer.
+                </p>
+                <NavLink href="/NewIdea">
+                    <button class="btn btn-lg btn-primary my-2 p-4 rounded-cos">Tilføj ny idé</button>
+                </NavLink>
+            </div>
+        </div>
+    </section>
 </div>
 
 <section class="py-5 bg-light">
-  <div class="container p-0">
-    <h2 class="text-center">Idéoversigt</h2>
-    <p class="text-center mb-5">Klik på en idé for at læse mere </p>
-    <div class="d-flex justify-content-between mb-1">
-      <EditForm Model="@_filterIdea" OnValidSubmit="@Update">
-        <div class="d-flex max-w-500">
-          <InputText class="form-control me-2 rounded-cos" type="search" @bind-Value="_filterIdea.SearchStr" placeholder="Søg" aria-label="Søg" />
-          <button class="btn btn-outline-secondary rounded-cos" type="submit">Søg</button>
+    <div class="container p-0">
+        <AuthorizeView>
+            <Authorized>
+                <h1>DU ER LOGGET IND!!</h1>
+            </Authorized>
+            <NotAuthorized>
+                <h1>DU ER IKKE LOGGET IND!!</h1>
+            </NotAuthorized>
+        </AuthorizeView>
+        <h2 class="text-center">Idéoversigt</h2>
+        <p class="text-center mb-5">Klik på en idé for at læse mere </p>
+        <div class="d-flex justify-content-between mb-1">
+            <EditForm Model="@_filterIdea" OnValidSubmit="@Update">
+                <div class="d-flex max-w-500">
+                    <InputText class="form-control me-2 rounded-cos" type="search" @bind-Value="_filterIdea.SearchStr" placeholder="Søg" aria-label="Søg" />
+                    <button class="btn btn-outline-secondary rounded-cos" type="submit">Søg</button>
+                </div>
+            </EditForm>
+            <button class="btn btn-outline-primary mb-1 rounded-cos" @onclick="Reset">Nulstil</button>
         </div>
-      </EditForm>
-        <button class="btn btn-outline-primary mb-1 rounded-cos" @onclick="Reset">Nulstil</button>
-    </div>
-    <EditForm EditContext="@_editContext">
-      <DataAnnotationsValidator />
-      <div class="table-responsive rounded-cos">
-        <table class="table my-0 table-primary table-striped table-hover">
-          <thead>
-            <tr>
-              <th scope="col" style="min-width: 150px;" class="sort-select bg-primary select-filter-text" @onclick="ChangeProjectNameSort">
-                Projektnavn
-                @if (_filterIdea.Sorting == Sort.ProjectNameAsc)
-                {<img src="/svg/alfa-desc.svg" />}
-                else if (_filterIdea.Sorting == Sort.ProjectNameDesc)
-                {<img src="/svg/alfa-asc.svg" />}
-                else
-                {<img src="/svg/filter.svg" />}
-              </th>
+        <EditForm EditContext="@_editContext">
+            <DataAnnotationsValidator />
+            <div class="table-responsive rounded-cos">
+                <table class="table my-0 table-primary table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th scope="col" style="min-width: 150px;" class="sort-select bg-primary select-filter-text" @onclick="ChangeProjectNameSort">
+                                Projektnavn
+                                @if (_filterIdea.Sorting == Sort.ProjectNameAsc)
+                                {<img src="/svg/alfa-desc.svg" />}
+                                else if (_filterIdea.Sorting == Sort.ProjectNameDesc)
+                                {<img src="/svg/alfa-asc.svg" />}
+                                else
+                                {<img src="/svg/filter.svg" />}
+                            </th>
 
-              <th scope="col" style="width: 220px;" class="bg-primary text-white select-filter-text">
-                <InputSelect class="btn form-select select-filter" @bind-Value="_filterIdea.BusinessUnit">
-                  <option value="0" selected>Forretningsenheder</option>
-                  <option value="1">Kun Ikke Angivet</option>
-                  <option value="2">Kun Aalborg Portland</option>
-                  <option value="3">Kun Unicon DK</option>
-                  <option value="4">Kun Unicon NO</option>
-                  <option value="5">Kun Kudsk & Dahl</option>
-                </InputSelect>
-              </th>
-              <th scope="col" style="width: 150px;" class="bg-primary text-white select-filter-text">
-                <InputSelect class="btn form-select select-filter" @bind-Value="_filterIdea.Department">
-                  <option value="0" selected>Afdelinger</option>
-                  <option value="1">Kun Ikke Angivet</option>
-                  <option value="2">Kun Salg</option>
-                  <option value="3">Kun SCM</option>
-                  <option value="4">Kun Produktion</option>
-                  <option value="5">Kun Vedligehold</option>
-                  <option value="6">Finans</option>
-                  <option value="7">HR</option>
-                  <option value="8">PMO & Transformation</option>
-                </InputSelect>
-              </th>
-              <th scope="col" style="width: 120px;" class="bg-primary text-white select-filter-text">
-                <InputSelect class="btn form-select select-filter" @bind-Value="_filterIdea.Status">
-                  <option value="0" selected>Status</option>
-                  <option value="1">Oprettet</option>
-                  <option value="2">Godkendt</option>
-                  <option value="3">Afvist</option>
-                  <option value="4">Afsluttet</option>
-                </InputSelect>
-              </th>
-              <th scope="col" style="width: 138px;" class="bg-primary text-white select-filter-text">
-                <InputSelect class="btn form-select select-filter" @bind-Value="_filterIdea.Priority">
-                  <option value="0" selected>Prioritet</option>
-                  <option value="1">Lav</option>
-                  <option value="2">Mellem</option>
-                  <option value="3">Høj</option>
-                  <option value="4">Ikke angivet</option>
-                </InputSelect>
-              </th>
-              <th scope="col" style="width: 110px;" class="sort-select bg-primary select-filter-text" @onclick="ChangeCreatedAtSort">
-                Oprettet
-                @if (_filterIdea.Sorting == Sort.CreatedAtAsc)
-                {<img src="/svg/sort-up.svg" />}
-                else if (_filterIdea.Sorting == Sort.CreatedAtDesc)
-                {<img src="/svg/sort-down.svg" />}
-                else
-                {<img src="/svg/filter.svg" />}
-              </th>
-              <th scope="col" style="width: 160px;" class="sort-select bg-primary select-filter-text" @onclick="ChangeUpdatedAtSort">
-                Sidst opdateret
-                @if (_filterIdea.Sorting == Sort.UpdatedAtAsc)
-                {<img src="/svg/sort-up.svg" />}
-                else if (_filterIdea.Sorting == Sort.UpdatedAtDesc)
-                {<img src="/svg/sort-down.svg" /> }
-                else
-                {<img src="/svg/filter.svg" />}
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            @if (IdeaList != null)
-            {
-              foreach (ViewIdea idea in IdeaList)
-              {
-                <tr title="Klik for at læse mere" @onclick="() => Modal.Open(idea)">
-                  <td style="min-width: 150px;" class="select-filter-text">@idea.ProjectName</td>
-                  <td>@idea.BusinessUnit</td>
-                  <td>@idea.Department</td>
-                  <td>@idea.Status</td>
-                  <td>@idea.Priority</td>
-                  <td>@idea.CreatedAt.ToShortDateString()</td>
-                  <td>@idea.UpdatedAt.ToShortDateString()</td>
-                </tr>
-              }
-            }
-          </tbody>
-        </table>
-      </div>
-    </EditForm>
-  </div>
+                            <th scope="col" style="width: 220px;" class="bg-primary text-white select-filter-text">
+                                <InputSelect class="btn form-select select-filter noFocus" @bind-Value="_filterIdea.BusinessUnit">
+                                    <option value="0" selected>Forretningsenheder</option>
+                                    <option value="1">Kun Ikke Angivet</option>
+                                    <option value="2">Kun Aalborg Portland</option>
+                                    <option value="3">Kun Unicon DK</option>
+                                    <option value="4">Kun Unicon NO</option>
+                                    <option value="5">Kun Kudsk & Dahl</option>
+                                </InputSelect>
+                            </th>
+                            <th scope="col" style="width: 150px;" class="bg-primary text-white select-filter-text">
+                                <InputSelect class="btn form-select select-filter noFocus" @bind-Value="_filterIdea.Department">
+                                    <option value="0" selected>Afdelinger</option>
+                                    <option value="1">Kun Ikke Angivet</option>
+                                    <option value="2">Kun Salg</option>
+                                    <option value="3">Kun SCM</option>
+                                    <option value="4">Kun Produktion</option>
+                                    <option value="5">Kun Vedligehold</option>
+                                    <option value="6">Finans</option>
+                                    <option value="7">HR</option>
+                                    <option value="8">PMO & Transformation</option>
+                                </InputSelect>
+                            </th>
+                            <th scope="col" style="width: 120px;" class="bg-primary text-white select-filter-text">
+                                <InputSelect class="btn form-select select-filter noFocus" @bind-Value="_filterIdea.Status">
+                                    <option value="0" selected>Status</option>
+                                    <option value="1">Oprettet</option>
+                                    <option value="2">Godkendt</option>
+                                    <option value="3">Afvist</option>
+                                    <option value="4">Afsluttet</option>
+                                </InputSelect>
+                            </th>
+                            <th scope="col" style="width: 138px;" class="bg-primary text-white select-filter-text">
+                                <InputSelect class="btn form-select select-filter noFocus" @bind-Value="_filterIdea.Priority">
+                                    <option value="0" selected>Prioritet</option>
+                                    <option value="1">Lav</option>
+                                    <option value="2">Mellem</option>
+                                    <option value="3">Høj</option>
+                                    <option value="4">Ikke angivet</option>
+                                </InputSelect>
+                            </th>
+                            <th scope="col" style="width: 110px;" class="sort-select bg-primary select-filter-text" @onclick="ChangeCreatedAtSort">
+                                Oprettet
+                                @if (_filterIdea.Sorting == Sort.CreatedAtAsc)
+                                {<img src="/svg/sort-up.svg" />}
+                                else if (_filterIdea.Sorting == Sort.CreatedAtDesc)
+                                {<img src="/svg/sort-down.svg" />}
+                                else
+                                {<img src="/svg/filter.svg" />}
+                            </th>
+                            <th scope="col" style="width: 160px;" class="sort-select bg-primary select-filter-text" @onclick="ChangeUpdatedAtSort">
+                                Sidst opdateret
+                                @if (_filterIdea.Sorting == Sort.UpdatedAtAsc)
+                                {<img src="/svg/sort-up.svg" />}
+                                else if (_filterIdea.Sorting == Sort.UpdatedAtDesc)
+                                {<img src="/svg/sort-down.svg" /> }
+                                else
+                                {<img src="/svg/filter.svg" />}
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (IdeaList != null)
+                        {
+                            foreach (ViewIdea idea in IdeaList)
+                            {
+                                <tr title="Klik for at læse mere" @onclick="() => Modal.Open(idea)">
+                                    <td style="min-width: 150px;" class="select-filter-text">@idea.ProjectName</td>
+                                    <td>@idea.BusinessUnit</td>
+                                    <td>@idea.Department</td>
+                                    <td>@idea.Status</td>
+                                    <td>@idea.Priority</td>
+                                    <td>@idea.CreatedAt.ToShortDateString()</td>
+                                    <td>@idea.UpdatedAt.ToShortDateString()</td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </EditForm>
+    </div>
 </section>
