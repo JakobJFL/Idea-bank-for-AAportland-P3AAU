@@ -39,7 +39,7 @@ namespace IdeaBank.Pages
         }
         private async void ChangeProjectNameSort()
         {
-            _filterIdea.Sorting = _filterIdea.Sorting == Sort.ProjectNameDesc ? Sort.ProjectNameAsc : Sort.ProjectNameDesc;
+            _filterIdea.Sorting = _filterIdea.Sorting == Sort.ProjectNameAsc ? Sort.ProjectNameDesc : Sort.ProjectNameAsc;
             await Update();
         }
         private async void ChangeCreatedAtSort()
