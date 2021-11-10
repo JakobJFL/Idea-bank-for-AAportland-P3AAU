@@ -39,27 +39,18 @@ namespace IdeaBank.Pages
         }
         private async void ChangeProjectNameSort()
         {
-            if (_filterIdea.Sorting == Sort.ProjectNameAsc)
-                _filterIdea.Sorting = Sort.ProjectNameDesc;
-            else
-                _filterIdea.Sorting = Sort.ProjectNameAsc;
+            _filterIdea.Sorting = _filterIdea.Sorting == Sort.ProjectNameDesc ? Sort.ProjectNameAsc : Sort.ProjectNameDesc;
             await Update();
         }
         private async void ChangeCreatedAtSort()
         {
-            if (_filterIdea.Sorting == Sort.CreatedAtAsc)
-                _filterIdea.Sorting = Sort.CreatedAtDesc;
-            else
-                _filterIdea.Sorting = Sort.CreatedAtAsc;
+            _filterIdea.Sorting = _filterIdea.Sorting == Sort.CreatedAtDesc ? Sort.CreatedAtAsc : Sort.CreatedAtDesc;
             await Update();
         }
 
         private async void ChangeUpdatedAtSort()
         {
-            if (_filterIdea.Sorting == Sort.UpdatedAtAsc)
-                _filterIdea.Sorting = Sort.UpdatedAtDesc;
-            else
-                _filterIdea.Sorting = Sort.UpdatedAtAsc;
+            _filterIdea.Sorting = _filterIdea.Sorting == Sort.UpdatedAtDesc ? Sort.UpdatedAtAsc : Sort.UpdatedAtDesc;
             await Update();
         }
 
