@@ -6,7 +6,19 @@
     <div class="modal-content rounded-cos border-0">
       <div class="modal-header bg-primary text-white">
         <h5 class="modal-title">@_idea.ProjectName</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" @onclick="() => Close()"></button>
+        <AuthorizeView>
+          <Authorized>
+            <div class="float-end">
+              <button class="btn btn-icon noFocus"><img src="/svg/trash-fill.svg" /></button>
+              <button class="btn btn-icon noFocus mx-3"><img src="/svg/pencil-fill.svg" /></button>
+              <button type="button" class="btn btn-close" data-bs-dismiss="modal" aria-label="Close" @onclick="() => Close()"></button>
+            </div>
+          </Authorized>
+          <NotAuthorized>
+            <button type="button" class="btn btn-close" data-bs-dismiss="modal" aria-label="Close" @onclick="() => Close()"></button>
+          </NotAuthorized>
+        </AuthorizeView>
+       
       </div>
       <div class="modal-body bg-light">
         <div class="row g-2">

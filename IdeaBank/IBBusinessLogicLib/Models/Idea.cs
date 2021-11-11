@@ -16,5 +16,6 @@ namespace BusinessLogicLib.Models
         public string Team { get; set; }
         public string Plan { get; set; }
         public string ExpectedResults { get; set; }
+        public bool IsHidden { get; set; }
     }
 }

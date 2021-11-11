@@ -50,6 +50,7 @@ namespace BusinessLogicLib
                 idea.Plan = StrLineToBr(i.PlanDescription);
                 idea.Risk = StrLineToBr(i.Risk);
                 idea.Team = i.Team;
+                idea.IsHidden = i.IsHidden;
                 idea.ExpectedResults = StrLineToBr(i.ExpectedResults);
                 idea.CreatedAt = i.CreatedAt;
                 idea.UpdatedAt = i.UpdatedAt;

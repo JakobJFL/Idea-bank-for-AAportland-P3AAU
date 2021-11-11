@@ -112,9 +112,9 @@
               </div>
             </div>
             <div>
-              <p>Skjul ide:</p>
+              <label class="my-2">Skjul ideen (kun administrator vil ikke kunne se ideen)</label>
               <label class="switch d-flex">
-                <input type="checkbox">
+                <input @bind="idea.IsHidden" type="checkbox">
                 <span class="slider"></span>
                 <span class="text-checked">Kun administrator kan se ideen</span>
                 <span class="text-not-checked">Alle kan se ideen</span>

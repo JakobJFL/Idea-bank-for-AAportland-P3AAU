@@ -20,10 +20,12 @@ namespace IdeaBank.Pages
         public List<ViewIdea> IdeaList;
         private Modal Modal { get; set; }
         private FilterIdea _filterIdea = new();
-        
+
+        private bool isAuthorized { get; set; }
+
         protected override async Task OnInitializedAsync()
         {
-            _editContext = new EditContext(_filterIdea);
+           _editContext = new EditContext(_filterIdea);
             _editContext.OnFieldChanged += EditContext_OnFieldChanged;
             _filterIdea.Sorting = Sort.CreatedAtDesc;
             await Config.ConfigureDBTables(); // Måske det skal være et andet sted

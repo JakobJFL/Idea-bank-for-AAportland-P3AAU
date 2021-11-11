@@ -139,3 +139,12 @@ textarea {
   max-width: 500px;
 }
 
+.text-show-hidden {
+  font-size: 10pt;
+  color: #6c757d;
+  margin: 3px 0px 0px 5px;
+}
+
+.btn-icon:hover {
+  box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+}
