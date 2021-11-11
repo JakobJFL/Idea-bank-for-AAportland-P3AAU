@@ -23,7 +23,6 @@ namespace IdeaBank.Pages
 
         protected override async Task OnInitializedAsync()
         {
-            throw new Exception();
             try
             {
                 _editContext = new EditContext(_filterIdea);
