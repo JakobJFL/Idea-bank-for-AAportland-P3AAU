@@ -1,14 +1,24 @@
 <header class="p-3 shadow bg-primary text-white">
     <div class="container">
-      <div class="d-flex justify-content-between">
+        <div class="d-flex justify-content-between">
         <NavLink href="/">
-          <img src="/svg/logo.svg" />
+            <img src="/svg/logo.svg" />
         </NavLink>
-        <div class="d-flex">
-          <NavLink class="btn btn-outline-light rounded-cos mx-1" href="/Guide">Guide</NavLink>
-          <NavLink class="btn btn-outline-light rounded-cos mx-1" href="/NewIdea">Tilføj ide</NavLink>
-          <NavLink class="btn text-white noFocus mx-1" href="Identity/Account/Login">Admin login</NavLink>
+            <div class="d-flex">
+                <NavLink class="btn btn-outline-light rounded-cos mx-1" href="/Guide">Guide</NavLink>
+                <NavLink class="btn btn-outline-light rounded-cos mx-1" href="/NewIdea">Tilføj ide</NavLink>
+                <AuthorizeView>
+                    <NotAuthorized>
+                        <NavLink class="btn text-white noFocus mx-1" href="Identity/Account/Login">Admin login</NavLink>
+                    </NotAuthorized>
+                    <Authorized>
+                        <NavLink class="btn text-white noFocus" href="Identity/Account/Manage">Konto</NavLink>
+                        <form method="post" action="Identity/Account/LogOut">
+                            <button type="submit" class="btn text-white noFocus">Log ud</button>
+                        </form>
+                    </Authorized>
+                </AuthorizeView>
+            </div>
         </div>
-      </div>
     </div>
 </header>
