@@ -16,7 +16,7 @@ The Ideabank layer contains ‘Bootstrap’ contains Bootstrap 4.0 from [getboot
 All the mentioned code except for the ones with a link to the source of the code, is developed and written by CS-21-SW-3-17 at Aalborg University.
 
 ## Technical content in repository
-We use Blazor Server with ASP.NET 5.0 and a SQL database. The following key elements we use are:
+We use Blazor Server which is a web framework designed to run server-side in ASP.NET Core and a SQL database. The following key elements we use are:
 * 1
 * 2
 * 3
