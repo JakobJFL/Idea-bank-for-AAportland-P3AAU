@@ -1,7 +1,7 @@
 @using BusinessLogicLib.Models;
 @using Microsoft.AspNetCore.Components.Forms
 
-<div class="modal fade @ModalClass cursor-de" tabindex="-1" style="display:@ModalDisplay;">
+<div class="modal fade @_modalClass cursor-de" tabindex="-1" style="display:@_modalDisplay;">
   <div class="modal-dialog modal-dialog-scrollable modal-xl bg-transparent" role="document" style="z-index:1055">
     <div class="modal-content rounded-cos border-0">
       <div class="modal-header bg-primary text-white">
@@ -9,7 +9,7 @@
         <AuthorizeView>
           <Authorized>
             <div class="float-end">
-              <button class="btn btn-icon noFocus"><img src="/svg/trash-fill.svg" /></button>
+              <button class="btn btn-icon noFocus" @onclick="DeleteIdea"><img src="/svg/trash-fill.svg" /></button>
               <button class="btn btn-icon noFocus mx-3"><img src="/svg/pencil-fill.svg" /></button>
               <button type="button" class="btn btn-close" data-bs-dismiss="modal" aria-label="Close" @onclick="() => Close()"></button>
             </div>
@@ -111,18 +111,18 @@
             {
               foreach (Comment c in _idea.Comments)
               {
-      <ul class="list-group list-group-flush">
-        <li class="list-group-item bg-transparent mb-0 pb-0 mt-2">
-          <h6 class="text-primary mb-0 pb-0">
-            @c.Initials
-            <small class="text-muted" style="font-size: 0.8rem;">
-              @c.CreatedAt.ToShortDateString()
-              @c.CreatedAt.ToShortTimeString()
-            </small>
-          </h6>
-          <p> @((MarkupString) c.Message)</p>
-        </li>
-      </ul>
+                <ul class="list-group list-group-flush">
+                  <li class="list-group-item bg-transparent mb-0 pb-0 mt-2">
+                    <h6 class="text-primary mb-0 pb-0">
+                      @c.Initials
+                      <small class="text-muted" style="font-size: 0.8rem;">
+                        @c.CreatedAt.ToShortDateString()
+                        @c.CreatedAt.ToShortTimeString()
+                      </small>
+                    </h6>
+                    <p> @((MarkupString) c.Message)</p>
+                  </li>
+                </ul>
                 <hr class="py-0 my-0" />}
             }
           </div>
@@ -130,5 +130,5 @@
       </div>
     </div>
   </div>
-  <div class="modal-backdrop fade @ModalClass cursor-de" style="display: @ModalDisplay;" @onclick="() => Close()"></div>
+  <div class="modal-backdrop fade @_modalClass cursor-de" style="display: @_modalDisplay;" @onclick="() => Close()"></div>
 </div>

@@ -9,6 +9,8 @@
 
 @inject IConfiguration _config
 
+@inject IJSRuntime JsRuntime
+
 <main class="bgImg">
   <section class="py-4 text-center container">
     <div class="row py-lg-5">
@@ -124,9 +126,7 @@
           </div>
           <hr class="my-4">
           <div class="d-flex justify-content-between">
-            <NavLink href="/">
-              <button class="btn my-2 btn-secondary btn-lg" type="button">Fortryd</button>
-            </NavLink>
+            <button class="btn my-2 btn-secondary btn-lg" @onclick="Regret" type="button">Fortryd</button>
             <button type="submit" class="my-2 btn btn-primary btn-lg">Indsend idé</button>
           </div>
         </EditForm>
@@ -140,16 +140,33 @@
 
     private async void HandleValidSubmit()
     {
-      await _ideas.Insert(idea);
-      NavManager.NavigateTo("/");
       try
       {
-
+        await _ideas.Insert(idea);
+        NavManager.NavigateTo("/");
       }
-      catch
+      catch (Exception ex)
       {
+        throw new Exception(ex.Message);
         // skriv en fejl besked til brugern
       }
 
+    }
+    private async void Regret()
+    {
+      if (string.IsNullOrEmpty(idea.ProjectName) &&
+          string.IsNullOrEmpty(idea.Description) &&
+          string.IsNullOrEmpty(idea.Initials) &&
+          string.IsNullOrEmpty(idea.ExpectedResults) &&
+          string.IsNullOrEmpty(idea.Team))
+      {
+        NavManager.NavigateTo("/");
+      }
+      else
+      {
+        bool confirmed = await JsRuntime.InvokeAsync<bool>("confirm", "Are you sure?");
+        if (confirmed)
+          NavManager.NavigateTo("/");
+      }
     }
 }

@@ -16,7 +16,7 @@ namespace BusinessLogicLib
                 Comment comment = new();
                 comment.Id = i.Id;
                 comment.Initials = i.Initials;
-                comment.Message = i.Message;
+                comment.Message = StrLineToBr(i.Message);
                 comment.CreatedAt = i.CreatedAt;
                 comments.Add(comment);
             }
@@ -27,7 +27,7 @@ namespace BusinessLogicLib
             CommentsTbl newComment = new();
             newComment.Id = comment.Id;
             newComment.Initials = comment.Initials;
-            newComment.Message = StrLineToBr(comment.Message);
+            newComment.Message = comment.Message;
             newComment.CreatedAt = comment.CreatedAt;
             newComment.IdeaId = comment.IdeaId;
             return newComment;

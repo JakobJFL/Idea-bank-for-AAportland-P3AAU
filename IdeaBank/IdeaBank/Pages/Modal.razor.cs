@@ -7,27 +7,31 @@ using BusinessLogicLib.Models;
 using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.AspNetCore.Components;
+using Microsoft.JSInterop;
 
 namespace IdeaBank.Pages
 {
     public partial class Modal : ComponentBase
     {
         [Inject]
-        public ICommentsDataAccess Comments { get; set; }
+        private ICommentsDataAccess Comments { get; set; }
+        [Inject]
+        private IJSRuntime JsRuntime { get; set; }
 
-        public Guid Guid = Guid.NewGuid();
+        private Index IndexView { get; set; }
 
-        public string ModalDisplay = "none;";
-        public string ModalClass = "";
+        private string _modalDisplay = "none;";
+        private string _modalClass = "";
         private ViewIdea _idea = new();
         private Comment _comment = new();
 
-        public async Task Open(ViewIdea idea)
+        public async Task Open(ViewIdea idea, Index indexView)
         {
             StateHasChanged();
-            ModalDisplay = "block;";
+            IndexView = indexView;
+            _modalDisplay = "block;";
             await Task.Delay(150);
-            ModalClass = "show";
+            _modalClass = "show";
             _idea = idea;
             _idea.Comments = await Comments.GetWFilter(_idea.Id);
             StateHasChanged();
@@ -35,9 +39,9 @@ namespace IdeaBank.Pages
 
         public async Task Close()
         {
-            ModalClass = "";
+            _modalClass = "";
             await Task.Delay(250);
-            ModalDisplay = "none;";
+            _modalDisplay = "none;";
             StateHasChanged();
         }
         private async void HandleValidSubmit()
@@ -49,6 +53,18 @@ namespace IdeaBank.Pages
             _comment.Initials = "";
             _comment.Message = "";
             StateHasChanged();
+        }
+
+        private async void DeleteIdea()
+        {
+            bool confirmed = await JsRuntime.InvokeAsync<bool>("confirm", "Are you sure?");
+            if (confirmed)
+            {
+                await IndexView.Ideas.DeleteByID(_idea.Id);
+                await Close();
+                await IndexView.Update();
+                StateHasChanged();
+            }
         }
     }
 }

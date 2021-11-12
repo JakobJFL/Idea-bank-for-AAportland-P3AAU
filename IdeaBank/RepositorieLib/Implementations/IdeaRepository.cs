@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace RepositoryLib.Implementations
 {
-    public class IdeaRepository : IIdeaRepository
+    public class IdeaRepository : IIdeaRepository, IRepository<IdeasTbl>
     {
         public IdeaRepository(Context context)
         {
@@ -71,7 +71,17 @@ namespace RepositoryLib.Implementations
                 .FirstAsync();
 
             await Context.IdeasTbl.AddAsync(model);
-            Context.SaveChanges();
+            await Context.SaveChangesAsync();
+        }
+        public async Task RemoveByIdAsync(int id)
+        {
+            IdeasTbl itemToRemove = Context.IdeasTbl.SingleOrDefault(x => x.Id == id);
+            if (itemToRemove != null)
+            {
+                Context.IdeasTbl.Remove(itemToRemove);
+                await Context.SaveChangesAsync();
+            }
+            
         }
         public Task AddRangeAsync(IEnumerable<IdeasTbl> metrics)
         {
@@ -83,11 +93,12 @@ namespace RepositoryLib.Implementations
             throw new NotImplementedException();
         }
 
-        public Task RemoveByIdAsync(int id)
+        public void Update(IdeasTbl model)
         {
             throw new NotImplementedException();
         }
-        public void Update(IdeasTbl model)
+
+        public Task<IEnumerable<IdeasTbl>> ListAsync(int id)
         {
             throw new NotImplementedException();
         }

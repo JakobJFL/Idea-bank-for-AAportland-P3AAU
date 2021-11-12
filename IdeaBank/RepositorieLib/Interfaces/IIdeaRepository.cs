@@ -8,6 +8,10 @@ namespace RepositoryLib.Interfaces
     {
         public Task<IEnumerable<IdeasTbl>> ListAsync(FilterIdea idea);
         public Task AddAsync(IdeasTbl model, int departmentId, int businessUnitId);
+        public Task RemoveByIdAsync(int id);
+        public void Update(IdeasTbl model);
+        public Task<IdeasTbl> FindByIdAsync(int id);
+        public Task AddRangeAsync(IEnumerable<IdeasTbl> metrics);
 
     }
 }

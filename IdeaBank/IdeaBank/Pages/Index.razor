@@ -5,10 +5,10 @@
 
 <AuthorizeView>
   <NotAuthorized>
-    @{isAuthorized = false;}
+    @{IsAuthorized = false;}
   </NotAuthorized>
   <Authorized>
-    @{isAuthorized = true;}
+    @{IsAuthorized = true;}
   </Authorized>
 </AuthorizeView>
 
@@ -129,13 +129,13 @@
           </thead>
           <tbody>
 
-            @if (IdeaList != null)
+            @if (_ideaList != null)
             {
-              foreach (ViewIdea idea in IdeaList)
+              foreach (ViewIdea idea in _ideaList)
               {
-                if (isAuthorized || !idea.IsHidden)
+                if (IsAuthorized || !idea.IsHidden)
                 {
-                  <tr title="Klik for at læse mere" @onclick="() => Modal.Open(idea)">
+                  <tr title="Klik for at læse mere" @onclick="() => Modal.Open(idea, this)">
                     <td style="min-width: 150px;" class="select-filter-text">
                       <div class="d-flex">
                         @idea.ProjectName
@@ -154,6 +154,12 @@
                 }
               }
             }
+            else
+              {
+                <tr>
+                  <td colspan = "7" class="m-3 fs-5 text-center">Indlæser idéer...</td>
+                </tr>
+              }
           </tbody>
         </table>
       </div>
