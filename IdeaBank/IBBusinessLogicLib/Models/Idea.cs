@@ -19,7 +19,7 @@ namespace BusinessLogicLib.Models
         public bool IsHidden { get; set; }
         public int BusinessUnit { get; set; } = 1;
         public int Department { get; set; } = 1;
-        public int Priority { get; set; } = 1;
+        public int Priority { get; set; } = 0;
         public int Status { get; set; } = 1;
     }
 }

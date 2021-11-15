@@ -86,8 +86,7 @@ namespace RepositoryLib.Implementations
         }
         public async Task UpdateAsync(IdeasTbl model, int departmentId, int businessUnitId)
         {
-            var result = Context.IdeasTbl.SingleOrDefault(b => b.Id == model.Id);
-            Console.WriteLine(model.Description);
+            IdeasTbl result = Context.IdeasTbl.SingleOrDefault(b => b.Id == model.Id);
             if (result != null)
             {
                 result.Department = await Context.DepartmentsTbl
@@ -96,6 +95,7 @@ namespace RepositoryLib.Implementations
                 result.BusinessUnit = await Context.BusinessUnitsTbl
                     .Where(b => b.Id == businessUnitId)
                     .FirstAsync();
+                Console.WriteLine(businessUnitId);
                 Context.Entry(result).CurrentValues.SetValues(model);
                 await Context.SaveChangesAsync();
             }

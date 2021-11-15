@@ -13,7 +13,7 @@ namespace IdeaBank.Pages
 {
     public partial class SubmitIdea : ComponentBase
     {
-        private NewIdea Idea = new();
+        private NewIdea _idea = new();
         [Inject]
         public NavigationManager NavManager { get; set; }
         [Inject]
@@ -23,12 +23,12 @@ namespace IdeaBank.Pages
         [Inject]
         public IJSRuntime JsRuntime { get; set; }
 
-
+        private readonly string _confirmRegretSubmit = "Er du sikker på du vil fortryde og slette denne ide?";
         private async void HandleValidSubmit()
         {
             try
             {
-                await Ideas.Insert(Idea);
+                await Ideas.Insert(_idea);
                 NavManager.NavigateTo("/");
             }
             catch (Exception ex)
@@ -40,17 +40,17 @@ namespace IdeaBank.Pages
         }
         private async void Regret()
         {
-            if (string.IsNullOrEmpty(Idea.ProjectName) &&
-                string.IsNullOrEmpty(Idea.Description) &&
-                string.IsNullOrEmpty(Idea.Initials) &&
-                string.IsNullOrEmpty(Idea.ExpectedResults) &&
-                string.IsNullOrEmpty(Idea.Team))
+            if (string.IsNullOrEmpty(_idea.ProjectName) &&
+                string.IsNullOrEmpty(_idea.Description) &&
+                string.IsNullOrEmpty(_idea.Initials) &&
+                string.IsNullOrEmpty(_idea.ExpectedResults) &&
+                string.IsNullOrEmpty(_idea.Team))
             {
                 NavManager.NavigateTo("/");
             }
             else
             {
-                bool confirmed = await JsRuntime.InvokeAsync<bool>("confirm", "Are you sure?");
+                bool confirmed = await JsRuntime.InvokeAsync<bool>("confirm", _confirmRegretSubmit);
                 if (confirmed)
                     NavManager.NavigateTo("/");
             }

@@ -21,7 +21,7 @@ namespace IdeaBank.Pages
 
         private Comment _comment = new();
         private List<Comment> AllComment { get; set; }
-        private readonly string _confirmDeleteComment = "Vil du slette kommentaren?";
+        private readonly string _confirmDeleteComment = "Er du sikker på du vil slette kommentaren?";
 
         public async void LoadComments(int ideaId)
         {

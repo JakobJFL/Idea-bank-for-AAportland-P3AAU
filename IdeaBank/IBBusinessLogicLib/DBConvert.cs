@@ -69,6 +69,7 @@ namespace BusinessLogicLib
             idea.Initials = editIdea.Initials;
             idea.ProjectName = editIdea.ProjectName;
             idea.Description = editIdea.Description;
+            idea.Description = editIdea.Description;
             idea.PlanDescription = editIdea.Plan;
             idea.Risk = editIdea.Risk;
             idea.CreatedAt = editIdea.CreatedAt;

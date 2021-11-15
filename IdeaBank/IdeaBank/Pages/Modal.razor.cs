@@ -28,7 +28,8 @@ namespace IdeaBank.Pages
         private CommentSection CommentSection { get; set; }
         private bool IsEditing { get; set; } = false;
 
-        private readonly string _confirmDeleteIdea = "Are you sure?";
+        private readonly string _confirmDeleteIdea = "Er du sikker på du vil slette ideen?";
+        private readonly string _confirmCloseModal = "Er du sikker på du vil lukke vinduet og slette dine ændringer?";
 
         public async Task Open(ViewIdea idea, Index indexView)
         {
@@ -44,6 +45,12 @@ namespace IdeaBank.Pages
 
         public async Task Close()
         {
+            if (IsEditing)
+            {
+                bool confirmed = await JsRuntime.InvokeAsync<bool>("confirm", _confirmCloseModal);
+                if (!confirmed)
+                    return;
+            }
             _modalClass = "";
             await Task.Delay(250);
             _modalDisplay = "none;";
@@ -88,6 +95,7 @@ namespace IdeaBank.Pages
             FilterIdea filterIdea = new();
             filterIdea.Id = _editIdea.Id;
             _idea = (await IndexView.Ideas.GetWFilter(filterIdea)).First();
+            await IndexView.Update();
             StateHasChanged();
         }
     }

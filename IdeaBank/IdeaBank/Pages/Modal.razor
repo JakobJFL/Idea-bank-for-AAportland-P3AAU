@@ -27,80 +27,156 @@
       </div>
       <div class="modal-body bg-light">
         <EditForm Model="@_editIdea" OnValidSubmit="@HandleValidEdit">
-          <div class="row g-2">
+          @if (_idea == null)
+          {
+            <h5>Indlæser ideen...</h5>
+          }
+          else
+          {
             <div class="row g-2">
-              <div class="col-12">
-                <div class="row mx-1">
-                  <div class="col">
-                    <h6>Initialer</h6>
-                    <p>@_idea.Initials</p>
-                  </div>
-                  <div class="col">
-                    <h6>Forretningsenhed</h6>
-                    <p>@_idea.BusinessUnitStr</p>
-                  </div>
-                  <div class="col">
-                    <h6>Afdeling</h6>
-                    <p>@_idea.DepartmentStr</p>
-                  </div>
-                  <div class="col">
-                    <h6>Prioritet</h6>
-                    <p>@_idea.PriorityStr</p>
-                  </div>
-                  <div class="col">
-                    <h6>Dato</h6>
-                    <p>@_idea.CreatedAt.ToShortDateString()</p>
-                  </div>
-                  <div class="col">
-                    <h6>Status</h6>
-                    <p>@_idea.StatusStr</p>
+              <div class="row g-2">
+                <div class="col-6">
+                  @if (IsEditing)
+                  {
+                    <h6>Projektnavn</h6>
+                    <InputText type="text" class="form-control m-1" maxlength=75 @bind-Value="_editIdea.ProjectName"></InputText>
+                  }
+                </div>
+                <div class="col-6"></div>
+                <div class="col-12">
+                  <div class="row mx-1">
+                    <div class="col">
+                      <h6>Initialer</h6>
+                      @if (IsEditing)
+                      {
+                        <InputText type="text" class="form-control" maxlength=5 @bind-Value="_editIdea.Initials"></InputText>
+                      }
+                      else
+                      {
+                        <p>@_idea.Initials</p>
+                      }
+                    </div>
+                    <div class="col">
+                      <h6>Forretningsenhed</h6>
+                      @if (IsEditing)
+                      {
+                        <InputSelect class="form-select" required @bind-Value="_editIdea.BusinessUnit">
+                          <option value="1">Ikke angivet</option>
+                          <option value="2">Aalborg Portland</option>
+                          <option value="3">Unicon DK</option>
+                          <option value="4">Unicon NO</option>
+                          <option value="5">Kudsk & Dahl</option>
+                        </InputSelect>
+                      }
+                      else
+                      {
+                        <p>@_idea.BusinessUnitStr</p>}
+
+                    </div>
+                    <div class="col">
+                      <h6>Afdeling</h6>
+                      @if (IsEditing)
+                      {
+                        <InputSelect class="form-select" @bind-Value="_editIdea.Department">
+                          <option value="1">Ikke angivet</option>
+                          <option value="2">Salg</option>
+                          <option value="3">SCM</option>
+                          <option value="4">Produktion</option>
+                          <option value="5">Vedligehold</option>
+                          <option value="6">Finans</option>
+                          <option value="7">HR</option>
+                          <option value="8">PMO & Transformation</option>
+                        </InputSelect>
+                      }
+                      else
+                      {
+                        <p>@_idea.DepartmentStr</p>
+                      }
+                    </div>
+                    <div class="col">
+                      <h6>Prioritet</h6>
+                      @if (IsEditing)
+                      {
+                        <InputSelect class="form-select" required @bind-Value="_editIdea.Priority">
+                          <option value="0">Ikke angivet</option>
+                          <option value="1">Lav</option>
+                          <option value="2">Mellem</option>
+                          <option value="3">Høj</option>
+                        </InputSelect>
+                      }
+                      else
+                      {
+                        <p>@_idea.PriorityStr</p>
+                      }
+                    </div>
+                    <div class="col">
+                      <h6>Status</h6>
+                      @if (IsEditing)
+                      {
+                        <InputSelect class="form-select" required @bind-Value="_editIdea.Status">
+                          <option value="1">Oprettet</option>
+                          <option value="2">Godkendt</option>
+                          <option value="3">Arkiveret</option>
+                          <option value="4">Afsluttet</option>
+                        </InputSelect>
+                      }
+                      else
+                      {
+                        <p>@_idea.StatusStr</p>
+                      }
+                    </div>
+                    <div class="col">
+                      <h6>Dato</h6>
+                      <p>@_idea.CreatedAt.ToShortDateString()</p>
+                    </div>
                   </div>
                 </div>
-              </div>
-              <div class="col-12">
-                @if (IsEditing)
-                {
-                  <div class="form-group">
-                    <label>Idébeskrivelse</label>
-                    <InputTextArea class="form-control" rows="3" maxlength=1500 required @bind-Value="_editIdea.Description"></InputTextArea>
-                  </div>
-                 }
-                else
-                {
-                  <div class="card">
-                    <div class="card-body">
-                      <h5 class="card-title mb-2 text-muted" style="margin-top: -0.5rem;"> Idébeskrivelse</h5>
-                      <p class="card-text">@((MarkupString)_idea.Description)</p>
-                    </div>
-                  </div>
-                  }
-              </div>
-              <div class="col-6">
-                @if (IsEditing)
-                {
-                  <div class="form-group">
-                    <label>Forventet resultat</label>
-                    <InputTextArea class="form-control" rows="3" maxlength=500 @bind-Value="@_editIdea.ExpectedResults">@_idea.ExpectedResults</InputTextArea>
-                  </div>
-                }
-                else
-                {
-                  <div class="card">
-                    <div class="card-body">
-                      <h5 class="card-title mb-2 text-muted" style="margin-top: -0.5rem;">Forventet resultat</h5>
-                      <p class="card-text">@((MarkupString)_idea.ExpectedResults)</p>
-                    </div>
-                  </div>
-                }
-              </div>
-              <div class="col-6">
-                  @if(IsEditing) {
+                <div class="col-12">
+                  @if (IsEditing)
+                  {
                     <div class="form-group">
-                        <label>Plan</label>
-                        <InputTextArea class="form-control" rows="3" maxlength=500 @bind-Value="@_editIdea.Plan">@_idea.Plan</InputTextArea>
+                      <label>Idébeskrivelse</label>
+                      <InputTextArea class="form-control" rows="3" maxlength=1500 required @bind-Value="_editIdea.Description"></InputTextArea>
                     </div>
                   }
-                  else {
+                  else
+                  {
+                    <div class="card">
+                      <div class="card-body">
+                        <h5 class="card-title mb-2 text-muted" style="margin-top: -0.5rem;"> Idébeskrivelse</h5>
+                        <p class="card-text">@((MarkupString)_idea.Description)</p>
+                      </div>
+                    </div>
+                  }
+                </div>
+                <div class="col-6">
+                  @if (IsEditing)
+                  {
+                    <div class="form-group">
+                      <label>Forventet resultat</label>
+                      <InputTextArea class="form-control" rows="3" maxlength=500 @bind-Value="@_editIdea.ExpectedResults"></InputTextArea>
+                    </div>
+                  }
+                  else
+                  {
+                    <div class="card">
+                      <div class="card-body">
+                        <h5 class="card-title mb-2 text-muted" style="margin-top: -0.5rem;">Forventet resultat</h5>
+                        <p class="card-text">@((MarkupString)_idea.ExpectedResults)</p>
+                      </div>
+                    </div>
+                  }
+                </div>
+                <div class="col-6">
+                  @if (IsEditing)
+                  {
+                    <div class="form-group">
+                      <label>Plan</label>
+                      <InputTextArea class="form-control" rows="3" maxlength=500 @bind-Value="@_editIdea.Plan"></InputTextArea>
+                    </div>
+                  }
+                  else
+                  {
                     <div class="card">
                       <div class="card-body">
                         <h5 class="card-title mb-2 text-muted" style="margin-top: -0.5rem;">Plan</h5>
@@ -108,13 +184,13 @@
                       </div>
                     </div>
                   }
-              </div>
-              <div class="col-6">
-                  @if (IsEditing) 
+                </div>
+                <div class="col-6">
+                  @if (IsEditing)
                   {
                     <div class="form-group">
-                        <label>Risiko</label>
-                        <InputTextArea class="form-control" rows="3" maxlength=1500 @bind-Value="_editIdea.Risk">@_idea.Risk</InputTextArea>
+                      <label>Risiko</label>
+                      <InputTextArea class="form-control" rows="3" maxlength=1500 @bind-Value="_editIdea.Risk"></InputTextArea>
                     </div>
                   }
                   else
@@ -126,35 +202,35 @@
                       </div>
                     </div>
                   }
-              </div>
-            <div class="col-6">
-              @if (IsEditing)
-              {
-              <div class="form-group">
-                <label>Team</label>
-                <InputText type="text" class="form-control" maxlength=75 @bind-Value="_editIdea.Team">@_idea.Team</InputText>
-              </div>
-              }
-              else
-              {
-                <div class="card h-100">
-                  <div class="card-body">
-                    <h5 class="card-title mb-2 text-muted" style="margin-top: -0.5rem;">Team</h5>
-                    <p class="card-text">@_idea.Team</p>
-                  </div>
-                </div>}
+                </div>
+                <div class="col-6">
+                  @if (IsEditing)
+                  {
+                    <div class="form-group">
+                      <label>Team</label>
+                      <InputText type="text" class="form-control" maxlength=75 @bind-Value="_editIdea.Team"></InputText>
+                    </div>
+                  }
+                  else
+                  {
+                    <div class="card h-100">
+                      <div class="card-body">
+                        <h5 class="card-title mb-2 text-muted" style="margin-top: -0.5rem;">Team</h5>
+                        <p class="card-text">@_idea.Team</p>
+                      </div>
+                    </div>}
 
+                </div>
+              </div>
             </div>
-            </div>
-          </div>
-          @if (IsEditing)
-          {
-        <div class="d-flex justify-content-end">
-          <button class="btn btn-secondary m-2">Fortryd</button>
-          <button type="submit" class="btn btn-primary m-2">Gem</button>
-        </div>
+            @if (IsEditing)
+            {
+              <div class="d-flex justify-content-end">
+                <button class="btn btn-secondary m-2">Fortryd</button>
+                <button type="submit" class="btn btn-primary m-2">Gem</button>
+              </div>
+            }
           }
-
         </EditForm>
         <CommentSection @ref="CommentSection"></CommentSection>
       </div>

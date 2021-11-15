@@ -32,6 +32,7 @@ namespace BusinessLogicLib.Service
         }
         public async Task Edit(EditIdea idea)
         {
+            Console.WriteLine(idea.Department);
             await Repository.UpdateAsync(DBConvert.EditIdeaToTbl(idea), idea.Department, idea.BusinessUnit);
         }
     }
