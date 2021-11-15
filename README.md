@@ -11,7 +11,7 @@ In this repository we use a layered architecture where we have four different la
 * RepositoryLib
 * DataBaseLib, where we have our database.
 
-The Ideabank layer contains ‘Bootstrap’ contains Bootstrap 4.0 from [getbootstrap.com](https://getbootstrap.com/)
+The Ideabank layer contains Bootstrap 5 from [getbootstrap.com](https://getbootstrap.com/)
 
 All the mentioned code except for the ones with a link to the source of the code, is developed and written by CS-21-SW-3-17 at Aalborg University.
 
