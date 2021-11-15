@@ -13,13 +13,13 @@ namespace IdeaBank.Pages
 {
     public partial class SubmitIdea : ComponentBase
     {
-        private NewIdea idea = new();
+        private NewIdea Idea = new();
         [Inject]
         public NavigationManager NavManager { get; set; }
         [Inject]
-        public IIdeasDataAccess _ideas { get; set; }
+        public IIdeasDataAccess Ideas { get; set; }
         [Inject]
-        public IConfiguration _config { get; set; }
+        public IConfiguration Config { get; set; }
         [Inject]
         public IJSRuntime JsRuntime { get; set; }
 
@@ -28,7 +28,7 @@ namespace IdeaBank.Pages
         {
             try
             {
-                await _ideas.Insert(idea);
+                await Ideas.Insert(Idea);
                 NavManager.NavigateTo("/");
             }
             catch (Exception ex)
@@ -40,11 +40,11 @@ namespace IdeaBank.Pages
         }
         private async void Regret()
         {
-            if (string.IsNullOrEmpty(idea.ProjectName) &&
-                string.IsNullOrEmpty(idea.Description) &&
-                string.IsNullOrEmpty(idea.Initials) &&
-                string.IsNullOrEmpty(idea.ExpectedResults) &&
-                string.IsNullOrEmpty(idea.Team))
+            if (string.IsNullOrEmpty(Idea.ProjectName) &&
+                string.IsNullOrEmpty(Idea.Description) &&
+                string.IsNullOrEmpty(Idea.Initials) &&
+                string.IsNullOrEmpty(Idea.ExpectedResults) &&
+                string.IsNullOrEmpty(Idea.Team))
             {
                 NavManager.NavigateTo("/");
             }

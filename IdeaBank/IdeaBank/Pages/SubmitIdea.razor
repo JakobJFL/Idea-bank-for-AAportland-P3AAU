@@ -24,7 +24,7 @@
       <p>Bemærk at du ikke kan foretage ændringer efter den er gemt.</p>
       <p class="mb-4 text-danger">*Skal udfyldes</p>
       <div class="row g-5">
-        <EditForm Model="@idea" OnValidSubmit="@HandleValidSubmit">
+        <EditForm Model="@Idea" OnValidSubmit="@HandleValidSubmit">
           <DataAnnotationsValidator />
           <ValidationSummary />
           <div class="row g-3">
@@ -34,7 +34,7 @@
               </label>
               <div class="input-group">
                 <InputText type="text" class="form-control" placeholder="Projektnavn" required
-                           @bind-Value="idea.ProjectName" maxlength=75 DisplayName="Projektnavn"></InputText>
+                           @bind-Value="Idea.ProjectName" maxlength=75 DisplayName="Projektnavn"></InputText>
               </div>
             </div>
 
@@ -44,7 +44,7 @@
               </label>
               <div class="input-group">
                 <InputText type="text" class="form-control" placeholder="AAA" required
-                           @bind-Value="idea.Initials" maxlength=5 />
+                           @bind-Value="Idea.Initials" maxlength=5 />
                 <div class="invalid-feedback">Initialer er noget værre noget.</div>
               </div>
             </div>
@@ -54,7 +54,7 @@
                 <label>
                   Idébeskrivelse<label class="text-danger">*</label>
                 </label>
-                <InputTextArea class="form-control" rows="3" maxlength=1500 placeholder="Problemdefinition og afgrænsning" required @bind-Value="idea.Description"></InputTextArea>
+                <InputTextArea class="form-control" rows="3" maxlength=1500 placeholder="Problemdefinition og afgrænsning" required @bind-Value="Idea.Description"></InputTextArea>
               </div>
             </div>
             <div class="col-md-3">
@@ -62,7 +62,7 @@
                 <label class="form-label">Forretningsenhed</label>
                 <img src="svg/question-circle.svg">
               </div>
-              <InputSelect class="form-select" required @bind-Value="idea.BusinessUnit">
+              <InputSelect class="form-select" required @bind-Value="Idea.BusinessUnit">
                 <option value="1" selected class="text-muted">Ikke angivet</option>
                 <option value="2">Aalborg Portland</option>
                 <option value="3">Unicon DK</option>
@@ -75,7 +75,7 @@
                 <label class="form-label">Afdeling</label>
                 <img src="svg/question-circle.svg">
               </div>
-              <InputSelect class="form-select" @bind-Value="idea.Department">
+              <InputSelect class="form-select" @bind-Value="Idea.Department">
                 <option value="1" selected class="text-muted">Ikke angivet</option>
                 <option value="2">Salg</option>
                 <option value="3">SCM</option>
@@ -92,25 +92,25 @@
             <div class="col-md-6">
               <label class="form-label">Team</label>
               <div class="input-group">
-                <InputText type="text" class="form-control" maxlength=75 placeholder="Hvem skal være med?" @bind-Value="idea.Team"></InputText>
+                <InputText type="text" class="form-control" maxlength=75 placeholder="Hvem skal være med?" @bind-Value="Idea.Team"></InputText>
               </div>
             </div>
             <div class="col-md-6">
               <div class="form-group">
                 <label>Plan</label>
-                <InputTextArea class="form-control" rows="3" maxlength=500 placeholder="Forventet varighed, ønsket start og/eller deadline" @bind-Value="idea.Plan"></InputTextArea>
+                <InputTextArea class="form-control" rows="3" maxlength=500 placeholder="Forventet varighed, ønsket start og/eller deadline" @bind-Value="Idea.Plan"></InputTextArea>
               </div>
             </div>
             <div class="col-md-6">
               <div class="form-group">
                 <label>Forventet resultat</label>
-                <InputTextArea class="form-control" rows="3" maxlength=500 placeholder="Forventet resultat" @bind-Value="idea.ExpectedResults"></InputTextArea>
+                <InputTextArea class="form-control" rows="3" maxlength=500 placeholder="Forventet resultat" @bind-Value="Idea.ExpectedResults"></InputTextArea>
               </div>
             </div>
             <div>
               <label class="my-2">Skjul ideen (kun administrator vil ikke kunne se ideen)</label>
               <label class="switch d-flex">
-                <input @bind="idea.IsHidden" type="checkbox">
+                <input @bind="Idea.IsHidden" type="checkbox">
                 <span class="slider"></span>
                 <span class="text-checked">Kun administrator kan se ideen</span>
                 <span class="text-not-checked">Alle kan se ideen</span>

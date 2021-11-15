@@ -17,7 +17,6 @@ namespace IdeaBank.Pages
         private ICommentsDataAccess Comments { get; set; }
         [Inject]
         private IJSRuntime JsRuntime { get; set; }
-
         private Index IndexView { get; set; }
 
         private string _modalDisplay = "none;";
@@ -65,6 +64,15 @@ namespace IdeaBank.Pages
                 await IndexView.Ideas.DeleteByID(_idea.Id);
                 await Close();
                 await IndexView.Update();
+                StateHasChanged();
+            }
+        }
+        private async void DeleteComment(Comment c)
+        {
+            if (await JS.InvokeAsync<bool>("confirm", "Vil du slette kommentaren?"))
+            {
+                await Comments.DeleteByID(c.Id);
+                _idea.Comments = await Comments.GetWFilter(_idea.Id);
                 StateHasChanged();
             }
         }

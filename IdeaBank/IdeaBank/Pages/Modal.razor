@@ -122,12 +122,20 @@
                         @c.CreatedAt.ToShortTimeString()
                       </small>
                     </h6>
-                    <p> @((MarkupString) c.Message)</p>
+                    <p>
+                      @((MarkupString) c.Message)
+                      <AuthorizeView>
+                        <Authorized>
+                          <a class="text-danger float-end" @onclick="() => DeleteComment(c)">Slet</a>
+                        </Authorized>
+                      </AuthorizeView>
+                    </p>
                   </li>
                 </ul>
-                <hr class="py-0 my-0" />}
+              <hr class="py-0 my-0" />
+                }
             }
-          </div>
+        </div>
         </div>
       </div>
     </div>
