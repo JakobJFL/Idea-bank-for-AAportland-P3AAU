@@ -9,5 +9,6 @@ namespace RepositoryLib.Interfaces
         public Task<IEnumerable<CommentsTbl>> ListAsync(int id);
         public Task AddAsync(CommentsTbl model);
 
+        public Task RemoveByIdAsync(int id);
     }
 }

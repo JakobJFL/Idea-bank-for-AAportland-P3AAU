@@ -40,9 +40,11 @@ namespace RepositoryLib.Implementations
             throw new NotImplementedException();
         }
 
-        public Task RemoveByIdAsync(int id)
+        public async Task RemoveByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            CommentsTbl c = await Context.CommentsTbl.FindAsync(id);
+            Context.CommentsTbl.Remove(c);
+            Context.SaveChanges();
         }
 
         public void Update(CommentsTbl model)

@@ -1,6 +1,8 @@
 @using BusinessLogicLib.Models;
 @using Microsoft.AspNetCore.Components.Forms
 
+@inject IJSRuntime JS
+
 <div class="modal fade @_modalClass cursor-de" tabindex="-1" style="display:@_modalDisplay;">
   <div class="modal-dialog modal-dialog-scrollable modal-xl bg-transparent" role="document" style="z-index:1055">
     <div class="modal-content rounded-cos border-0">
@@ -10,7 +12,7 @@
           <Authorized>
             <div class="float-end">
               <button class="btn btn-icon noFocus" @onclick="DeleteIdea"><img src="/svg/trash-fill.svg" /></button>
-              <button class="btn btn-icon noFocus mx-3" @onclick="EditIdea"><img src="/svg/pencil-fill.svg" /></button>
+              <button class="btn btn-icon noFocus mx-3"><img src="/svg/pencil-fill.svg" /></button>
               <button type="button" class="btn btn-close" data-bs-dismiss="modal" aria-label="Close" @onclick="() => Close()"></button>
             </div>
           </Authorized>
@@ -83,6 +85,7 @@
                 </div>
               </div>
             </div>
+
             <div class="col-6">
               <div class="card h-100">
                 <div class="card-body">
