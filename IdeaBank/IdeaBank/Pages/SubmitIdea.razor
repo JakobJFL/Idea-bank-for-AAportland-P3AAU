@@ -3,13 +3,7 @@
 @using BusinessLogicLib.Models;
 @using BusinessLogicLib.Interfaces;
 
-@inject NavigationManager NavManager
 
-@inject IIdeasDataAccess _ideas
-
-@inject IConfiguration _config
-
-@inject IJSRuntime JsRuntime
 
 <main class="bgImg">
   <section class="py-4 text-center container">
@@ -134,39 +128,3 @@
     </div>
   </section>
 </main>
-
-@code {
-    private NewIdea idea = new();
-
-    private async void HandleValidSubmit()
-    {
-      try
-      {
-        await _ideas.Insert(idea);
-        NavManager.NavigateTo("/");
-      }
-      catch (Exception ex)
-      {
-        throw new Exception(ex.Message);
-        // skriv en fejl besked til brugern
-      }
-
-    }
-    private async void Regret()
-    {
-      if (string.IsNullOrEmpty(idea.ProjectName) &&
-          string.IsNullOrEmpty(idea.Description) &&
-          string.IsNullOrEmpty(idea.Initials) &&
-          string.IsNullOrEmpty(idea.ExpectedResults) &&
-          string.IsNullOrEmpty(idea.Team))
-      {
-        NavManager.NavigateTo("/");
-      }
-      else
-      {
-        bool confirmed = await JsRuntime.InvokeAsync<bool>("confirm", "Are you sure?");
-        if (confirmed)
-          NavManager.NavigateTo("/");
-      }
-    }
-}

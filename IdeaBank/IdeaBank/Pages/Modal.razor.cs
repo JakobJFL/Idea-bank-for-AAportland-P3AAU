@@ -25,6 +25,8 @@ namespace IdeaBank.Pages
         private ViewIdea _idea = new();
         private Comment _comment = new();
 
+        private readonly string _confirmDeleteIdea = "Are you sure?";
+
         public async Task Open(ViewIdea idea, Index indexView)
         {
             StateHasChanged();
@@ -57,7 +59,7 @@ namespace IdeaBank.Pages
 
         private async void DeleteIdea()
         {
-            bool confirmed = await JsRuntime.InvokeAsync<bool>("confirm", "Are you sure?");
+            bool confirmed = await JsRuntime.InvokeAsync<bool>("confirm", _confirmDeleteIdea);
             if (confirmed)
             {
                 await IndexView.Ideas.DeleteByID(_idea.Id);
@@ -65,6 +67,12 @@ namespace IdeaBank.Pages
                 await IndexView.Update();
                 StateHasChanged();
             }
+        }
+
+        private void EditIdea()
+        {
+
+            //IndexView.Ideas.Edit();
         }
     }
 }
