@@ -30,9 +30,9 @@ namespace BusinessLogicLib.Service
         {
             await Repository.RemoveByIdAsync(id);
         }
-        public Task Edit(ViewIdea idea)
+        public async Task Edit(EditIdea idea)
         {
-            throw new NotImplementedException();
+            await Repository.UpdateAsync(DBConvert.EditIdeaToTbl(idea), idea.Department, idea.BusinessUnit);
         }
     }
 }

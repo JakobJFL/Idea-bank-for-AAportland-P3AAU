@@ -1,0 +1,53 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using BusinessLogicLib.Interfaces;
+using BusinessLogicLib.Models;
+using Microsoft.Extensions.Configuration;
+using Microsoft.AspNetCore.Components.Forms;
+using Microsoft.AspNetCore.Components;
+using Microsoft.JSInterop;
+
+namespace IdeaBank.Pages
+{
+    public partial class CommentSection : ComponentBase
+    {
+        [Inject]
+        private ICommentsDataAccess Comments { get; set; }
+        [Inject]
+        private IJSRuntime JsRuntime { get; set; }
+        public int IdeaId { get; set; }
+
+        private Comment _comment = new();
+        private List<Comment> AllComment { get; set; }
+        private readonly string _confirmDeleteComment = "Vil du slette kommentaren?";
+
+        public async void LoadComments(int ideaId)
+        {
+            IdeaId = ideaId;
+            AllComment = await Comments.GetWFilter(ideaId);
+            StateHasChanged();
+        }
+
+        private async void HandleValidSubmit()
+        {
+            _comment.CreatedAt = DateTime.Now;
+            _comment.IdeaId = IdeaId;
+            Comments.Insert(_comment);
+            AllComment = await Comments.GetWFilter(IdeaId);
+            _comment.Initials = "";
+            _comment.Message = "";
+            StateHasChanged();
+        }
+        private async void DeleteComment(Comment c)
+        {
+            if (await JsRuntime.InvokeAsync<bool>("confirm", _confirmDeleteComment))
+            {
+                await Comments.DeleteByID(c.Id);
+                AllComment = await Comments.GetWFilter(IdeaId);
+                StateHasChanged();
+            }
+        }
+    }
+}

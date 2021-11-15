@@ -8,13 +8,15 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
+using System.Reflection;
+using DataBaseLib.Models;
+using BusinessLogicLib;
 
 namespace IdeaBank.Pages
 {
     public partial class Modal : ComponentBase
     {
-        [Inject]
-        private ICommentsDataAccess Comments { get; set; }
+
         [Inject]
         private IJSRuntime JsRuntime { get; set; }
         private Index IndexView { get; set; }
@@ -22,7 +24,9 @@ namespace IdeaBank.Pages
         private string _modalDisplay = "none;";
         private string _modalClass = "";
         private ViewIdea _idea = new();
-        private Comment _comment = new();
+        private EditIdea _editIdea = new();
+        private CommentSection CommentSection { get; set; }
+        private bool IsEditing { get; set; } = false;
 
         private readonly string _confirmDeleteIdea = "Are you sure?";
 
@@ -34,7 +38,7 @@ namespace IdeaBank.Pages
             await Task.Delay(150);
             _modalClass = "show";
             _idea = idea;
-            _idea.Comments = await Comments.GetWFilter(_idea.Id);
+            CommentSection.LoadComments(idea.Id);
             StateHasChanged();
         }
 
@@ -43,19 +47,9 @@ namespace IdeaBank.Pages
             _modalClass = "";
             await Task.Delay(250);
             _modalDisplay = "none;";
+            IsEditing = false;
             StateHasChanged();
         }
-        private async void HandleValidSubmit()
-        {
-            _comment.CreatedAt = DateTime.Now;
-            _comment.IdeaId = _idea.Id;
-            Comments.Insert(_comment);
-            _idea.Comments = await Comments.GetWFilter(_idea.Id);
-            _comment.Initials = "";
-            _comment.Message = "";
-            StateHasChanged();
-        }
-
         private async void DeleteIdea()
         {
             bool confirmed = await JsRuntime.InvokeAsync<bool>("confirm", _confirmDeleteIdea);
@@ -67,20 +61,34 @@ namespace IdeaBank.Pages
                 StateHasChanged();
             }
         }
-        private async void DeleteComment(Comment c)
-        {
-            if (await JS.InvokeAsync<bool>("confirm", "Vil du slette kommentaren?"))
-            {
-                await Comments.DeleteByID(c.Id);
-                _idea.Comments = await Comments.GetWFilter(_idea.Id);
-                StateHasChanged();
-            }
-        }
-
         private void EditIdea()
         {
-
-            //IndexView.Ideas.Edit();
+            _editIdea.Id = _idea.Id;
+            _editIdea.Initials = _idea.Initials;
+            _editIdea.ProjectName = _idea.ProjectName;
+            _editIdea.Description = DBConvert.StrBrToNewLine(_idea.Description);
+            _editIdea.Risk = DBConvert.StrBrToNewLine(_idea.Risk);
+            _editIdea.Plan = DBConvert.StrBrToNewLine(_idea.Plan);
+            _editIdea.ExpectedResults = DBConvert.StrBrToNewLine(_idea.ExpectedResults);
+            _editIdea.Team = _idea.Team;
+            _editIdea.Priority = _idea.Priority;
+            _editIdea.Department = _idea.Department;
+            _editIdea.BusinessUnit = _idea.BusinessUnit;
+            _editIdea.Status = _idea.Status;
+            _editIdea.IsHidden = _idea.IsHidden;
+            _editIdea.CreatedAt = _idea.CreatedAt;
+            _editIdea.UpdatedAt = _idea.UpdatedAt;
+            IsEditing = true;
+            StateHasChanged();
+        }
+        private async void HandleValidEdit()
+        {
+            IsEditing = false;
+            await IndexView.Ideas.Edit(_editIdea);
+            FilterIdea filterIdea = new();
+            filterIdea.Id = _editIdea.Id;
+            _idea = (await IndexView.Ideas.GetWFilter(filterIdea)).First();
+            StateHasChanged();
         }
     }
 }

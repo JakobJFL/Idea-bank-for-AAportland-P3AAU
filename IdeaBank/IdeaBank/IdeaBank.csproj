@@ -13,6 +13,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Remove="Pages\Comments.razor.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="Pages\Comments.razor" />
     <Content Remove="Pages\NewIdea.razor" />
     <Content Remove="wwwroot\js\NewFile.txt" />
     <Content Remove="wwwroot\lib\NewFile.txt" />
