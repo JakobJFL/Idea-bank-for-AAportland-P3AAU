@@ -4154,7 +4154,7 @@ textarea.form-control-lg {
 .nav-link {
     display: block;
     padding: 0.5rem 1rem;
-    color: #0d6efd;
+    color: var(--bs-primary);
     text-decoration: none;
     transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out;
 }
@@ -4166,7 +4166,7 @@ textarea.form-control-lg {
 }
 
 .nav-link:hover, .nav-link:focus {
-    color: #0a58ca;
+  color: #8A0039;
 }
 
 .nav-link.disabled {
@@ -4220,7 +4220,7 @@ textarea.form-control-lg {
     .nav-pills .nav-link.active,
     .nav-pills .show > .nav-link {
         color: #fff;
-        background-color: #0d6efd;
+        background-color: var(--bs-primary);
     }
 
 .nav-fill > .nav-link,

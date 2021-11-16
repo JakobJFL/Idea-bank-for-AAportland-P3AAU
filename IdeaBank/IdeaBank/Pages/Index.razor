@@ -1,21 +1,37 @@
 @page "/"
-@using BusinessLogicLib.Models;
-@using DataBaseLib.Models;
+@using BusinessLogicLib.Models
+@using DataBaseLib.Models
+@using Microsoft.AspNetCore.Components.Authorization
 
-<Modal @ref="Modal"></Modal>
+<AuthorizeView>
+  <NotAuthorized>
+    @{IsAuthorized = false;}
+  </NotAuthorized>
+  <Authorized>
+    @{IsAuthorized = true;}
+  </Authorized>
+</AuthorizeView>
 
 <div class="bgImg">
   <section class="py-4 text-center container">
     <div class="row py-lg-5">
       <div class="col-lg-6 col-md-6 mx-auto">
-        <div class="d-flex flex-row justify-content-center"><h1 class="fw-light">Aalborg Portland Idébank</h1></div>
-        <p class="fs-5 py-1">
-          Velkommen til Aalborg Portland's idébank. Her er der mulighed for at indsende dine egne
-          idéer til eventuelle forbedringer eller ændringer.
-        </p>
-        <NavLink href="/NewIdea">
-          <button class="btn btn-lg btn-primary my-2 p-4 rounded-cos">Tilføj ny idé</button>
-        </NavLink>
+        <AuthorizeView>
+          <Authorized>
+            <div class="d-flex flex-row justify-content-center"><h1 class="fw-light">Administrator side</h1></div>
+            <p>Du er logget ind som admin</p>
+          </Authorized>
+          <NotAuthorized>
+            <div class="d-flex flex-row justify-content-center"><h1 class="fw-light">Aalborg Portland Idébank</h1></div>
+            <p class="fs-5 py-1">
+              Velkommen til Aalborg Portland's idébank. Her er der mulighed for at indsende dine egne
+              idéer til eventuelle forbedringer eller ændringer.
+            </p>
+            <NavLink href="/NewIdea">
+              <button class="btn btn-lg btn-primary my-2 p-4 rounded-cos">Tilføj ny idé</button>
+            </NavLink>
+          </NotAuthorized>
+        </AuthorizeView>
       </div>
     </div>
   </section>
@@ -32,10 +48,10 @@
           <button class="btn btn-outline-secondary rounded-cos" type="submit">Søg</button>
         </div>
       </EditForm>
-        <button class="btn btn-outline-primary mb-1 rounded-cos" @onclick="Reset">Nulstil</button>
+      <button class="btn btn-outline-primary mb-1 rounded-cos" @onclick="Reset">Nulstil</button>
     </div>
+    <Modal @ref="Modal"></Modal>
     <EditForm EditContext="@_editContext">
-      <DataAnnotationsValidator />
       <div class="table-responsive rounded-cos">
         <table class="table my-0 table-primary table-striped table-hover">
           <thead>
@@ -43,15 +59,15 @@
               <th scope="col" style="min-width: 150px;" class="sort-select bg-primary select-filter-text" @onclick="ChangeProjectNameSort">
                 Projektnavn
                 @if (_filterIdea.Sorting == Sort.ProjectNameAsc)
-                {<img src="/svg/sort-up.svg" />}
+                {<img src="/svg/alfa-desc.svg" />}
                 else if (_filterIdea.Sorting == Sort.ProjectNameDesc)
-                {<img src="/svg/sort-down.svg" />}
+                {<img src="/svg/alfa-asc.svg" />}
                 else
                 {<img src="/svg/filter.svg" />}
               </th>
 
               <th scope="col" style="width: 220px;" class="bg-primary text-white select-filter-text">
-                <InputSelect class="btn form-select select-filter" @bind-Value="_filterIdea.BusinessUnit">
+                <InputSelect class="btn form-select select-filter noFocus" @bind-Value="_filterIdea.BusinessUnit">
                   <option value="0" selected>Forretningsenheder</option>
                   <option value="1">Kun Ikke Angivet</option>
                   <option value="2">Kun Aalborg Portland</option>
@@ -61,7 +77,7 @@
                 </InputSelect>
               </th>
               <th scope="col" style="width: 150px;" class="bg-primary text-white select-filter-text">
-                <InputSelect class="btn form-select select-filter" @bind-Value="_filterIdea.Department">
+                <InputSelect class="btn form-select select-filter noFocus" @bind-Value="_filterIdea.Department">
                   <option value="0" selected>Afdelinger</option>
                   <option value="1">Kun Ikke Angivet</option>
                   <option value="2">Kun Salg</option>
@@ -74,7 +90,7 @@
                 </InputSelect>
               </th>
               <th scope="col" style="width: 120px;" class="bg-primary text-white select-filter-text">
-                <InputSelect class="btn form-select select-filter" @bind-Value="_filterIdea.Status">
+                <InputSelect class="btn form-select select-filter noFocus" @bind-Value="_filterIdea.Status">
                   <option value="0" selected>Status</option>
                   <option value="1">Oprettet</option>
                   <option value="2">Godkendt</option>
@@ -83,7 +99,7 @@
                 </InputSelect>
               </th>
               <th scope="col" style="width: 138px;" class="bg-primary text-white select-filter-text">
-                <InputSelect class="btn form-select select-filter" @bind-Value="_filterIdea.Priority">
+                <InputSelect class="btn form-select select-filter noFocus" @bind-Value="_filterIdea.Priority">
                   <option value="0" selected>Prioritet</option>
                   <option value="1">Lav</option>
                   <option value="2">Mellem</option>
@@ -112,21 +128,38 @@
             </tr>
           </thead>
           <tbody>
-            @if (IdeaList != null)
+
+            @if (_ideaList != null)
             {
-              foreach (ViewIdea idea in IdeaList)
+              foreach (ViewIdea idea in _ideaList)
               {
-                <tr title="Klik for at læse mere" @onclick="() => Modal.Open(idea)">
-                  <td style="min-width: 150px;" class="select-filter-text">@idea.ProjectName</td>
-                  <td>@idea.BusinessUnit</td>
-                  <td>@idea.Department</td>
-                  <td>@idea.Status</td>
-                  <td>@idea.Priority</td>
-                  <td>@idea.CreatedAt.ToShortDateString()</td>
-                  <td>@idea.UpdatedAt.ToShortDateString()</td>
-                </tr>
+                if (IsAuthorized || !idea.IsHidden)
+                {
+                  <tr title="Klik for at læse mere" @onclick="() => Modal.Open(idea, this)">
+                    <td style="min-width: 150px;" class="select-filter-text">
+                      <div class="d-flex">
+                        @idea.ProjectName
+                        @if (idea.IsHidden)
+                        {
+                          <p class="text-show-hidden">Skjult</p>}
+                      </div>
+                    </td>
+                    <td>@idea.BusinessUnitStr</td>
+                    <td>@idea.DepartmentStr</td>
+                    <td>@idea.StatusStr</td>
+                    <td>@idea.PriorityStr</td>
+                    <td>@idea.CreatedAt.ToShortDateString()</td>
+                    <td>@idea.UpdatedAt.ToShortDateString()</td>
+                  </tr>
+                }
               }
             }
+            else
+              {
+                <tr>
+                  <td colspan = "7" class="m-3 fs-5 text-center">Indlæser idéer...</td>
+                </tr>
+              }
           </tbody>
         </table>
       </div>

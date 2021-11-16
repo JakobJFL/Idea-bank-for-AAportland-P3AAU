@@ -1,122 +1,240 @@
 @using BusinessLogicLib.Models;
 @using Microsoft.AspNetCore.Components.Forms
 
-<div class="modal fade @ModalClass cursor-de" tabindex="-1" style="display:@ModalDisplay;">
+@inject IJSRuntime JS
+
+<div class="modal fade @_modalClass cursor-de" tabindex="-1" style="display:@_modalDisplay;">
   <div class="modal-dialog modal-dialog-scrollable modal-xl bg-transparent" role="document" style="z-index:1055">
     <div class="modal-content rounded-cos border-0">
       <div class="modal-header bg-primary text-white">
         <h5 class="modal-title">@_idea.ProjectName</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" @onclick="() => Close()"></button>
+        <AuthorizeView>
+          <Authorized>
+            <div class="float-end">
+              @if (!IsEditing)
+              {
+                <button class="btn btn-icon noFocus" @onclick="DeleteIdea"><img src="/svg/trash-fill.svg" /></button>
+                <button class="btn btn-icon noFocus mx-3" @onclick="EditIdea"><img src="/svg/pencil-fill.svg" /></button>
+              }
+              <button type="button" class="btn btn-close" data-bs-dismiss="modal" aria-label="Close" @onclick="() => Close()"></button>
+            </div>
+          </Authorized>
+          <NotAuthorized>
+            <button type="button" class="btn btn-close" data-bs-dismiss="modal" aria-label="Close" @onclick="() => Close()"></button>
+          </NotAuthorized>
+        </AuthorizeView>
+
       </div>
       <div class="modal-body bg-light">
-        <div class="row g-2">
-          <div class="row g-2">
-            <div class="col-12">
-              <div class="row mx-1">
-                <div class="col">
-                  <h6>Initialer</h6>
-                  <p>@_idea.Initials</p>
+        <EditForm Model="@_editIdea" OnValidSubmit="@HandleValidEdit">
+          @if (_idea == null)
+          {
+            <h5>Indlæser ideen...</h5>
+          }
+          else
+          {
+            <div class="row g-2">
+              <div class="row g-2">
+                <div class="col-6">
+                  @if (IsEditing)
+                  {
+                    <h6>Projektnavn</h6>
+                    <InputText type="text" class="form-control m-1" maxlength=75 @bind-Value="_editIdea.ProjectName"></InputText>
+                  }
                 </div>
-                <div class="col">
-                  <h6>Forretningsenhed</h6>
-                  <p>@_idea.BusinessUnit</p>
-                </div>
-                <div class="col">
-                  <h6>Afdeling</h6>
-                  <p>@_idea.Department</p>
-                </div>
-                <div class="col">
-                  <h6>Prioritet</h6>
-                  <p>@_idea.Priority</p>
-                </div>
-                <div class="col">
-                  <h6>Dato</h6>
-                  <p>@_idea.CreatedAt.ToShortDateString()</p>
-                </div>
-                <div class="col">
-                  <h6>Status</h6>
-                  <p>@_idea.Status</p>
-                </div>
-              </div>
-            </div>
-            <div class="col-12">
-              <div class="card">
-                <div class="card-body">
-                  <h5 class="card-title mb-2 text-muted" style="margin-top: -0.5rem;"> Idébeskrivelse</h5>
-                  <p class="card-text">@((MarkupString)_idea.Description)</p>
-                </div>
-              </div>
-            </div>
-            <div class="col-6">
-              <div class="card">
-                <div class="card-body">
-                  <h5 class="card-title mb-2 text-muted" style="margin-top: -0.5rem;">Forventet resultat</h5>
-                  <p class="card-text">@((MarkupString)_idea.ExpectedResults)</p>
-                </div>
-              </div>
-            </div>
-            <div class="col-6">
-              <div class="card">
-                <div class="card-body">
-                  <h5 class="card-title mb-2 text-muted"style="margin-top: -0.5rem;">Plan</h5>
-                  <p class="card-text">@((MarkupString)_idea.Plan)</p>
-                </div>
-              </div>
-            </div>
-            <div class="col-6">
-              <div class="card">
-                <div class="card-body">
-                  <h5 class="card-title mb-2 text-muted"style="margin-top: -0.5rem;">Risiko</h5>
-                  <p class="card-text">@((MarkupString)_idea.Risk)</p>
-                </div>
-              </div>
-            </div>
+                <div class="col-6"></div>
+                <div class="col-12">
+                  <div class="row mx-1">
+                    <div class="col">
+                      <h6>Initialer</h6>
+                      @if (IsEditing)
+                      {
+                        <InputText type="text" class="form-control" maxlength=5 @bind-Value="_editIdea.Initials"></InputText>
+                      }
+                      else
+                      {
+                        <p>@_idea.Initials</p>
+                      }
+                    </div>
+                    <div class="col">
+                      <h6>Forretningsenhed</h6>
+                      @if (IsEditing)
+                      {
+                        <InputSelect class="form-select" required @bind-Value="_editIdea.BusinessUnit">
+                          <option value="1">Ikke angivet</option>
+                          <option value="2">Aalborg Portland</option>
+                          <option value="3">Unicon DK</option>
+                          <option value="4">Unicon NO</option>
+                          <option value="5">Kudsk & Dahl</option>
+                        </InputSelect>
+                      }
+                      else
+                      {
+                        <p>@_idea.BusinessUnitStr</p>}
 
-            <div class="col-6">
-              <div class="card h-100">
-                <div class="card-body">
-                  <h5 class="card-title mb-2 text-muted" style="margin-top: -0.5rem;">Team</h5>
-                  <p class="card-text">@_idea.Team</p>
+                    </div>
+                    <div class="col">
+                      <h6>Afdeling</h6>
+                      @if (IsEditing)
+                      {
+                        <InputSelect class="form-select" @bind-Value="_editIdea.Department">
+                          <option value="1">Ikke angivet</option>
+                          <option value="2">Salg</option>
+                          <option value="3">SCM</option>
+                          <option value="4">Produktion</option>
+                          <option value="5">Vedligehold</option>
+                          <option value="6">Finans</option>
+                          <option value="7">HR</option>
+                          <option value="8">PMO & Transformation</option>
+                        </InputSelect>
+                      }
+                      else
+                      {
+                        <p>@_idea.DepartmentStr</p>
+                      }
+                    </div>
+                    <div class="col">
+                      <h6>Prioritet</h6>
+                      @if (IsEditing)
+                      {
+                        <InputSelect class="form-select" required @bind-Value="_editIdea.Priority">
+                          <option value="0">Ikke angivet</option>
+                          <option value="1">Lav</option>
+                          <option value="2">Mellem</option>
+                          <option value="3">Høj</option>
+                        </InputSelect>
+                      }
+                      else
+                      {
+                        <p>@_idea.PriorityStr</p>
+                      }
+                    </div>
+                    <div class="col">
+                      <h6>Status</h6>
+                      @if (IsEditing)
+                      {
+                        <InputSelect class="form-select" required @bind-Value="_editIdea.Status">
+                          <option value="1">Oprettet</option>
+                          <option value="2">Godkendt</option>
+                          <option value="3">Arkiveret</option>
+                          <option value="4">Afsluttet</option>
+                        </InputSelect>
+                      }
+                      else
+                      {
+                        <p>@_idea.StatusStr</p>
+                      }
+                    </div>
+                    <div class="col">
+                      <h6>Dato</h6>
+                      <p>@_idea.CreatedAt.ToShortDateString()</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-12">
+                  @if (IsEditing)
+                  {
+                    <div class="form-group">
+                      <label>Idébeskrivelse</label>
+                      <InputTextArea class="form-control" rows="3" maxlength=1500 required @bind-Value="_editIdea.Description"></InputTextArea>
+                    </div>
+                  }
+                  else
+                  {
+                    <div class="card">
+                      <div class="card-body">
+                        <h5 class="card-title mb-2 text-muted" style="margin-top: -0.5rem;"> Idébeskrivelse</h5>
+                        <p class="card-text">@((MarkupString)_idea.Description)</p>
+                      </div>
+                    </div>
+                  }
+                </div>
+                <div class="col-6">
+                  @if (IsEditing)
+                  {
+                    <div class="form-group">
+                      <label>Forventet resultat</label>
+                      <InputTextArea class="form-control" rows="3" maxlength=500 @bind-Value="@_editIdea.ExpectedResults"></InputTextArea>
+                    </div>
+                  }
+                  else
+                  {
+                    <div class="card">
+                      <div class="card-body">
+                        <h5 class="card-title mb-2 text-muted" style="margin-top: -0.5rem;">Forventet resultat</h5>
+                        <p class="card-text">@((MarkupString)_idea.ExpectedResults)</p>
+                      </div>
+                    </div>
+                  }
+                </div>
+                <div class="col-6">
+                  @if (IsEditing)
+                  {
+                    <div class="form-group">
+                      <label>Plan</label>
+                      <InputTextArea class="form-control" rows="3" maxlength=500 @bind-Value="@_editIdea.Plan"></InputTextArea>
+                    </div>
+                  }
+                  else
+                  {
+                    <div class="card">
+                      <div class="card-body">
+                        <h5 class="card-title mb-2 text-muted" style="margin-top: -0.5rem;">Plan</h5>
+                        <p class="card-text">@((MarkupString)_idea.Plan)</p>
+                      </div>
+                    </div>
+                  }
+                </div>
+                <div class="col-6">
+                  @if (IsEditing)
+                  {
+                    <div class="form-group">
+                      <label>Risiko</label>
+                      <InputTextArea class="form-control" rows="3" maxlength=1500 @bind-Value="_editIdea.Risk"></InputTextArea>
+                    </div>
+                  }
+                  else
+                  {
+                    <div class="card">
+                      <div class="card-body">
+                        <h5 class="card-title mb-2 text-muted" style="margin-top: -0.5rem;">Risiko</h5>
+                        <p class="card-text">@((MarkupString)_idea.Risk)</p>
+                      </div>
+                    </div>
+                  }
+                </div>
+                <div class="col-6">
+                  @if (IsEditing)
+                  {
+                    <div class="form-group">
+                      <label>Team</label>
+                      <InputText type="text" class="form-control" maxlength=75 @bind-Value="_editIdea.Team"></InputText>
+                    </div>
+                  }
+                  else
+                  {
+                    <div class="card h-100">
+                      <div class="card-body">
+                        <h5 class="card-title mb-2 text-muted" style="margin-top: -0.5rem;">Team</h5>
+                        <p class="card-text">@_idea.Team</p>
+                      </div>
+                    </div>}
+
                 </div>
               </div>
             </div>
-          </div>
-        </div>
-        <div class="p-2 my-3 bg-light rounded-cos">
-          <div class="container-fluid">
-            <h3 class="my-2">Kommentarspor</h3>
-            <EditForm Model="@_comment" OnValidSubmit="@HandleValidSubmit">
-              <DataAnnotationsValidator />
-              <div class="d-flex flex-row mb-2">
-                <InputTextArea class="form-control rounded-cos my-1" required placeholder="Skriv din kommentar her" @bind-Value="_comment.Message"></InputTextArea>
-                <div>
-                  <InputText class="form-control mx-2 my-1 rounded-cos" required maxlength="5" placeholder="Initialer" @bind-Value="_comment.Initials"></InputText>
-                  <button type="submit" class="btn btn-primary mx-2 my-1 rounded-cos w-100">Kommenter</button>
-                </div>
-              </div>
-            </EditForm>
-            @if (_idea.Comments != null)
+            @if (IsEditing)
             {
-              foreach (Comment c in _idea.Comments)
-              {
-      <ul class="list-group list-group-flush">
-        <li class="list-group-item bg-transparent mb-0 pb-0 mt-2">
-          <h6 class="text-primary mb-0 pb-0">
-            @c.Initials
-            <small class="text-muted" style="font-size: 0.8rem;">
-              @c.CreatedAt.ToShortDateString()
-              @c.CreatedAt.ToShortTimeString()
-            </small>
-          </h6>
-          <p> @((MarkupString) c.Message)</p>
-        </li>
-      </ul>
-                <hr class="py-0 my-0" />}
+              <div class="d-flex justify-content-end">
+                <button class="btn btn-secondary m-2">Fortryd</button>
+                <button type="submit" class="btn btn-primary m-2">Gem</button>
+              </div>
             }
-          </div>
-        </div>
+          }
+        </EditForm>
+        <CommentSection @ref="CommentSection"></CommentSection>
       </div>
     </div>
   </div>
-  <div class="modal-backdrop fade @ModalClass cursor-de" style="display: @ModalDisplay;" @onclick="() => Close()"></div>
+  <div class="modal-backdrop fade @_modalClass cursor-de" style="display: @_modalDisplay;" @onclick="() => Close()"></div>
 </div>

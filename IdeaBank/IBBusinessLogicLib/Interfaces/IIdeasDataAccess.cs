@@ -12,7 +12,7 @@ namespace BusinessLogicLib.Interfaces
     {
         public Task<List<ViewIdea>> GetWFilter(FilterIdea filter);
         public Task Insert(NewIdea idea);
-        public Task Edit(ViewIdea idea);
+        public Task Edit(EditIdea idea);
         public Task DeleteByID(int id);
 
     }

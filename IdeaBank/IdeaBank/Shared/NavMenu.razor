@@ -1,39 +1,24 @@
 <header class="p-3 shadow bg-primary text-white">
     <div class="container">
-      <div class="d-flex justify-content-between">
+        <div class="d-flex justify-content-between">
         <NavLink href="/">
-          <img src="/svg/logo.svg" />
+            <img src="/svg/logo.svg" />
         </NavLink>
-        <div class="d-flex">
-          <NavLink class="btn btn-outline-light rounded-cos mx-1" href="/Guide">Guide</NavLink>
-          <NavLink class="btn btn-outline-light rounded-cos mx-1" href="/NewIdea">Tilføj ide</NavLink>
-          <a class="btn text-white mx-1" data-bs-toggle="modal"
-             data-bs-target="#adminModal">
-            Admin login
-          </a>
-        </div>
-        <!--Modal-->
-        <div class="modal fade" id="adminModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-             aria-hidden="true">
-          <div class="modal-dialog modal-l">
-            <div class="modal-content rounded-cos border-0">
-              <div class="modal-header bg-primary text-white"
-                   style="border-radius: 11px 11px 0px 0px;">
-                <h5 class="modal-title">Admin Login</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                        aria-label="Close"></button>
-              </div>
-              <div class="modal-body bg-light">
-                <form>
-                  <h4 class="text-center text-muted mt-3 mb-4">Indtast adgangskode</h4>
-                  <input type="password" class="form-control" id="floatingPassword"
-                         placeholder="Adgangskode">
-                  <button class="w-100 btn btn-lg btn-primary my-4" type="submit">Log ind</button>
-                </form>
-              </div>
+            <div class="d-flex">
+                <NavLink class="btn btn-outline-light rounded-cos mx-1" href="/Guide">Guide</NavLink>
+                <NavLink class="btn btn-outline-light rounded-cos mx-1" href="/NewIdea">Tilføj ide</NavLink>
+                <AuthorizeView>
+                    <NotAuthorized>
+                        <NavLink class="btn text-white noFocus mx-1" href="Identity/Account/Login">Admin login</NavLink>
+                    </NotAuthorized>
+                    <Authorized>
+                      <NavLink class="btn text-white noFocus" href="Identity/Account/Manage">Indstillinger</NavLink>
+                        <form method="post" action="Identity/Account/LogOut">
+                            <button type="submit" class="btn text-white noFocus">Log ud</button>
+                        </form>
+                    </Authorized>
+                </AuthorizeView>
             </div>
-          </div>
         </div>
-      </div>
     </div>
 </header>

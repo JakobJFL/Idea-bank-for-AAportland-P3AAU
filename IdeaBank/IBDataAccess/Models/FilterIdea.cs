@@ -11,6 +11,7 @@ namespace DataBaseLib.Models
     }
     public class FilterIdea
     {
+        public int Id { get; set; }
         public int BusinessUnit { get; set; }
         public int Department { get; set; }
         public int Priority { get; set; }

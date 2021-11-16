@@ -16,5 +16,10 @@ namespace BusinessLogicLib.Models
         public string Team { get; set; }
         public string Plan { get; set; }
         public string ExpectedResults { get; set; }
+        public bool IsHidden { get; set; }
+        public int BusinessUnit { get; set; } = 1;
+        public int Department { get; set; } = 1;
+        public int Priority { get; set; } = 0;
+        public int Status { get; set; } = 1;
     }
 }

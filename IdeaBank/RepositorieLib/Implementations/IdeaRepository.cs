@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace RepositoryLib.Implementations
 {
-    public class IdeaRepository : IIdeaRepository
+    public class IdeaRepository : IIdeaRepository, IRepository<IdeasTbl>
     {
         public IdeaRepository(Context context)
         {
@@ -31,7 +31,8 @@ namespace RepositoryLib.Implementations
                 .Where(f => idea.BusinessUnit == 0 || idea.BusinessUnit == f.BusinessUnit.Id)
                 .Where(f => idea.Department == 0 || idea.Department == f.Department.Id)
                 .Where(f => idea.Priority == 0 || idea.Priority == f.Priority)
-                .Where(f => idea.Status == 0 || idea.Status == f.Status);
+                .Where(f => idea.Status == 0 || idea.Status == f.Status)
+                .Where(f => idea.Id == 0 || idea.Id == f.Id);
             if (!string.IsNullOrEmpty(idea.SearchStr))
             {
                 ideas = ideas.Where(f => f.ProjectName.Contains(idea.SearchStr));
@@ -71,7 +72,35 @@ namespace RepositoryLib.Implementations
                 .FirstAsync();
 
             await Context.IdeasTbl.AddAsync(model);
-            Context.SaveChanges();
+            await Context.SaveChangesAsync();
+        }
+        public async Task RemoveByIdAsync(int id)
+        {
+            IdeasTbl itemToRemove = Context.IdeasTbl.SingleOrDefault(x => x.Id == id);
+            if (itemToRemove != null)
+            {
+                Context.IdeasTbl.Remove(itemToRemove);
+                await Context.SaveChangesAsync();
+            }
+            
+        }
+        public async Task UpdateAsync(IdeasTbl model, int departmentId, int businessUnitId)
+        {
+            IdeasTbl result = Context.IdeasTbl.SingleOrDefault(b => b.Id == model.Id);
+            if (result != null)
+            {
+                result.Department = await Context.DepartmentsTbl
+                   .Where(d => d.Id == departmentId)
+                   .FirstAsync();
+                result.BusinessUnit = await Context.BusinessUnitsTbl
+                    .Where(b => b.Id == businessUnitId)
+                    .FirstAsync();
+                Console.WriteLine(businessUnitId);
+                Context.Entry(result).CurrentValues.SetValues(model);
+                await Context.SaveChangesAsync();
+            }
+            else
+                throw new ArgumentNullException("Idea not found");
         }
         public Task AddRangeAsync(IEnumerable<IdeasTbl> metrics)
         {
@@ -83,16 +112,17 @@ namespace RepositoryLib.Implementations
             throw new NotImplementedException();
         }
 
-        public Task RemoveByIdAsync(int id)
-        {
-            throw new NotImplementedException();
-        }
-        public void Update(IdeasTbl model)
+        public Task<IEnumerable<IdeasTbl>> ListAsync(int id)
         {
             throw new NotImplementedException();
         }
 
         public Task AddAsync(IdeasTbl model)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task UpdateAsync(IdeasTbl model)
         {
             throw new NotImplementedException();
         }

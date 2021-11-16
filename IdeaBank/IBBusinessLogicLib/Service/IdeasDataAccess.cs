@@ -40,14 +40,14 @@ namespace BusinessLogicLib.Service
                 throw new Exception("Insert failed");
             }
         }
-        public Task Edit(ViewIdea idea)
+        public async Task DeleteByID(int id)
         {
-            throw new NotImplementedException();
+            await Repository.RemoveByIdAsync(id);
         }
-
-        public Task DeleteByID(int id)
+        public async Task Edit(EditIdea idea)
         {
-            throw new NotImplementedException();
+            Console.WriteLine(idea.Department);
+            await Repository.UpdateAsync(DBConvert.EditIdeaToTbl(idea), idea.Department, idea.BusinessUnit);
         }
     }
 }
