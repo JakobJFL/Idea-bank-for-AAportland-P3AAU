@@ -44,7 +44,7 @@ namespace DataBaseLib.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("IdeaId")
+                    b.Property<int?>("IdeaId")
                         .HasColumnType("int");
 
                     b.Property<string>("Initials")
@@ -58,6 +58,8 @@ namespace DataBaseLib.Migrations
                         .HasColumnType("varchar(1500)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("IdeaId");
 
                     b.ToTable("CommentsTbl");
                 });
@@ -345,6 +347,15 @@ namespace DataBaseLib.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("DataBaseLib.Models.CommentsTbl", b =>
+                {
+                    b.HasOne("DataBaseLib.Models.IdeasTbl", "Idea")
+                        .WithMany("Comments")
+                        .HasForeignKey("IdeaId");
+
+                    b.Navigation("Idea");
+                });
+
             modelBuilder.Entity("DataBaseLib.Models.IdeasTbl", b =>
                 {
                     b.HasOne("DataBaseLib.Models.BusinessUnitsTbl", "BusinessUnit")
@@ -419,6 +430,11 @@ namespace DataBaseLib.Migrations
             modelBuilder.Entity("DataBaseLib.Models.DepartmentsTbl", b =>
                 {
                     b.Navigation("Ideas");
+                });
+
+            modelBuilder.Entity("DataBaseLib.Models.IdeasTbl", b =>
+                {
+                    b.Navigation("Comments");
                 });
 #pragma warning restore 612, 618
         }

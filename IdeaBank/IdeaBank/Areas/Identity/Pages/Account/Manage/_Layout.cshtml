@@ -1,29 +1,60 @@
-﻿@{
-    if (ViewData.TryGetValue("ParentLayout", out var parentLayout))
-    {
-        Layout = (string)parentLayout;
-    }
-    else
-    {
-        Layout = "/Areas/Identity/Pages/_Layout.cshtml";
-    }
+@using Microsoft.AspNetCore.Hosting
+@using Microsoft.AspNetCore.Mvc.ViewEngines
+@inject ICompositeViewEngine Engine
+
+@{
+  if (ViewData.TryGetValue("ParentLayout", out var parentLayout))
+  {
+    Layout = (string)parentLayout;
+  }
+  else
+  {
+    Layout = "/Areas/Identity/Pages/_Layout.cshtml";
+  }
 }
+<header>
+  <nav class="navbar navbar-expand-sm navbar-light navbar-toggleable-sm bg-white border-bottom box-shadow mb-3">
+    <div class="container">
+      <a class="navbar-brand" href="~/">IdeaBank</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+              aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+        @{
+          var result = Engine.FindView(ViewContext, "_LoginPartial", isMainPage: false);
+        }
+        @if (result.Success)
+        {
+          await Html.RenderPartialAsync("_LoginPartial");
+        }
+        else
+        {
+          throw new InvalidOperationException("The default Identity UI layout requires a partial view '_LoginPartial' " +
+              "usually located at '/Pages/_LoginPartial' or at '/Views/Shared/_LoginPartial' to work. Based on your configuration " +
+              $"we have looked at it in the following locations: {System.Environment.NewLine}{string.Join(System.Environment.NewLine, result.SearchedLocations)}.");
+        }
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="container">
+  <h2>Manage your account</h2>
 
-<h2>Manage your account</h2>
-
-<div>
+  <div>
     <h4>Change your account settings</h4>
     <hr />
     <div class="row">
-        <div class="col-md-3">
-            <partial name="_ManageNav" />
-        </div>
-        <div class="col-md-9">
-            @RenderBody()
-        </div>
+      <div class="col-md-3">
+        <partial name="_ManageNav" />
+      </div>
+      <div class="col-md-9">
+        @RenderBody()
+      </div>
     </div>
+  </div>
 </div>
 
 @section Scripts {
-    @RenderSection("Scripts", required: false)
+  @RenderSection("Scripts", required: false)
 }

@@ -39,7 +39,7 @@ namespace IdeaBank.Pages
             await Task.Delay(150);
             _modalClass = "show";
             _idea = idea;
-            CommentSection.LoadComments(idea.Id);
+            CommentSection.LoadComments(_idea.Comments, idea.Id);
             StateHasChanged();
         }
 

@@ -59,22 +59,6 @@ namespace DataBaseLib.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "CommentsTbl",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Initials = table.Column<string>(type: "nvarchar(5)", maxLength: 5, nullable: false),
-                    Message = table.Column<string>(type: "varchar(1500)", maxLength: 1500, nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    IdeaId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_CommentsTbl", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "DepartmentsTbl",
                 columns: table => new
                 {
@@ -230,6 +214,28 @@ namespace DataBaseLib.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "CommentsTbl",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Initials = table.Column<string>(type: "nvarchar(5)", maxLength: 5, nullable: false),
+                    Message = table.Column<string>(type: "varchar(1500)", maxLength: 1500, nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    IdeaId = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CommentsTbl", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_CommentsTbl_IdeasTbl_IdeaId",
+                        column: x => x.IdeaId,
+                        principalTable: "IdeasTbl",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -270,6 +276,11 @@ namespace DataBaseLib.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_CommentsTbl_IdeaId",
+                table: "CommentsTbl",
+                column: "IdeaId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_IdeasTbl_BusinessUnitId",
                 table: "IdeasTbl",
                 column: "BusinessUnitId");
@@ -301,13 +312,13 @@ namespace DataBaseLib.Migrations
                 name: "CommentsTbl");
 
             migrationBuilder.DropTable(
-                name: "IdeasTbl");
-
-            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "IdeasTbl");
 
             migrationBuilder.DropTable(
                 name: "BusinessUnitsTbl");

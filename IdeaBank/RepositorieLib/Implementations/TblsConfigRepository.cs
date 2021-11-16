@@ -1,3 +1,4 @@
+using System;
 using System.Threading.Tasks;
 using DataBaseLib.DataAccess;
 using DataBaseLib.Models;
@@ -16,31 +17,41 @@ namespace RepositoryLib.Implementations
 
         private readonly string[] _businessUnits = { "Ikke Angivet", "Aalborg Portland", "Unicon DK", "Unicon NO", "Kudsk & Dahl" };
         private readonly string[] _departments = { "Ikke Angivet", "Salg", "SCM", "Produktion", "Vedligehold", "Finans", "HR", "PMO & Transformation" };
-        public void SetDefaultTbls()
+
+        public async Task<bool> Kat()
+        {
+           return await Context.Users.AnyAsync();
+        }
+        public async Task SetDefaultDeBuTbls()
         {
             for (int i = 0; i < _departments.Length; i++)
             {
                 DepartmentsTbl dep = new();
                 dep.Id = i + 1;
                 dep.Name = _departments[i];
-                Context.DepartmentsTbl.Add(dep);
+                await Context.DepartmentsTbl.AddAsync(dep);
             }
             for (int i = 0; i < _businessUnits.Length; i++)
             {
                 BusinessUnitsTbl bu = new();
                 bu.Id = i + 1;
                 bu.Name = _businessUnits[i];
-                Context.BusinessUnitsTbl.Add(bu);
+                await Context.BusinessUnitsTbl.AddAsync(bu);
             }
             try
             {
-                Context.SaveChanges();
+               await Context.SaveChangesAsync();
             }
             catch (DbUpdateException ex)
             {
                 //FIX Exception  HERE
                 throw new DbUpdateException("Updating tables in database failed." + ex.Message);
             }
+        }
+
+        public async Task<bool> DoesDatabaseExist()
+        {
+            return await Context.Database.CanConnectAsync();
         }
         public async Task<bool> IsBuAndDepEmpty()
         {

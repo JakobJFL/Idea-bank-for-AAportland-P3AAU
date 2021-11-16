@@ -1,0 +1,17 @@
+@page
+@model RegisterModel
+@{
+  ViewData["Title"] = "Register";
+}
+@using RepositoryLib.Interfaces;
+@inject ITblsConfigRepository repository
+
+<h3 class="text-center" style="margin-top: 10%">Beklager, der er intet på denne addresse.</h3>
+<center>
+  <img class="mt-1" src="~/confusedstickman.png" />
+</center>
+
+
+@section Scripts {
+  <partial name="_ValidationScriptsPartial" />
+}

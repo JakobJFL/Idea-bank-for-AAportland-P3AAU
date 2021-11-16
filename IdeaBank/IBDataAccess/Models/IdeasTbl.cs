@@ -40,5 +40,6 @@ namespace DataBaseLib.Models
         public DateTime UpdatedAt { get; set; }
         public BusinessUnitsTbl BusinessUnit { get; set; }
         public DepartmentsTbl Department { get; set; }
+        public List<CommentsTbl> Comments { get; set; }
     }
 }

@@ -28,6 +28,7 @@ namespace RepositoryLib.Implementations
             IQueryable<IdeasTbl> ideas = Context.IdeasTbl
                 .Include(b => b.BusinessUnit)
                 .Include(d => d.Department)
+                .Include(i => i.Comments)
                 .Where(f => idea.BusinessUnit == 0 || idea.BusinessUnit == f.BusinessUnit.Id)
                 .Where(f => idea.Department == 0 || idea.Department == f.Department.Id)
                 .Where(f => idea.Priority == 0 || idea.Priority == f.Priority)

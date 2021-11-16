@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -24,8 +24,6 @@ namespace DataBaseLib.Models
 
         [Required]
         public DateTime CreatedAt { get; set; } = DateTime.Now;
-
-        [Required]
-        public int IdeaId { get; set; }
+        public IdeasTbl Idea { get; set; }
     }
 }

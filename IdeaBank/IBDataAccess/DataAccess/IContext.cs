@@ -1,4 +1,4 @@
-﻿using DataBaseLib.Models;
+using DataBaseLib.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace DataBaseLib.DataAccess

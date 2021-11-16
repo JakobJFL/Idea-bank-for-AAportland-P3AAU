@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
 using DataBaseLib.Models;
-using System;
 using Microsoft.JSInterop;
 
 namespace IdeaBank.Pages
@@ -16,7 +15,7 @@ namespace IdeaBank.Pages
         [Inject]
         public IIdeasDataAccess Ideas { get; set; }
         [Inject]
-        private IDBTableConfiguration Config { get; set; }
+        public IDBTableConfiguration Config { get; set; }
         [Inject]
         private IJSRuntime JsRuntime { get; set; }
 
@@ -30,7 +29,7 @@ namespace IdeaBank.Pages
             _editContext = new EditContext(_filterIdea);
             _editContext.OnFieldChanged += EditContext_OnFieldChanged;
             _filterIdea.Sorting = Sort.CreatedAtDesc;
-            await Config.ConfigureDBTables(); // Skal være et andet sted
+            await Config.ConfigureDBTables();
             if (_ideaList == null)
             {
                 await Update();

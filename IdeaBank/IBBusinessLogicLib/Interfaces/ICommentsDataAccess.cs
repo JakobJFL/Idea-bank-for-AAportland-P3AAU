@@ -7,7 +7,7 @@ namespace BusinessLogicLib.Interfaces
     public interface ICommentsDataAccess
     {
         public Task<List<Comment>> GetWFilter(int id);
-        public void Insert(Comment comment);
+        public Task Insert(Comment comment);
         public Task DeleteByID(int id);
     }
 }

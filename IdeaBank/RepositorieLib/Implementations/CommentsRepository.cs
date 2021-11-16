@@ -17,17 +17,20 @@ namespace RepositoryLib.Implementations
             Context = context;
         }
         public Context Context { get; }
-        public async Task<IEnumerable<CommentsTbl>> ListAsync(int id)
+        public async Task<IEnumerable<CommentsTbl>> ListAsync(int ideaId)
         {
             return await Context.CommentsTbl
-                .Where(c => c.IdeaId == id)
+                .Where(c => c.Idea.Id == ideaId)
                 .OrderByDescending(s => s.Id)
                 .ToListAsync();
         }
-        public async Task AddAsync(CommentsTbl model)
+        public async Task AddAsync(CommentsTbl model, int ideaId)
         {
+            model.Idea = await Context.IdeasTbl
+              .Where(i => i.Id == ideaId)
+              .FirstOrDefaultAsync();
             await Context.CommentsTbl.AddAsync(model);
-            Context.SaveChanges();
+            await Context.SaveChangesAsync();
         }
 
         public Task AddRangeAsync(IEnumerable<CommentsTbl> metrics)

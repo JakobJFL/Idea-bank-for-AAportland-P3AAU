@@ -17,16 +17,17 @@ namespace IdeaBank.Pages
         private ICommentsDataAccess Comments { get; set; }
         [Inject]
         private IJSRuntime JsRuntime { get; set; }
-        public int IdeaId { get; set; }
 
         private Comment _comment = new();
         private List<Comment> AllComment { get; set; }
+        private int IdeaId { get; set; }
+
         private readonly string _confirmDeleteComment = "Er du sikker på du vil slette kommentaren?";
 
-        public async void LoadComments(int ideaId)
+        public async void LoadComments(List<Comment> comments, int ideaId)
         {
+            AllComment = comments;
             IdeaId = ideaId;
-            AllComment = await Comments.GetWFilter(ideaId);
             StateHasChanged();
         }
 
@@ -34,7 +35,7 @@ namespace IdeaBank.Pages
         {
             _comment.CreatedAt = DateTime.Now;
             _comment.IdeaId = IdeaId;
-            Comments.Insert(_comment);
+            await Comments.Insert(_comment);
             AllComment = await Comments.GetWFilter(IdeaId);
             _comment.Initials = "";
             _comment.Message = "";

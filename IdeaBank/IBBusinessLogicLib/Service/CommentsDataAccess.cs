@@ -18,26 +18,12 @@ namespace BusinessLogicLib.Service
         public ICommentsRepository Repository { get; }
         public async Task<List<Comment>> GetWFilter(int id)
         {
-            try
-            {
-                List<CommentsTbl> comments = (await Repository.ListAsync(id)).ToList();
-                return DBConvert.TblToComment(comments);
-            }
-            catch
-            {
-                throw new Exception("GetWFilter failed");
-            }
+            List<CommentsTbl> comments = (await Repository.ListAsync(id)).ToList();
+            return DBConvert.TblToComment(comments);
         }
-        public async void Insert(Comment comment)
+        public async Task Insert(Comment comment)
         {
-            try
-            {
-            await Repository.AddAsync(DBConvert.CommentToTbl(comment));
-            }
-            catch
-            {
-                throw new Exception("Insert failed");
-            }
+            await Repository.AddAsync(DBConvert.CommentToTbl(comment), comment.IdeaId);
         }
         public async Task DeleteByID(int id)
         {

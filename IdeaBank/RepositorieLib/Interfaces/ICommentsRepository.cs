@@ -7,7 +7,7 @@ namespace RepositoryLib.Interfaces
     public interface ICommentsRepository
     {
         public Task<IEnumerable<CommentsTbl>> ListAsync(int id);
-        public Task AddAsync(CommentsTbl model);
+        public Task AddAsync(CommentsTbl model, int ideaId);
 
         public Task RemoveByIdAsync(int id);
     }

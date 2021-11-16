@@ -29,7 +29,6 @@ namespace BusinessLogicLib
             newComment.Initials = comment.Initials;
             newComment.Message = comment.Message;
             newComment.CreatedAt = comment.CreatedAt;
-            newComment.IdeaId = comment.IdeaId;
             return newComment;
         }
 
@@ -58,6 +57,7 @@ namespace BusinessLogicLib
                 idea.ExpectedResults = StrNewLineToBr(i.ExpectedResults);
                 idea.CreatedAt = i.CreatedAt;
                 idea.UpdatedAt = i.UpdatedAt;
+                idea.Comments = TblToComment(i.Comments);
                 ideas.Add(idea);
             }
             return ideas;

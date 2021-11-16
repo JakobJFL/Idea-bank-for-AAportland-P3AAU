@@ -8,7 +8,9 @@ namespace RepositoryLib.Interfaces
 {
     public interface ITblsConfigRepository
     {
-        public void SetDefaultTbls();
+        public Task SetDefaultDeBuTbls();
         public Task<bool> IsBuAndDepEmpty();
+        public Task<bool> DoesDatabaseExist();
+        public Task<bool> Kat();
     }
 }

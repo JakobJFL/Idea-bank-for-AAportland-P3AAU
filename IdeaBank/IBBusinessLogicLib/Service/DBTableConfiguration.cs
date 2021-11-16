@@ -19,8 +19,12 @@ namespace BusinessLogicLib
 
         public async Task ConfigureDBTables()
         {
+            await Repository.Kat();
+            if (!(await Repository.DoesDatabaseExist())) 
+                throw new DbNoConnectionException();
+
             if (await Repository.IsBuAndDepEmpty())
-                Repository.SetDefaultTbls();
+                await Repository.SetDefaultDeBuTbls(); 
         }
     }
 }
