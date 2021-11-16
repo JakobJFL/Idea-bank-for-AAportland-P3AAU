@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
 using DataBaseLib.Models;
 using System;
+using Microsoft.JSInterop;
 
 namespace IdeaBank.Pages
 {
@@ -16,6 +17,8 @@ namespace IdeaBank.Pages
         public IIdeasDataAccess Ideas { get; set; }
         [Inject]
         private IDBTableConfiguration Config { get; set; }
+        [Inject]
+        private IJSRuntime JsRuntime { get; set; }
 
         private EditContext _editContext;
         private List<ViewIdea> _ideaList;
@@ -24,18 +27,10 @@ namespace IdeaBank.Pages
         private bool IsAuthorized { get; set; }
         protected override async Task OnInitializedAsync()
         {
-            try
-            {
-                _editContext = new EditContext(_filterIdea);
-                _editContext.OnFieldChanged += EditContext_OnFieldChanged;
-                _filterIdea.Sorting = Sort.CreatedAtDesc;
-                await Config.ConfigureDBTables(); // Måske det skal være et andet sted
-            }
-            catch
-            {
-                throw new Exception("OnInitializedAsync failed");
-            }
-          
+            _editContext = new EditContext(_filterIdea);
+            _editContext.OnFieldChanged += EditContext_OnFieldChanged;
+            _filterIdea.Sorting = Sort.CreatedAtDesc;
+            await Config.ConfigureDBTables(); // Skal være et andet sted
             if (_ideaList == null)
             {
                 await Update();
@@ -69,7 +64,6 @@ namespace IdeaBank.Pages
             _ideaList = await Ideas.GetWFilter(_filterIdea);
             StateHasChanged();
         }
-
         private async void Reset()
         {
             _filterIdea.BusinessUnit = 0;

@@ -1,5 +1,10 @@
-using BusinessLogicLib.Models;
 using System;
+using BusinessLogicLib.Interfaces;
+using BusinessLogicLib.Models;
+using Microsoft.AspNetCore.Components;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.JSInterop;
 
 namespace IdeaBank.Pages
 {
@@ -13,10 +18,11 @@ namespace IdeaBank.Pages
         [Inject]
         public IConfiguration Config { get; set; }
         [Inject]
-        public IJSRuntime JsRuntime { get; set; }
+        private IJSRuntime JsRuntime { get; set; }
 
         private readonly string _confirmRegretSubmit = "Er du sikker på du vil fortryde og slette denne ide?";
-        
+        private readonly string _dbUpdateExceptionText = "Der skete en fejl under indsendelse af din idé. Prøv igen senere";
+
         private async void HandleValidSubmit()
         {
             try
@@ -24,9 +30,9 @@ namespace IdeaBank.Pages
                 await Ideas.Insert(_idea);
                 NavManager.NavigateTo("/");
             }
-            catch (Exception ex)
+            catch (DbUpdateException)
             {
-                throw new Exception("HandleValidSubmit failed");
+                await JsRuntime.InvokeVoidAsync("alert", _dbUpdateExceptionText);
             }
         }
         private async void Regret()

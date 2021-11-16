@@ -58,7 +58,7 @@ namespace RepositoryLib.Implementations
                     ideas = ideas.OrderByDescending(s => s.UpdatedAt);
                     break;
                 default:
-                    throw new ArgumentException("Skriv noget her");
+                    throw new ArgumentException("Sorting was not was not within range of Sort");
             }
             return await ideas.ToListAsync();
         }
@@ -70,7 +70,6 @@ namespace RepositoryLib.Implementations
             model.BusinessUnit = await Context.BusinessUnitsTbl
                 .Where(b => b.Id == businessUnitId)
                 .FirstAsync();
-
             await Context.IdeasTbl.AddAsync(model);
             await Context.SaveChangesAsync();
         }
@@ -82,7 +81,6 @@ namespace RepositoryLib.Implementations
                 Context.IdeasTbl.Remove(itemToRemove);
                 await Context.SaveChangesAsync();
             }
-            
         }
         public async Task UpdateAsync(IdeasTbl model, int departmentId, int businessUnitId)
         {
@@ -95,7 +93,6 @@ namespace RepositoryLib.Implementations
                 result.BusinessUnit = await Context.BusinessUnitsTbl
                     .Where(b => b.Id == businessUnitId)
                     .FirstAsync();
-                Console.WriteLine(businessUnitId);
                 Context.Entry(result).CurrentValues.SetValues(model);
                 await Context.SaveChangesAsync();
             }

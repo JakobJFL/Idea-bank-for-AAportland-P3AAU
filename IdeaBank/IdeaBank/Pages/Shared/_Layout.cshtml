@@ -12,6 +12,7 @@
   <link href="~/css/site.css" rel="stylesheet" />
 </head>
 <body>
+  <!--
     <header>
         <nav class="navbar navbar-expand-sm navbar-light navbar-toggleable-sm bg-white border-bottom box-shadow mb-3">
             <div class="container">
@@ -38,20 +39,19 @@
             </div>
         </nav>
     </header>
-
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
-    <footer class="footer border-top text-muted">
-        <div class="container">
-            &copy; 2021 - IdeaBank - <a asp-area="" asp-page="Privacy">Privacy</a>
-        </div>
-    </footer>
-    <script src="~/Identity/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/Identity/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/Identity/js/site.js" asp-append-version="true"></script>
-    @RenderSection("Scripts", required: false)
+    -->
+  <main role="main" class="pb-3">
+    @RenderBody()
+  </main>
+  <footer class="py-5 text-muted text-center text-small">
+    <hr />
+      &copy; 2021 <br />
+      Denne hjemmeside gør brug af strengt nødvendige cookies til autentificering.
+      <a href="https://ec.europa.eu/info/cookies_da" target="_blank">Læs mere her</a>
+  </footer>
+  <script src="~/Identity/lib/jquery/dist/jquery.min.js"></script>
+  <script src="~/Identity/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="~/Identity/js/site.js" asp-append-version="true"></script>
+  @RenderSection("Scripts", required: false)
 </body>
 </html>

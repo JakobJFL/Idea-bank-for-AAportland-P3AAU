@@ -139,15 +139,10 @@ textarea {
   max-width: 500px;
 }
 
-/*
-.row {
-  display: flex;
-}
-
-.column {
+.flex-50 {
   flex: 50%;
 }
-*/
+
 .text-show-hidden {
   font-size: 10pt;
   color: #6c757d;
