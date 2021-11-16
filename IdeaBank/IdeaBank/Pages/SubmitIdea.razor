@@ -3,11 +3,7 @@
 @using BusinessLogicLib.Models;
 @using BusinessLogicLib.Interfaces;
 
-@inject NavigationManager NavManager
 
-@inject IIdeasDataAccess _ideas
-
-@inject IConfiguration _config
 
 <main class="bgImg">
   <section class="py-4 text-center container">
@@ -28,9 +24,8 @@
       <p>Bemærk at du ikke kan foretage ændringer efter den er gemt.</p>
       <p class="mb-4 text-danger">*Skal udfyldes</p>
       <div class="row g-5">
-        <EditForm Model="@idea" OnValidSubmit="@HandleValidSubmit">
+        <EditForm Model="@_idea" OnValidSubmit="@HandleValidSubmit">
           <DataAnnotationsValidator />
-          <ValidationSummary />
           <div class="row g-3">
             <div class="col-sm-8">
               <label class="form-label">
@@ -38,7 +33,7 @@
               </label>
               <div class="input-group">
                 <InputText type="text" class="form-control" placeholder="Projektnavn" required
-                           @bind-Value="idea.ProjectName" maxlength=75 DisplayName="Projektnavn"></InputText>
+                           @bind-Value="_idea.ProjectName" maxlength=75 DisplayName="Projektnavn"></InputText>
               </div>
             </div>
 
@@ -48,7 +43,7 @@
               </label>
               <div class="input-group">
                 <InputText type="text" class="form-control" placeholder="AAA" required
-                           @bind-Value="idea.Initials" maxlength=5 />
+                           @bind-Value="_idea.Initials" maxlength=5 />
                 <div class="invalid-feedback">Initialer er noget værre noget.</div>
               </div>
             </div>
@@ -58,7 +53,7 @@
                 <label>
                   Idébeskrivelse<label class="text-danger">*</label>
                 </label>
-                <InputTextArea class="form-control" rows="3" maxlength=1500 placeholder="Problemdefinition og afgrænsning" required @bind-Value="idea.Description"></InputTextArea>
+                <InputTextArea class="form-control" rows="3" maxlength=1500 placeholder="Problemdefinition og afgrænsning" required @bind-Value="_idea.Description"></InputTextArea>
               </div>
             </div>
             <div class="col-md-3">
@@ -66,7 +61,7 @@
                 <label class="form-label">Forretningsenhed</label>
                 <img src="svg/question-circle.svg">
               </div>
-              <InputSelect class="form-select" required @bind-Value="idea.BusinessUnit">
+              <InputSelect class="form-select" required @bind-Value="_idea.BusinessUnit">
                 <option value="1" selected class="text-muted">Ikke angivet</option>
                 <option value="2">Aalborg Portland</option>
                 <option value="3">Unicon DK</option>
@@ -79,7 +74,7 @@
                 <label class="form-label">Afdeling</label>
                 <img src="svg/question-circle.svg">
               </div>
-              <InputSelect class="form-select" @bind-Value="idea.Department">
+              <InputSelect class="form-select" @bind-Value="_idea.Department">
                 <option value="1" selected class="text-muted">Ikke angivet</option>
                 <option value="2">Salg</option>
                 <option value="3">SCM</option>
@@ -96,25 +91,25 @@
             <div class="col-md-6">
               <label class="form-label">Team</label>
               <div class="input-group">
-                <InputText type="text" class="form-control" maxlength=75 placeholder="Hvem skal være med?" @bind-Value="idea.Team"></InputText>
+                <InputText type="text" class="form-control" maxlength=75 placeholder="Hvem skal være med?" @bind-Value="_idea.Team"></InputText>
               </div>
             </div>
             <div class="col-md-6">
               <div class="form-group">
                 <label>Plan</label>
-                <InputTextArea class="form-control" rows="3" maxlength=500 placeholder="Forventet varighed, ønsket start og/eller deadline" @bind-Value="idea.Plan"></InputTextArea>
+                <InputTextArea class="form-control" rows="3" maxlength=500 placeholder="Forventet varighed, ønsket start og/eller deadline" @bind-Value="_idea.Plan"></InputTextArea>
               </div>
             </div>
             <div class="col-md-6">
               <div class="form-group">
                 <label>Forventet resultat</label>
-                <InputTextArea class="form-control" rows="3" maxlength=500 placeholder="Forventet resultat" @bind-Value="idea.ExpectedResults"></InputTextArea>
+                <InputTextArea class="form-control" rows="3" maxlength=500 placeholder="Forventet resultat" @bind-Value="_idea.ExpectedResults"></InputTextArea>
               </div>
             </div>
             <div>
-              <p>Skjul ide:</p>
+              <label class="my-2">Skjul ideen (kun administrator vil ikke kunne se ideen)</label>
               <label class="switch d-flex">
-                <input type="checkbox">
+                <input @bind="_idea.IsHidden" type="checkbox">
                 <span class="slider"></span>
                 <span class="text-checked">Kun administrator kan se ideen</span>
                 <span class="text-not-checked">Alle kan se ideen</span>
@@ -124,9 +119,7 @@
           </div>
           <hr class="my-4">
           <div class="d-flex justify-content-between">
-            <NavLink href="/">
-              <button class="btn my-2 btn-secondary btn-lg" type="button">Fortryd</button>
-            </NavLink>
+            <button class="btn my-2 btn-secondary btn-lg" @onclick="Regret" type="button">Fortryd</button>
             <button type="submit" class="my-2 btn btn-primary btn-lg">Indsend idé</button>
           </div>
         </EditForm>
@@ -134,22 +127,3 @@
     </div>
   </section>
 </main>
-
-@code {
-    private NewIdea idea = new();
-
-    private async void HandleValidSubmit()
-    {
-      await _ideas.Insert(idea);
-      NavManager.NavigateTo("/");
-      try
-      {
-
-      }
-      catch
-      {
-        // skriv en fejl besked til brugern
-      }
-
-    }
-}

@@ -24,9 +24,9 @@ namespace BusinessLogicLib.Service
         {
             await Repository.AddAsync(DBConvert.CommentToTbl(comment));
         }
-        public Task DeleteByID(int id)
+        public async Task DeleteByID(int id)
         {
-            throw new System.NotImplementedException();
+            await Repository.RemoveByIdAsync(id);
         }
     }
 }

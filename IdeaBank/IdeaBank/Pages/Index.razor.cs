@@ -1,3 +1,4 @@
+
 using BusinessLogicLib.Interfaces;
 using BusinessLogicLib.Models;
 using Microsoft.AspNetCore.Components.Forms;
@@ -8,30 +9,31 @@ using DataBaseLib.Models;
 
 namespace IdeaBank.Pages
 {
-    public partial class Index
+    public partial class Index : ComponentBase
     {
         [Inject]
-        private IIdeasDataAccess Ideas { get; set; }
+        public IIdeasDataAccess Ideas { get; set; }
         [Inject]
         private IDBTableConfiguration Config { get; set; }
 
         private EditContext _editContext;
-        public List<ViewIdea> IdeaList;
+        private List<ViewIdea> _ideaList;
         private Modal Modal { get; set; }
         private FilterIdea _filterIdea = new();
-
+        private bool IsAuthorized { get; set; }
         protected override async Task OnInitializedAsync()
         {
-            _editContext = new EditContext(_filterIdea);
+           _editContext = new EditContext(_filterIdea);
             _editContext.OnFieldChanged += EditContext_OnFieldChanged;
             _filterIdea.Sorting = Sort.CreatedAtDesc;
             await Config.ConfigureDBTables(); // Måske det skal være et andet sted
             
-            if (IdeaList == null)
+            if (_ideaList == null)
             {
                 await Update();
             }
         }
+        
         // Note: The OnFieldChanged event is raised for each field in the model
         private async void EditContext_OnFieldChanged(object sender, FieldChangedEventArgs e)
         {
@@ -54,9 +56,9 @@ namespace IdeaBank.Pages
             await Update();
         }
 
-        private async Task Update()
+        public async Task Update()
         {
-            IdeaList = await Ideas.GetWFilter(_filterIdea);
+            _ideaList = await Ideas.GetWFilter(_filterIdea);
             StateHasChanged();
         }
 

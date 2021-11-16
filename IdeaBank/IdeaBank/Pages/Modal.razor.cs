@@ -7,47 +7,95 @@ using BusinessLogicLib.Models;
 using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.AspNetCore.Components;
+using Microsoft.JSInterop;
+using System.Reflection;
+using DataBaseLib.Models;
+using BusinessLogicLib;
 
 namespace IdeaBank.Pages
 {
-    public partial class Modal
+    public partial class Modal : ComponentBase
     {
+
         [Inject]
-        public ICommentsDataAccess Comments { get; set; }
+        private IJSRuntime JsRuntime { get; set; }
+        private Index IndexView { get; set; }
 
-        public Guid Guid = Guid.NewGuid();
-
-        public string ModalDisplay = "none;";
-        public string ModalClass = "";
+        private string _modalDisplay = "none;";
+        private string _modalClass = "";
         private ViewIdea _idea = new();
-        private Comment _comment = new();
+        private EditIdea _editIdea = new();
+        private CommentSection CommentSection { get; set; }
+        private bool IsEditing { get; set; } = false;
 
-        public async Task Open(ViewIdea idea)
+        private readonly string _confirmDeleteIdea = "Er du sikker på du vil slette ideen?";
+        private readonly string _confirmCloseModal = "Er du sikker på du vil lukke vinduet og slette dine ændringer?";
+
+        public async Task Open(ViewIdea idea, Index indexView)
         {
             StateHasChanged();
-            ModalDisplay = "block;";
+            IndexView = indexView;
+            _modalDisplay = "block;";
             await Task.Delay(150);
-            ModalClass = "show";
+            _modalClass = "show";
             _idea = idea;
-            _idea.Comments = await Comments.GetWFilter(_idea.Id);
+            CommentSection.LoadComments(idea.Id);
             StateHasChanged();
         }
 
         public async Task Close()
         {
-            ModalClass = "";
+            if (IsEditing)
+            {
+                bool confirmed = await JsRuntime.InvokeAsync<bool>("confirm", _confirmCloseModal);
+                if (!confirmed)
+                    return;
+            }
+            _modalClass = "";
             await Task.Delay(250);
-            ModalDisplay = "none;";
+            _modalDisplay = "none;";
+            IsEditing = false;
             StateHasChanged();
         }
-        private async void HandleValidSubmit()
+        private async void DeleteIdea()
         {
-            _comment.CreatedAt = DateTime.Now;
-            _comment.IdeaId = _idea.Id;
-            Comments.Insert(_comment);
-            _idea.Comments = await Comments.GetWFilter(_idea.Id);
-            _comment.Initials = "";
-            _comment.Message = "";
+            bool confirmed = await JsRuntime.InvokeAsync<bool>("confirm", _confirmDeleteIdea);
+            if (confirmed)
+            {
+                await IndexView.Ideas.DeleteByID(_idea.Id);
+                await Close();
+                await IndexView.Update();
+                StateHasChanged();
+            }
+        }
+        private void EditIdea()
+        {
+            _editIdea.Id = _idea.Id;
+            _editIdea.Initials = _idea.Initials;
+            _editIdea.ProjectName = _idea.ProjectName;
+            _editIdea.Description = DBConvert.StrBrToNewLine(_idea.Description);
+            _editIdea.Risk = DBConvert.StrBrToNewLine(_idea.Risk);
+            _editIdea.Plan = DBConvert.StrBrToNewLine(_idea.Plan);
+            _editIdea.ExpectedResults = DBConvert.StrBrToNewLine(_idea.ExpectedResults);
+            _editIdea.Team = _idea.Team;
+            _editIdea.Priority = _idea.Priority;
+            _editIdea.Department = _idea.Department;
+            _editIdea.BusinessUnit = _idea.BusinessUnit;
+            _editIdea.Status = _idea.Status;
+            _editIdea.IsHidden = _idea.IsHidden;
+            _editIdea.CreatedAt = _idea.CreatedAt;
+            _editIdea.UpdatedAt = _idea.UpdatedAt;
+            IsEditing = true;
+            StateHasChanged();
+        }
+        private async void HandleValidEdit()
+        {
+            IsEditing = false;
+            await IndexView.Ideas.Edit(_editIdea);
+            FilterIdea filterIdea = new();
+            filterIdea.Id = _editIdea.Id;
+            _idea = (await IndexView.Ideas.GetWFilter(filterIdea)).First();
+            await IndexView.Update();
             StateHasChanged();
         }
     }

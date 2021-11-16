@@ -1,0 +1,45 @@
+@using BusinessLogicLib.Models;
+@using Microsoft.AspNetCore.Components.Forms
+
+
+<div class="p-2 my-3 bg-light rounded-cos">
+  <div class="container-fluid">
+    <h3 class="my-2">Kommentarspor</h3>
+    <EditForm Model="@_comment" OnValidSubmit="@HandleValidSubmit">
+      <DataAnnotationsValidator />
+      <div class="d-flex flex-row mb-2">
+        <InputTextArea class="form-control rounded-cos my-1" required placeholder="Skriv din kommentar her" @bind-Value="_comment.Message"></InputTextArea>
+        <div>
+          <InputText class="form-control mx-2 my-1 rounded-cos" required maxlength="5" placeholder="Initialer" @bind-Value="_comment.Initials"></InputText>
+          <button type="submit" class="btn btn-primary mx-2 my-1 rounded-cos w-100">Kommenter</button>
+        </div>
+      </div>
+    </EditForm>
+    @if (AllComment != null)
+    {
+      foreach (Comment c in AllComment)
+      {
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item bg-transparent mb-0 pb-0 mt-2">
+            <h6 class="text-primary mb-0 pb-0">
+              @c.Initials
+              <small class="text-muted" style="font-size: 0.8rem;">
+                @c.CreatedAt.ToShortDateString()
+                @c.CreatedAt.ToShortTimeString()
+              </small>
+            </h6>
+            <p>
+              @((MarkupString) c.Message)
+              <AuthorizeView>
+                <Authorized>
+                  <a class="text-danger float-end" @onclick="() => DeleteComment(c)">Slet</a>
+                </Authorized>
+              </AuthorizeView>
+            </p>
+          </li>
+        </ul>
+      <hr class="py-0 my-0" />
+        }
+    }
+</div>
+</div>
