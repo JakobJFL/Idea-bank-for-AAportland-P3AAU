@@ -16,6 +16,7 @@ namespace BusinessLogicLib
         {
             Repository = repository;
         }
+
         public async Task ConfigureDBTables()
         {
             if (await Repository.IsBuAndDepEmpty())

@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
 using DataBaseLib.Models;
+using System;
 
 namespace IdeaBank.Pages
 {
@@ -23,11 +24,18 @@ namespace IdeaBank.Pages
         private bool IsAuthorized { get; set; }
         protected override async Task OnInitializedAsync()
         {
-           _editContext = new EditContext(_filterIdea);
-            _editContext.OnFieldChanged += EditContext_OnFieldChanged;
-            _filterIdea.Sorting = Sort.CreatedAtDesc;
-            await Config.ConfigureDBTables(); // Måske det skal være et andet sted
-            
+            try
+            {
+                _editContext = new EditContext(_filterIdea);
+                _editContext.OnFieldChanged += EditContext_OnFieldChanged;
+                _filterIdea.Sorting = Sort.CreatedAtDesc;
+                await Config.ConfigureDBTables(); // Måske det skal være et andet sted
+            }
+            catch
+            {
+                throw new Exception("OnInitializedAsync failed");
+            }
+          
             if (_ideaList == null)
             {
                 await Update();

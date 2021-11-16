@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -17,12 +18,26 @@ namespace BusinessLogicLib.Service
         public ICommentsRepository Repository { get; }
         public async Task<List<Comment>> GetWFilter(int id)
         {
-            List<CommentsTbl> comments = (await Repository.ListAsync(id)).ToList();
-            return DBConvert.TblToComment(comments);
+            try
+            {
+                List<CommentsTbl> comments = (await Repository.ListAsync(id)).ToList();
+                return DBConvert.TblToComment(comments);
+            }
+            catch
+            {
+                throw new Exception("GetWFilter failed");
+            }
         }
         public async void Insert(Comment comment)
         {
+            try
+            {
             await Repository.AddAsync(DBConvert.CommentToTbl(comment));
+            }
+            catch
+            {
+                throw new Exception("Insert failed");
+            }
         }
         public async Task DeleteByID(int id)
         {

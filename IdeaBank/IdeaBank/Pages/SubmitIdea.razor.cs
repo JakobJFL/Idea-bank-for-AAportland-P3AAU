@@ -1,13 +1,5 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using BusinessLogicLib.Interfaces;
 using BusinessLogicLib.Models;
-using Microsoft.Extensions.Configuration;
-using Microsoft.AspNetCore.Components.Forms;
-using Microsoft.AspNetCore.Components;
-using Microsoft.JSInterop;
+using System;
 
 namespace IdeaBank.Pages
 {
@@ -24,6 +16,7 @@ namespace IdeaBank.Pages
         public IJSRuntime JsRuntime { get; set; }
 
         private readonly string _confirmRegretSubmit = "Er du sikker på du vil fortryde og slette denne ide?";
+        
         private async void HandleValidSubmit()
         {
             try
@@ -33,10 +26,8 @@ namespace IdeaBank.Pages
             }
             catch (Exception ex)
             {
-                throw new Exception(ex.Message);
-                // skriv en fejl besked til brugern
+                throw new Exception("HandleValidSubmit failed");
             }
-
         }
         private async void Regret()
         {
