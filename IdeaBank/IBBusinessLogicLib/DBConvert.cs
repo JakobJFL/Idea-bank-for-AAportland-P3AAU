@@ -57,7 +57,6 @@ namespace BusinessLogicLib
                 idea.ExpectedResults = StrNewLineToBr(i.ExpectedResults);
                 idea.CreatedAt = i.CreatedAt;
                 idea.UpdatedAt = i.UpdatedAt;
-                idea.Comments = TblToComment(i.Comments);
                 ideas.Add(idea);
             }
             return ideas;

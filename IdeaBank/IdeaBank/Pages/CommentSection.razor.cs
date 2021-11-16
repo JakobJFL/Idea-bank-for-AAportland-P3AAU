@@ -24,9 +24,9 @@ namespace IdeaBank.Pages
 
         private readonly string _confirmDeleteComment = "Er du sikker på du vil slette kommentaren?";
 
-        public async void LoadComments(List<Comment> comments, int ideaId)
+        public async void LoadComments(int ideaId)
         {
-            AllComment = comments;
+            AllComment = await Comments.GetWFilter(ideaId);
             IdeaId = ideaId;
             StateHasChanged();
         }

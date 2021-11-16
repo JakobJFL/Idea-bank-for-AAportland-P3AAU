@@ -15,6 +15,5 @@ namespace BusinessLogicLib.Models
         public string StatusStr { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
-        public List<Comment> Comments { get; set; }
     }
 }

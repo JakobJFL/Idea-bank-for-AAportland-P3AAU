@@ -74,12 +74,17 @@ namespace RepositoryLib.Implementations
             await Context.IdeasTbl.AddAsync(model);
             await Context.SaveChangesAsync();
         }
-        public async Task RemoveByIdAsync(int id)
+        public async Task RemoveByIdAsync(int ideaId)
         {
-            IdeasTbl itemToRemove = Context.IdeasTbl.SingleOrDefault(x => x.Id == id);
-            if (itemToRemove != null)
+            IdeasTbl ideaToRemove = Context.IdeasTbl.SingleOrDefault(x => x.Id == ideaId);
+            if (ideaToRemove != null)
             {
-                Context.IdeasTbl.Remove(itemToRemove);
+                Context.IdeasTbl.Remove(ideaToRemove);
+                List<CommentsTbl> commentsToRemove = Context.CommentsTbl.Where(c => c.Idea == ideaToRemove).ToList();
+                foreach (CommentsTbl comment in commentsToRemove)
+                {
+                    Context.CommentsTbl.Remove(comment);
+                }
                 await Context.SaveChangesAsync();
             }
         }
