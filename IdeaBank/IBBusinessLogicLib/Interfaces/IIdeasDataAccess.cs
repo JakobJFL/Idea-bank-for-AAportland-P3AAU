@@ -14,6 +14,7 @@ namespace BusinessLogicLib.Interfaces
         public Task Insert(NewIdea idea);
         public Task Edit(EditIdea idea);
         public Task DeleteByID(int id);
+        public int Count();
 
     }
 }

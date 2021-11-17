@@ -24,7 +24,7 @@ namespace BusinessLogicLib.Service
         }
         public async Task Insert(NewIdea idea)
         {
-            await Repository.AddAsync(DBConvert.NewIdeaToTbl(idea), idea.Department, idea.BusinessUnit);
+            await Repository.AddAsync(DBConvert.NewIdeaToTbl(idea));
         }
         public async Task DeleteByID(int id)
         {
@@ -32,8 +32,13 @@ namespace BusinessLogicLib.Service
         }
         public async Task Edit(EditIdea idea)
         {
-            Console.WriteLine(idea.Department);
-            await Repository.UpdateAsync(DBConvert.EditIdeaToTbl(idea), idea.Department, idea.BusinessUnit);
+            Console.WriteLine(idea.AuthorDepartment);
+            await Repository.UpdateAsync(DBConvert.EditIdeaToTbl(idea));
+        }
+
+        public int Count()
+        {
+            return Repository.IdeasCount;
         }
     }
 }

@@ -21,6 +21,9 @@
     <Content Remove="Pages\NewIdea.razor" />
     <Content Remove="wwwroot\js\NewFile.txt" />
     <Content Remove="wwwroot\lib\NewFile.txt" />
+    <Content Remove="wwwroot\svg\logo - Copy.svg" />
+    <Content Remove="wwwroot\svg\logo-shortsvg" />
+    <Content Remove="wwwroot\svg\logo-shosrt.svg" />
     <Content Remove="wwwroot\svg\NewFile.txt" />
   </ItemGroup>
 

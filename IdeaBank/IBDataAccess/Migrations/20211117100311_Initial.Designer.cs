@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataBaseLib.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20211116133706_Initial")]
+    [Migration("20211117100311_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -88,14 +88,14 @@ namespace DataBaseLib.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("BusinessUnitId")
+                    b.Property<int?>("AuthorBusinessUnitId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("AuthorDepartmentId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
-
-                    b.Property<int?>("DepartmentId")
-                        .HasColumnType("int");
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -105,6 +105,12 @@ namespace DataBaseLib.Migrations
                     b.Property<string>("ExpectedResults")
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
+
+                    b.Property<int?>("IdeaBusinessUnitId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("IdeaDepartmentId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Initials")
                         .IsRequired()
@@ -142,9 +148,13 @@ namespace DataBaseLib.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("BusinessUnitId");
+                    b.HasIndex("AuthorBusinessUnitId");
 
-                    b.HasIndex("DepartmentId");
+                    b.HasIndex("AuthorDepartmentId");
+
+                    b.HasIndex("IdeaBusinessUnitId");
+
+                    b.HasIndex("IdeaDepartmentId");
 
                     b.ToTable("IdeasTbl");
                 });
@@ -360,17 +370,29 @@ namespace DataBaseLib.Migrations
 
             modelBuilder.Entity("DataBaseLib.Models.IdeasTbl", b =>
                 {
-                    b.HasOne("DataBaseLib.Models.BusinessUnitsTbl", "BusinessUnit")
-                        .WithMany("Ideas")
-                        .HasForeignKey("BusinessUnitId");
+                    b.HasOne("DataBaseLib.Models.BusinessUnitsTbl", "AuthorBusinessUnit")
+                        .WithMany("AuthorIdeas")
+                        .HasForeignKey("AuthorBusinessUnitId");
 
-                    b.HasOne("DataBaseLib.Models.DepartmentsTbl", "Department")
-                        .WithMany("Ideas")
-                        .HasForeignKey("DepartmentId");
+                    b.HasOne("DataBaseLib.Models.DepartmentsTbl", "AuthorDepartment")
+                        .WithMany("AuthorIdeas")
+                        .HasForeignKey("AuthorDepartmentId");
 
-                    b.Navigation("BusinessUnit");
+                    b.HasOne("DataBaseLib.Models.BusinessUnitsTbl", "IdeaBusinessUnit")
+                        .WithMany("IdeaIdeas")
+                        .HasForeignKey("IdeaBusinessUnitId");
 
-                    b.Navigation("Department");
+                    b.HasOne("DataBaseLib.Models.DepartmentsTbl", "IdeaDepartment")
+                        .WithMany("IdeaIdeas")
+                        .HasForeignKey("IdeaDepartmentId");
+
+                    b.Navigation("AuthorBusinessUnit");
+
+                    b.Navigation("AuthorDepartment");
+
+                    b.Navigation("IdeaBusinessUnit");
+
+                    b.Navigation("IdeaDepartment");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -426,12 +448,16 @@ namespace DataBaseLib.Migrations
 
             modelBuilder.Entity("DataBaseLib.Models.BusinessUnitsTbl", b =>
                 {
-                    b.Navigation("Ideas");
+                    b.Navigation("AuthorIdeas");
+
+                    b.Navigation("IdeaIdeas");
                 });
 
             modelBuilder.Entity("DataBaseLib.Models.DepartmentsTbl", b =>
                 {
-                    b.Navigation("Ideas");
+                    b.Navigation("AuthorIdeas");
+
+                    b.Navigation("IdeaIdeas");
                 });
 
             modelBuilder.Entity("DataBaseLib.Models.IdeasTbl", b =>

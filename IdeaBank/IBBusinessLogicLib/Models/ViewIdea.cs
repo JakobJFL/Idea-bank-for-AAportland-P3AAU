@@ -8,8 +8,10 @@ namespace BusinessLogicLib.Models
     {
         [Required]
         public int Id { get; set; }
-        public string BusinessUnitStr { get; set; }
-        public string DepartmentStr { get; set; }
+        public string AuthorBusinessUnitStr { get; set; }
+        public string AuthorDepartmentStr { get; set; }
+        public string IdeaBusinessUnitStr { get; set; }
+        public string IdeaDepartmentStr { get; set; }
         public string Risk { get; set; }
         public string PriorityStr { get; set; }
         public string StatusStr { get; set; }

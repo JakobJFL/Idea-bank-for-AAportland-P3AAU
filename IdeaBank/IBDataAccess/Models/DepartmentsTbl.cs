@@ -15,7 +15,10 @@ namespace DataBaseLib.Models
         [MaxLength(50)]
         [Column(TypeName = "varchar(50)")]
         public string Name { get; set; }
+        [InverseProperty("IdeaDepartment")]
+        public virtual ICollection<IdeasTbl> IdeaIdeas { get; set; }
+        [InverseProperty("AuthorDepartment")]
+        public virtual ICollection<IdeasTbl> AuthorIdeas { get; set; }
 
-        public ICollection<IdeasTbl> Ideas { get; set; }
     }
 }

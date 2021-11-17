@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -16,6 +16,11 @@ namespace DataBaseLib.Models
         [Column(TypeName = "varchar(50)")]
         public string Name { get; set; }
 
-        public ICollection<IdeasTbl> Ideas { get; set; }
+        [InverseProperty("IdeaBusinessUnit")]
+        public virtual ICollection<IdeasTbl> IdeaIdeas { get; set; }
+        [InverseProperty("AuthorBusinessUnit")]
+        public virtual ICollection<IdeasTbl> AuthorIdeas { get; set; }
+
     }
+
 }

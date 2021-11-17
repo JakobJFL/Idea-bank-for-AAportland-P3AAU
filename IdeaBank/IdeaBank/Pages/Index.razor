@@ -56,7 +56,7 @@
         <table class="table my-0 table-primary table-striped table-hover">
           <thead>
             <tr>
-              <th scope="col" style="min-width: 150px;" class="sort-select bg-primary select-filter-text" @onclick="ChangeProjectNameSort">
+              <th scope="col" style="min-width: 150px;" class="sort-select bg-primary select-filter-text align-middle" @onclick="ChangeProjectNameSort">
                 Projektnavn
                 @if (_filterIdea.Sorting == Sort.ProjectNameAsc)
                 {<img src="/svg/alfa-desc.svg" />}
@@ -66,30 +66,30 @@
                 {<img src="/svg/filter.svg" />}
               </th>
 
-              <th scope="col" style="width: 220px;" class="bg-primary text-white select-filter-text">
+              <th scope="col" style="width: 220px;" class="bg-primary text-white select-filter-text align-middle">
                 <InputSelect class="btn form-select select-filter noFocus" @bind-Value="_filterIdea.BusinessUnit">
-                  <option value="0" selected>Forretningsenheder</option>
-                  <option value="1">Kun Ikke Angivet</option>
-                  <option value="2">Kun Aalborg Portland</option>
-                  <option value="3">Kun Unicon DK</option>
-                  <option value="4">Kun Unicon NO</option>
-                  <option value="5">Kun Kudsk & Dahl</option>
+                  <option value="0" selected>Forretningsenhed</option>
+                  <option value="1">Ikke Angivet</option>
+                  <option value="2">Aalborg Portland</option>
+                  <option value="3">Unicon DK</option>
+                  <option value="4">Unicon NO</option>
+                  <option value="5">Kudsk & Dahl</option>
                 </InputSelect>
               </th>
-              <th scope="col" style="width: 150px;" class="bg-primary text-white select-filter-text">
+              <th scope="col" style="width: 150px;" class="bg-primary text-white select-filter-text align-middle">
                 <InputSelect class="btn form-select select-filter noFocus" @bind-Value="_filterIdea.Department">
-                  <option value="0" selected>Afdelinger</option>
-                  <option value="1">Kun Ikke Angivet</option>
-                  <option value="2">Kun Salg</option>
-                  <option value="3">Kun SCM</option>
-                  <option value="4">Kun Produktion</option>
-                  <option value="5">Kun Vedligehold</option>
+                  <option value="0" selected>Afdeling</option>
+                  <option value="1">Ikke Angivet</option>
+                  <option value="2">Salg</option>
+                  <option value="3">SCM</option>
+                  <option value="4">Produktion</option>
+                  <option value="5">Vedligehold</option>
                   <option value="6">Finans</option>
                   <option value="7">HR</option>
                   <option value="8">PMO & Transformation</option>
                 </InputSelect>
               </th>
-              <th scope="col" style="width: 120px;" class="bg-primary text-white select-filter-text">
+              <th scope="col" style="width: 120px;" class="bg-primary text-white select-filter-text align-middle">
                 <InputSelect class="btn form-select select-filter noFocus" @bind-Value="_filterIdea.Status">
                   <option value="0" selected>Status</option>
                   <option value="1">Oprettet</option>
@@ -98,7 +98,7 @@
                   <option value="4">Afsluttet</option>
                 </InputSelect>
               </th>
-              <th scope="col" style="width: 138px;" class="bg-primary text-white select-filter-text">
+              <th scope="col" style="width: 138px;" class="bg-primary text-white select-filter-text align-middle">
                 <InputSelect class="btn form-select select-filter noFocus" @bind-Value="_filterIdea.Priority">
                   <option value="0" selected>Prioritet</option>
                   <option value="1">Lav</option>
@@ -107,7 +107,7 @@
                   <option value="4">Ikke angivet</option>
                 </InputSelect>
               </th>
-              <th scope="col" style="width: 110px;" class="sort-select bg-primary select-filter-text" @onclick="ChangeCreatedAtSort">
+              <th scope="col" style="width: 110px;" class="sort-select bg-primary select-filter-text align-middle" @onclick="ChangeCreatedAtSort">
                 Oprettet
                 @if (_filterIdea.Sorting == Sort.CreatedAtAsc)
                 {<img src="/svg/sort-up.svg" />}
@@ -116,7 +116,7 @@
                 else
                 {<img src="/svg/filter.svg" />}
               </th>
-              <th scope="col" style="width: 160px;" class="sort-select bg-primary select-filter-text" @onclick="ChangeUpdatedAtSort">
+              <th scope="col" style="width: 160px;" class="sort-select bg-primary select-filter-text align-middle" @onclick="ChangeUpdatedAtSort">
                 Sidst opdateret
                 @if (_filterIdea.Sorting == Sort.UpdatedAtAsc)
                 {<img src="/svg/sort-up.svg" />}
@@ -144,8 +144,8 @@
                           <p class="text-show-hidden">Skjult</p>}
                       </div>
                     </td>
-                    <td>@idea.BusinessUnitStr</td>
-                    <td>@idea.DepartmentStr</td>
+                    <td>@idea.IdeaBusinessUnitStr</td>
+                    <td>@idea.IdeaDepartmentStr</td>
                     <td>@idea.StatusStr</td>
                     <td>@idea.PriorityStr</td>
                     <td>@idea.CreatedAt.ToShortDateString()</td>
@@ -155,14 +155,56 @@
               }
             }
             else
-              {
-                <tr>
-                  <td colspan = "7" class="m-3 fs-5 text-center">Indlæser idéer...</td>
-                </tr>
-              }
+            {
+              <tr>
+                <td colspan="7" class="m-3 fs-5 text-center">Indlæser idéer...</td>
+              </tr>
+            }
           </tbody>
         </table>
       </div>
     </EditForm>
+    <ul class="pagination justify-content-end mt-3">
+      @if (_ideaList != null)
+      {
+        if (CurrentPage == 1)
+        {
+          <li class="page-item disabled">
+            <a class="btn rounded-0 page-link rounded-start">Forrige</a>
+          </li>
+        }
+        else
+        {
+          <li class="page-item">
+            <a class="btn rounded-0 page-link text-primary rounded-start" @onclick="() => {CurrentPage--; ChangeUpdatedAtPage(); }">Forrige</a>
+          </li>
+        }
+        for (int i = 1; i <= NumOfPages; i++)
+        {
+            int local = i; 
+            if (i == CurrentPage)
+            {
+                <li class="page-item disabled"><a class="btn bg-primary rounded-0 page-link text-white font-weight-bold">@i</a></li>
+          }
+          else
+          {
+                <li class="page-item"><a class="btn rounded-0 page-link text-primary" @onclick="() => {CurrentPage = local; ChangeUpdatedAtPage(); }">@i</a></li>
+          }
+        }
+        if (CurrentPage == NumOfPages)
+        {
+            <li class="page-item disabled">
+              <a class="btn rounded-0 rounded-end page-link" >Næste</a>
+            </li>
+        }
+        else
+        {
+            <li class="page-item">
+              <a class="btn rounded-0 rounded-end page-link text-primary" @onclick="()=> {CurrentPage++; ChangeUpdatedAtPage(); }">Næste</a>
+            </li>
+        }
+      }
+
+    </ul>
   </div>
 </section>

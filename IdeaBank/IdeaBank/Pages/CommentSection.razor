@@ -32,7 +32,7 @@
               @((MarkupString) c.Message)
               <AuthorizeView>
                 <Authorized>
-                  <a class="text-danger float-end" @onclick="() => DeleteComment(c)">Slet</a>
+                  <a class="btn btn-icon noFocus float-end" @onclick="() => DeleteComment(c)"><img src="/svg/trash-fill-red.svg" /></a>
                 </Authorized>
               </AuthorizeView>
             </p>

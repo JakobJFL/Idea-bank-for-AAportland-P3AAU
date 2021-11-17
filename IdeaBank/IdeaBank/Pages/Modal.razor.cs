@@ -29,7 +29,7 @@ namespace IdeaBank.Pages
         private bool IsEditing { get; set; } = false;
 
         private readonly string _confirmDeleteIdea = "Er du sikker på du vil slette ideen?";
-        private readonly string _confirmCloseModal = "Er du sikker på du vil lukke vinduet og slette dine ændringer?";
+        private readonly string _confirmCancel = "Er du sikker på du vil slette dine ændringer?";
 
         public async Task Open(ViewIdea idea, Index indexView)
         {
@@ -43,19 +43,31 @@ namespace IdeaBank.Pages
             StateHasChanged();
         }
 
-        public async Task Close()
+        private async Task<bool> CancelEditing()
         {
             if (IsEditing)
             {
-                bool confirmed = await JsRuntime.InvokeAsync<bool>("confirm", _confirmCloseModal);
-                if (!confirmed)
-                    return;
+                bool confirmed = await JsRuntime.InvokeAsync<bool>("confirm", _confirmCancel);
+                if (confirmed)
+                {
+                    IsEditing = false;
+                    StateHasChanged();
+                    return true;
+                }
+                return false;
             }
-            _modalClass = "";
-            await Task.Delay(250);
-            _modalDisplay = "none;";
-            IsEditing = false;
-            StateHasChanged();
+            return true;
+        }
+
+        public async Task Close()
+        {
+            if (await CancelEditing())
+            {
+                _modalClass = "";
+                await Task.Delay(250);
+                _modalDisplay = "none;";
+                StateHasChanged();
+            }
         }
         private async void DeleteIdea()
         {
@@ -79,12 +91,13 @@ namespace IdeaBank.Pages
             _editIdea.ExpectedResults = DBConvert.StrBrToNewLine(_idea.ExpectedResults);
             _editIdea.Team = _idea.Team;
             _editIdea.Priority = _idea.Priority;
-            _editIdea.Department = _idea.Department;
-            _editIdea.BusinessUnit = _idea.BusinessUnit;
+            _editIdea.AuthorDepartment = _idea.AuthorDepartment;
+            _editIdea.AuthorBusinessUnit = _idea.AuthorBusinessUnit;
+            _editIdea.IdeaDepartment = _idea.IdeaDepartment;
+            _editIdea.IdeaBusinessUnit = _idea.IdeaBusinessUnit;
             _editIdea.Status = _idea.Status;
             _editIdea.IsHidden = _idea.IsHidden;
             _editIdea.CreatedAt = _idea.CreatedAt;
-            _editIdea.UpdatedAt = _idea.UpdatedAt;
             IsEditing = true;
             StateHasChanged();
         }
@@ -94,6 +107,8 @@ namespace IdeaBank.Pages
             await IndexView.Ideas.Edit(_editIdea);
             FilterIdea filterIdea = new();
             filterIdea.Id = _editIdea.Id;
+            filterIdea.CurrentPage = 1;
+            filterIdea.IdeasShownCount = 1;
             _idea = (await IndexView.Ideas.GetWFilter(filterIdea)).First();
             await IndexView.Update();
             StateHasChanged();

@@ -1,9 +1,12 @@
 <header class="p-3 shadow bg-primary text-white">
     <div class="container">
         <div class="d-flex justify-content-between">
-        <NavLink href="/">
-            <img src="/svg/logo.svg" />
-        </NavLink>
+            <NavLink href="/" class="d-none d-sm-block align-middle">
+                <img src="/svg/logo.svg" />
+            </NavLink>
+            <NavLink href="/" class="d-block d-sm-none">
+                <img src="/svg/logo-short.svg" />
+            </NavLink>
             <div class="d-flex">
                 <NavLink class="btn btn-outline-light rounded-cos mx-1" href="/Guide">Guide</NavLink>
                 <NavLink class="btn btn-outline-light rounded-cos mx-1" href="/NewIdea">Tilføj ide</NavLink>
@@ -12,7 +15,7 @@
                         <NavLink class="btn text-white noFocus mx-1" href="Identity/Account/Login">Admin login</NavLink>
                     </NotAuthorized>
                     <Authorized>
-                      <NavLink class="btn text-white noFocus" href="Identity/Account/Manage">Indstillinger</NavLink>
+                        <NavLink class="btn text-white noFocus" href="Identity/Account/Manage">Indstillinger</NavLink>
                         <form method="post" action="Identity/Account/LogOut">
                             <button type="submit" class="btn text-white noFocus">Log ud</button>
                         </form>

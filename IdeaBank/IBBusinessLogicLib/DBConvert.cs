@@ -42,10 +42,17 @@ namespace BusinessLogicLib
                 idea.Initials = i.Initials;
                 idea.ProjectName = i.ProjectName;
                 idea.Description = StrNewLineToBr(i.Description);
-                idea.BusinessUnit = i.BusinessUnit.Id;
-                idea.BusinessUnitStr = i.BusinessUnit.Name;
-                idea.Department = i.Department.Id;
-                idea.DepartmentStr = i.Department.Name;
+
+                idea.AuthorBusinessUnit = i.AuthorBusinessUnitId;
+                idea.AuthorBusinessUnitStr = i.AuthorBusinessUnit.Name;
+                idea.AuthorDepartment = i.AuthorDepartmentId;
+                idea.AuthorDepartmentStr = i.AuthorDepartment.Name;
+
+                idea.IdeaBusinessUnit = i.IdeaBusinessUnitId;
+                idea.IdeaBusinessUnitStr = i.IdeaBusinessUnit.Name;
+                idea.IdeaDepartment = i.IdeaDepartmentId;
+                idea.IdeaDepartmentStr = i.IdeaDepartment.Name;
+
                 idea.Priority = i.Priority;
                 idea.PriorityStr = GetPriorityStr(i.Priority);
                 idea.Status = i.Status;
@@ -69,6 +76,10 @@ namespace BusinessLogicLib
             idea.ProjectName = editIdea.ProjectName;
             idea.Description = editIdea.Description;
             idea.Description = editIdea.Description;
+            idea.IdeaBusinessUnitId = editIdea.IdeaBusinessUnit;
+            idea.IdeaDepartmentId = editIdea.IdeaDepartment;
+            idea.AuthorBusinessUnitId = editIdea.AuthorBusinessUnit;
+            idea.AuthorDepartmentId = editIdea.AuthorDepartment;
             idea.PlanDescription = editIdea.Plan;
             idea.Risk = editIdea.Risk;
             idea.CreatedAt = editIdea.CreatedAt;
@@ -76,6 +87,7 @@ namespace BusinessLogicLib
             idea.Priority = editIdea.Priority;
             idea.Team = editIdea.Team;
             idea.ExpectedResults = editIdea.ExpectedResults;
+            idea.UpdatedAt = DateTime.Now;
             return idea;
         }
         public static IdeasTbl NewIdeaToTbl(NewIdea idea)
@@ -84,6 +96,10 @@ namespace BusinessLogicLib
             newIdea.ProjectName = idea.ProjectName;
             newIdea.Initials = idea.Initials;
             newIdea.Description = idea.Description;
+            newIdea.IdeaBusinessUnitId = idea.IdeaBusinessUnit;
+            newIdea.IdeaDepartmentId = idea.IdeaDepartment;
+            newIdea.AuthorBusinessUnitId = idea.AuthorBusinessUnit;
+            newIdea.AuthorDepartmentId = idea.AuthorDepartment;
             newIdea.Team = idea.Team;
             newIdea.PlanDescription = idea.Plan;
             newIdea.ExpectedResults = idea.ExpectedResults;

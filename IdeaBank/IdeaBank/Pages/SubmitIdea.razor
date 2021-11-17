@@ -56,11 +56,43 @@
               </div>
             </div>
             <div class="col-md-3">
-              <div title="Den forretningsenhed som idéen vedrører">
-                <label class="form-label">Forretningsenhed</label>
+              <div title="Den forretningsenhed som du arbejder i">
+                <label class="form-label">Din forretningsenhed</label>
                 <img src="svg/question-circle.svg">
               </div>
-              <InputSelect class="form-select" required @bind-Value="_idea.BusinessUnit">
+              <InputSelect class="form-select" required @bind-Value="_idea.AuthorBusinessUnit">
+                <option value="1" selected class="text-muted">Ikke angivet</option>
+                <option value="2">Aalborg Portland</option>
+                <option value="3">Unicon DK</option>
+                <option value="4">Unicon NO</option>
+                <option value="5">Kudsk & Dahl</option>
+              </InputSelect>
+            </div>
+            <div class="col-md-3">
+              <div title="Den afdeling som du arbejder i">
+                <label class="form-label">Din afdeling</label>
+                <img src="svg/question-circle.svg">
+              </div>
+              <InputSelect class="form-select" @bind-Value="_idea.AuthorDepartment">
+                <option value="1" selected class="text-muted">Ikke angivet</option>
+                <option value="2">Salg</option>
+                <option value="3">SCM</option>
+                <option value="4">Produktion</option>
+                <option value="5">Vedligehold</option>
+                <option value="6">Finans</option>
+                <option value="7">HR</option>
+                <option value="8">PMO & Transformation</option>
+              </InputSelect>
+              <div class="invalid-feedback">
+                Vælg venligst en afdeling
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div title="Den forretningsenhed som idéen vedrører">
+                <label class="form-label">Vedrørende forretningsenhed</label>
+                <img src="svg/question-circle.svg">
+              </div>
+              <InputSelect class="form-select" required @bind-Value="_idea.IdeaBusinessUnit">
                 <option value="1" selected class="text-muted">Ikke angivet</option>
                 <option value="2">Aalborg Portland</option>
                 <option value="3">Unicon DK</option>
@@ -70,10 +102,10 @@
             </div>
             <div class="col-md-3">
               <div title="Den afdeling som idéen vedrører">
-                <label class="form-label">Afdeling</label>
+                <label class="form-label">Vedrørende afdeling</label>
                 <img src="svg/question-circle.svg">
               </div>
-              <InputSelect class="form-select" @bind-Value="_idea.Department">
+              <InputSelect class="form-select" @bind-Value="_idea.IdeaDepartment">
                 <option value="1" selected class="text-muted">Ikke angivet</option>
                 <option value="2">Salg</option>
                 <option value="3">SCM</option>
@@ -88,12 +120,6 @@
               </div>
             </div>
             <div class="col-md-6">
-              <label class="form-label">Team</label>
-              <div class="input-group">
-                <InputText type="text" class="form-control" maxlength=75 placeholder="Hvem skal være med?" @bind-Value="_idea.Team"></InputText>
-              </div>
-            </div>
-            <div class="col-md-6">
               <div class="form-group">
                 <label>Plan</label>
                 <InputTextArea class="form-control" rows="3" maxlength=500 placeholder="Forventet varighed, ønsket start og/eller deadline" @bind-Value="_idea.Plan"></InputTextArea>
@@ -103,6 +129,12 @@
               <div class="form-group">
                 <label>Forventet resultat</label>
                 <InputTextArea class="form-control" rows="3" maxlength=500 placeholder="Forventet resultat" @bind-Value="_idea.ExpectedResults"></InputTextArea>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Team</label>
+              <div class="input-group">
+                <InputText type="text" class="form-control" maxlength=75 placeholder="Hvem skal være med?" @bind-Value="_idea.Team"></InputText>
               </div>
             </div>
             <div>

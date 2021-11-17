@@ -16,6 +16,7 @@ namespace RepositoryLib.Implementations
         {
             Context = context;
         }
+        public int IdeasCount { get; set; } = 1;
         public Context Context { get; }
         /// <summary>
         /// 
@@ -23,22 +24,24 @@ namespace RepositoryLib.Implementations
         /// <param name="id"></param>
         /// <returns></returns>
         ///
-        public async Task<IEnumerable<IdeasTbl>> ListAsync(FilterIdea idea)
+        public async Task<IEnumerable<IdeasTbl>> ListAsync(FilterIdea filter)
         {
             IQueryable<IdeasTbl> ideas = Context.IdeasTbl
-                .Include(b => b.BusinessUnit)
-                .Include(d => d.Department)
+                .Include(b => b.IdeaBusinessUnit)
+                .Include(d => d.IdeaDepartment)
+                .Include(d => d.AuthorBusinessUnit)
+                .Include(d => d.AuthorDepartment)
                 .Include(i => i.Comments)
-                .Where(f => idea.BusinessUnit == 0 || idea.BusinessUnit == f.BusinessUnit.Id)
-                .Where(f => idea.Department == 0 || idea.Department == f.Department.Id)
-                .Where(f => idea.Priority == 0 || idea.Priority == f.Priority)
-                .Where(f => idea.Status == 0 || idea.Status == f.Status)
-                .Where(f => idea.Id == 0 || idea.Id == f.Id);
-            if (!string.IsNullOrEmpty(idea.SearchStr))
+                .Where(f => filter.BusinessUnit == 0 || filter.BusinessUnit == f.IdeaBusinessUnit.Id)
+                .Where(f => filter.Department == 0 || filter.Department == f.IdeaDepartment.Id)
+                .Where(f => filter.Priority == 0 || filter.Priority == f.Priority)
+                .Where(f => filter.Status == 0 || filter.Status == f.Status)
+                .Where(f => filter.Id == 0 || filter.Id == f.Id);
+            if (!string.IsNullOrEmpty(filter.SearchStr))
             {
-                ideas = ideas.Where(f => f.ProjectName.Contains(idea.SearchStr));
+                ideas = ideas.Where(f => f.ProjectName.Contains(filter.SearchStr));
             }
-            switch (idea.Sorting)
+            switch (filter.Sorting)
             {
                 case Sort.ProjectNameAsc:
                     ideas = ideas.OrderBy(s => s.ProjectName);
@@ -61,16 +64,12 @@ namespace RepositoryLib.Implementations
                 default:
                     throw new ArgumentException("Sorting was not was not within range of Sort");
             }
+            IdeasCount = await ideas.CountAsync();
+            ideas = ideas.Skip((filter.CurrentPage-1) * filter.IdeasShownCount).Take(filter.IdeasShownCount);
             return await ideas.ToListAsync();
         }
-        public async Task AddAsync(IdeasTbl model, int departmentId, int businessUnitId)
+        public async Task AddAsync(IdeasTbl model)
         {
-            model.Department = await Context.DepartmentsTbl
-               .Where(d => d.Id == departmentId)
-               .FirstAsync();
-            model.BusinessUnit = await Context.BusinessUnitsTbl
-                .Where(b => b.Id == businessUnitId)
-                .FirstAsync();
             await Context.IdeasTbl.AddAsync(model);
             await Context.SaveChangesAsync();
         }
@@ -88,18 +87,12 @@ namespace RepositoryLib.Implementations
                 await Context.SaveChangesAsync();
             }
         }
-        public async Task UpdateAsync(IdeasTbl model, int departmentId, int businessUnitId)
+        public async Task UpdateAsync(IdeasTbl model)
         {
-            IdeasTbl result = Context.IdeasTbl.SingleOrDefault(b => b.Id == model.Id);
-            if (result != null)
+            IdeasTbl ideaToUpdate = Context.IdeasTbl.SingleOrDefault(b => b.Id == model.Id);
+            if (ideaToUpdate != null)
             {
-                result.Department = await Context.DepartmentsTbl
-                   .Where(d => d.Id == departmentId)
-                   .FirstAsync();
-                result.BusinessUnit = await Context.BusinessUnitsTbl
-                    .Where(b => b.Id == businessUnitId)
-                    .FirstAsync();
-                Context.Entry(result).CurrentValues.SetValues(model);
+                Context.Entry(ideaToUpdate).CurrentValues.SetValues(model);
                 await Context.SaveChangesAsync();
             }
             else
@@ -116,16 +109,6 @@ namespace RepositoryLib.Implementations
         }
 
         public Task<IEnumerable<IdeasTbl>> ListAsync(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task AddAsync(IdeasTbl model)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task UpdateAsync(IdeasTbl model)
         {
             throw new NotImplementedException();
         }

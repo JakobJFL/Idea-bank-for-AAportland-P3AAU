@@ -194,21 +194,35 @@ namespace DataBaseLib.Migrations
                     Status = table.Column<int>(type: "int", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    BusinessUnitId = table.Column<int>(type: "int", nullable: true),
-                    DepartmentId = table.Column<int>(type: "int", nullable: true)
+                    IdeaBusinessUnitId = table.Column<int>(type: "int", nullable: true),
+                    IdeaDepartmentId = table.Column<int>(type: "int", nullable: true),
+                    AuthorBusinessUnitId = table.Column<int>(type: "int", nullable: true),
+                    AuthorDepartmentId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_IdeasTbl", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_IdeasTbl_BusinessUnitsTbl_BusinessUnitId",
-                        column: x => x.BusinessUnitId,
+                        name: "FK_IdeasTbl_BusinessUnitsTbl_AuthorBusinessUnitId",
+                        column: x => x.AuthorBusinessUnitId,
                         principalTable: "BusinessUnitsTbl",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_IdeasTbl_DepartmentsTbl_DepartmentId",
-                        column: x => x.DepartmentId,
+                        name: "FK_IdeasTbl_BusinessUnitsTbl_IdeaBusinessUnitId",
+                        column: x => x.IdeaBusinessUnitId,
+                        principalTable: "BusinessUnitsTbl",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_IdeasTbl_DepartmentsTbl_AuthorDepartmentId",
+                        column: x => x.AuthorDepartmentId,
+                        principalTable: "DepartmentsTbl",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_IdeasTbl_DepartmentsTbl_IdeaDepartmentId",
+                        column: x => x.IdeaDepartmentId,
                         principalTable: "DepartmentsTbl",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -281,14 +295,24 @@ namespace DataBaseLib.Migrations
                 column: "IdeaId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_IdeasTbl_BusinessUnitId",
+                name: "IX_IdeasTbl_AuthorBusinessUnitId",
                 table: "IdeasTbl",
-                column: "BusinessUnitId");
+                column: "AuthorBusinessUnitId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_IdeasTbl_DepartmentId",
+                name: "IX_IdeasTbl_AuthorDepartmentId",
                 table: "IdeasTbl",
-                column: "DepartmentId");
+                column: "AuthorDepartmentId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_IdeasTbl_IdeaBusinessUnitId",
+                table: "IdeasTbl",
+                column: "IdeaBusinessUnitId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_IdeasTbl_IdeaDepartmentId",
+                table: "IdeasTbl",
+                column: "IdeaDepartmentId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

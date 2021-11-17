@@ -38,8 +38,18 @@ namespace DataBaseLib.Models
         public DateTime CreatedAt { get; set; }
         [Required]
         public DateTime UpdatedAt { get; set; }
-        public BusinessUnitsTbl BusinessUnit { get; set; }
-        public DepartmentsTbl Department { get; set; }
+        public int? IdeaBusinessUnitId { get; set; } = 1;
+        public int? IdeaDepartmentId { get; set; } = 1;
+        public int? AuthorBusinessUnitId { get; set; } = 1;
+        public int? AuthorDepartmentId { get; set; } = 1;
+        [ForeignKey("IdeaBusinessUnitId")]
+        public virtual BusinessUnitsTbl IdeaBusinessUnit { get; set; }
+        [ForeignKey("IdeaDepartmentId")]
+        public virtual DepartmentsTbl IdeaDepartment { get; set; }
+        [ForeignKey("AuthorBusinessUnitId")]
+        public virtual BusinessUnitsTbl AuthorBusinessUnit { get; set; }
+        [ForeignKey("AuthorDepartmentId")]
+        public virtual DepartmentsTbl AuthorDepartment { get; set; }
         public List<CommentsTbl> Comments { get; set; }
     }
 }
