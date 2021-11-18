@@ -17,6 +17,9 @@ namespace IdeaBank.Pages
         private ICommentsDataAccess Comments { get; set; }
         [Inject]
         private IJSRuntime JsRuntime { get; set; }
+        [Inject]
+        public Settings Settings { get; set; }
+        public bool IsAuthorized { get; set; }
 
         private Comment _comment = new();
         private List<Comment> AllComment { get; set; }

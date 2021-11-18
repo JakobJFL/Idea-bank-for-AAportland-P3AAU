@@ -5,6 +5,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Models\AdministrateeTbl.cs" />
+    <Compile Remove="Models\AdministraterTbl.cs" />
+    <Compile Remove="Models\AdministratorTbl.cs" />
+    <Compile Remove="Models\IdeasTbl - Copy.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Models\AdminiStrATeTbl" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="5.0.12" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.12" />
   </ItemGroup>

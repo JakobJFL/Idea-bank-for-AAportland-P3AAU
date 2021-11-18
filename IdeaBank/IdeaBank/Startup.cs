@@ -10,6 +10,7 @@ using RepositoryLib.Interfaces;
 using RepositoryLib.Implementations;
 using BusinessLogicLib.Service;
 using BusinessLogicLib;
+using BusinessLogicLib.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Components.Authorization;
 using Ideabank.Areas.Identity;
@@ -36,6 +37,7 @@ namespace IdeaBank
             services.AddScoped<IDBTableConfiguration, DBTableConfiguration>();
             services.AddScoped<IIdeasDataAccess, IdeasDataAccess>();
             services.AddScoped<ICommentsDataAccess, CommentsDataAccess>();
+            services.AddSingleton<Settings>();
 
             services.AddDbContext<Context>(options =>
             {

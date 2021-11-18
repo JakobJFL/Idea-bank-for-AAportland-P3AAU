@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
@@ -14,11 +14,15 @@
 
   <ItemGroup>
     <Compile Remove="Pages\Comments.razor.cs" />
+    <Compile Remove="Pages\Settings.razor.cs" />
   </ItemGroup>
 
   <ItemGroup>
+    <Content Remove="Areas\Identity\Pages\Account\Manage\Index.razor" />
+    <Content Remove="Areas\Identity\Pages\Account\Manage\Settin.razor" />
     <Content Remove="Pages\Comments.razor" />
     <Content Remove="Pages\NewIdea.razor" />
+    <Content Remove="Pages\Settings.razor" />
     <Content Remove="wwwroot\js\NewFile.txt" />
     <Content Remove="wwwroot\lib\NewFile.txt" />
     <Content Remove="wwwroot\svg\logo - Copy.svg" />
@@ -28,6 +32,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="Areas\Identity\Pages\Account\Manage\NewFile.txt" />
     <None Remove="Areas\Identity\Pages\Account\NewFile.txt" />
     <None Remove="Areas\Identity\Pages\Shared\NewFile.txt" />
     <None Remove="Areas\Identity\Pages\Shared\_" />

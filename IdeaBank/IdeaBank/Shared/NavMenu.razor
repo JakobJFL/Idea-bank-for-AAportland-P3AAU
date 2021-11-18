@@ -15,10 +15,11 @@
                         <NavLink class="btn text-white noFocus mx-1" href="Identity/Account/Login">Admin login</NavLink>
                     </NotAuthorized>
                     <Authorized>
-                        <NavLink class="btn text-white noFocus" href="Identity/Account/Manage">Indstillinger</NavLink>
-                        <form method="post" action="Identity/Account/LogOut">
-                            <button type="submit" class="btn text-white noFocus">Log ud</button>
-                        </form>
+                      <NavLink class="btn text-white noFocus" href="/Administrate">Administrer</NavLink>
+                      <NavLink class="btn text-white noFocus" href="/Identity/Account/Manage">Konto</NavLink>
+                      <form method="post" action="Identity/Account/LogOut">
+                        <button type="submit" class="btn text-white noFocus">Log ud</button>
+                      </form>
                     </Authorized>
                 </AuthorizeView>
             </div>
