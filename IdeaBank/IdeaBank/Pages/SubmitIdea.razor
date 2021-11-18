@@ -58,7 +58,6 @@
             <div class="col-md-3">
               <div title="Den forretningsenhed som du arbejder i">
                 <label class="form-label">Din forretningsenhed</label>
-                <img src="svg/question-circle.svg">
               </div>
               <InputSelect class="form-select" required @bind-Value="_idea.AuthorBusinessUnit">
                 <option value="1" selected class="text-muted">Ikke angivet</option>
@@ -71,7 +70,6 @@
             <div class="col-md-3">
               <div title="Den afdeling som du arbejder i">
                 <label class="form-label">Din afdeling</label>
-                <img src="svg/question-circle.svg">
               </div>
               <InputSelect class="form-select" @bind-Value="_idea.AuthorDepartment">
                 <option value="1" selected class="text-muted">Ikke angivet</option>
@@ -90,7 +88,7 @@
             <div class="col-md-3">
               <div title="Den forretningsenhed som idéen vedrører">
                 <label class="form-label">Vedrørende forretningsenhed</label>
-                <img src="svg/question-circle.svg">
+                <!--<img src="svg/question-circle.svg">-->
               </div>
               <InputSelect class="form-select" required @bind-Value="_idea.IdeaBusinessUnit">
                 <option value="1" selected class="text-muted">Ikke angivet</option>
@@ -103,7 +101,6 @@
             <div class="col-md-3">
               <div title="Den afdeling som idéen vedrører">
                 <label class="form-label">Vedrørende afdeling</label>
-                <img src="svg/question-circle.svg">
               </div>
               <InputSelect class="form-select" @bind-Value="_idea.IdeaDepartment">
                 <option value="1" selected class="text-muted">Ikke angivet</option>
