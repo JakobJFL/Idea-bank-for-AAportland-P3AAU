@@ -25,6 +25,7 @@ namespace IdeaBank.Pages
         private bool IsAuthorized { get; set; }
         public int NumOfPages { get; set; }
         public int CurrentPage { get; set; } = 1;
+
         protected override async Task OnInitializedAsync()
         {
             _editContext = new EditContext(_filterIdea);
@@ -68,12 +69,20 @@ namespace IdeaBank.Pages
             await Update();
         }
 
+        /// <summary>
+        /// Updates the table of ideas.
+        /// </summary>
+        /// <returns></returns>
         public async Task Update()
         {
             _ideaList = await Ideas.GetWFilter(_filterIdea);
             NumOfPages = (int)Math.Ceiling((decimal)Ideas.Count() / IdeasShownCount);
             StateHasChanged();
         }
+
+        /// <summary>
+        /// Reset all filters to default values.
+        /// </summary>
         private async void Reset()
         {
             _filterIdea.BusinessUnit = 0;

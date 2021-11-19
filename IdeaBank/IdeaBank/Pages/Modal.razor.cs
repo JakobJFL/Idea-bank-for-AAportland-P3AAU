@@ -28,8 +28,8 @@ namespace IdeaBank.Pages
         private CommentSection CommentSection { get; set; }
         private bool IsEditing { get; set; } = false;
 
-        private readonly string _confirmDeleteIdea = "Er du sikker på du vil slette ideen?";
-        private readonly string _confirmCancel = "Er du sikker på du vil slette dine ændringer?";
+        private readonly string _confirmDeleteIdea = "Er du sikker på, at du vil slette ideen?";
+        private readonly string _confirmCancel = "Er du sikker på, at du vil slette dine ændringer?";
 
         public async Task Open(ViewIdea idea, Index indexView)
         {
@@ -47,8 +47,7 @@ namespace IdeaBank.Pages
         {
             if (IsEditing)
             {
-                bool confirmed = await JsRuntime.InvokeAsync<bool>("confirm", _confirmCancel);
-                if (confirmed)
+                if (await JsRuntime.InvokeAsync<bool>("confirm", _confirmCancel))
                 {
                     IsEditing = false;
                     StateHasChanged();
@@ -71,8 +70,7 @@ namespace IdeaBank.Pages
         }
         private async void DeleteIdea()
         {
-            bool confirmed = await JsRuntime.InvokeAsync<bool>("confirm", _confirmDeleteIdea);
-            if (confirmed)
+            if (await JsRuntime.InvokeAsync<bool>("confirm", _confirmDeleteIdea))
             {
                 await IndexView.Ideas.DeleteByID(_idea.Id);
                 await Close();

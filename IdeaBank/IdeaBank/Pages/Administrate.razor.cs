@@ -21,13 +21,16 @@ namespace IdeaBank.Pages
         [Inject]
         public Settings Settings { get; set; }
 
-        private async Task DownloadFileFromStream()
+        /// <summary>
+        /// Downloads ideas as CSV file
+        /// </summary>
+        private async Task DownloadIdeasToCSV()
         {
             FilterIdea filterIdea = new();
             filterIdea.CurrentPage = 1;
             filterIdea.IdeasShownCount = MaxIdesInCSVFile;
             List<ViewIdea> ideaList = await Ideas.GetWFilter(filterIdea);
-
+             
             string csvContext = "Projekt navn;" +
                                 "Initialer;" +
                                 "Forfatterens forretningsenhed;" +

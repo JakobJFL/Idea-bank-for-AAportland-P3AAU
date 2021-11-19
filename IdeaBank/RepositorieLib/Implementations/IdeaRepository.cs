@@ -18,12 +18,12 @@ namespace RepositoryLib.Implementations
         }
         public int IdeasCount { get; set; } = 1;
         public Context Context { get; }
+
         /// <summary>
-        /// 
+        /// Filter and sort ideas
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        ///
         public async Task<IEnumerable<IdeasTbl>> ListAsync(FilterIdea filter)
         {
             IQueryable<IdeasTbl> ideas = Context.IdeasTbl

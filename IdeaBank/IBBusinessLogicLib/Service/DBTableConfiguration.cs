@@ -17,6 +17,9 @@ namespace BusinessLogicLib
             Repository = repository;
         }
 
+        /// <summary>
+        /// Create tables DepartmentTbl and BusinessUnitTbl if empty
+        /// </summary>
         public async Task ConfigureDBTables()
         {
             await Repository.Kat();

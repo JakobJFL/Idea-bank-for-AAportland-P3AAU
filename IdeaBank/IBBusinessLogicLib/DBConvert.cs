@@ -8,6 +8,11 @@ namespace BusinessLogicLib
 {
     public static class DBConvert // internal???
     {
+        /// <summary>
+        /// Inserts break line tag in comment.message
+        /// </summary>
+        /// <param name="dbComments">List of comments</param>
+        /// <returns>List of converted comments related to an idea</returns>
         public static List<Comment> TblToComment(List<CommentsTbl> dbComments)
         {
             List<Comment> comments = new();
@@ -22,6 +27,11 @@ namespace BusinessLogicLib
             }
             return comments;
         }
+        /// <summary>
+        /// Inserts an idea to the database.
+        /// </summary>
+        /// <param name="comment"></param>
+        /// <returns>The new comment</returns>
         public static CommentsTbl CommentToTbl(Comment comment)
         {
             CommentsTbl newComment = new();
@@ -32,6 +42,11 @@ namespace BusinessLogicLib
             return newComment;
         }
 
+        /// <summary>
+        /// Insert break line, bu&dep name, status and priority.
+        /// </summary>
+        /// <param name="dbIdeas">All ideas in database</param>
+        /// <returns>List of ideas</returns>
         public static List<ViewIdea> TblToViewIdea(List<IdeasTbl> dbIdeas)
         {
             List<ViewIdea> ideas = new();
@@ -68,6 +83,11 @@ namespace BusinessLogicLib
             }
             return ideas;
         }
+        /// <summary>
+        /// Converts the edited idea to IdeasTbl so it can be inserted in database.
+        /// </summary>
+        /// <param name="editIdea"></param>
+        /// <returns>The edited idea of type IdeasTbl</returns>
         public static IdeasTbl EditIdeaToTbl(EditIdea editIdea)
         {
             IdeasTbl idea = new();
@@ -90,6 +110,12 @@ namespace BusinessLogicLib
             idea.UpdatedAt = DateTime.Now;
             return idea;
         }
+
+        /// <summary>
+        /// Converts the new idea to IdeasTbl so it can be inserted in database.
+        /// </summary>
+        /// <param name="idea"></param>
+        /// <returns>The new idea of type IdeasTbl</returns>
         public static IdeasTbl NewIdeaToTbl(NewIdea idea)
         {
             IdeasTbl newIdea = new();
@@ -109,6 +135,12 @@ namespace BusinessLogicLib
             newIdea.UpdatedAt = DateTime.Now;
             return newIdea;
         }
+
+        /// <summary>
+        /// Converts priority int to string.
+        /// </summary>
+        /// <param name="index"></param>
+        /// <returns>Name of a priority.</returns>
         private static string GetPriorityStr(int index)
         {
             switch (index)
@@ -119,6 +151,12 @@ namespace BusinessLogicLib
                 default: return "Ikke angivet";
             }
         }
+
+        /// <summary>
+        /// Converts status int to string.
+        /// </summary>
+        /// <param name="index"></param>
+        /// <returns>Name of status.</returns>
         private static string GetStatusStr(int index)
         {
             switch (index)
@@ -131,7 +169,7 @@ namespace BusinessLogicLib
             }
         }
 
-        private static string StrNewLineToBr(string str)
+        public static string StrNewLineToBr(string str)
         {
             if (str != null)
                 return str.Replace("\r\n", "<br />").Replace("\n", "<br />");

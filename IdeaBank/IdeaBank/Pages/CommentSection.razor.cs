@@ -25,8 +25,12 @@ namespace IdeaBank.Pages
         private List<Comment> AllComment { get; set; }
         private int IdeaId { get; set; }
 
-        private readonly string _confirmDeleteComment = "Er du sikker på du vil slette kommentaren?";
+        private readonly string _confirmDeleteComment = "Er du sikker på, at du vil slette kommentaren?";
 
+        /// <summary>
+        /// Load all comments for an idea.
+        /// </summary>
+        /// <param name="ideaId"></param>
         public async void LoadComments(int ideaId)
         {
             AllComment = await Comments.GetWFilter(ideaId);
@@ -34,6 +38,9 @@ namespace IdeaBank.Pages
             StateHasChanged();
         }
 
+        /// <summary>
+        /// Insert comment to database and refresh component.
+        /// </summary>
         private async void HandleValidSubmit()
         {
             _comment.CreatedAt = DateTime.Now;
@@ -44,6 +51,10 @@ namespace IdeaBank.Pages
             _comment.Message = "";
             StateHasChanged();
         }
+        /// <summary>
+        /// Delete comment
+        /// </summary>
+        /// <param name="c"></param>
         private async void DeleteComment(Comment c)
         {
             if (await JsRuntime.InvokeAsync<bool>("confirm", _confirmDeleteComment))
