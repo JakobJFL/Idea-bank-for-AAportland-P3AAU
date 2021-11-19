@@ -16,5 +16,7 @@ namespace BusinessLogicLib.Interfaces
         public Task DeleteByID(int id);
         public int Count();
 
+        public Task<int> GetCount(FilterIdea filter);
+
     }
 }

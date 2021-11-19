@@ -17,9 +17,9 @@ namespace BusinessLogicLib.Service
             Repository = repository;
         }
         public IIdeaRepository Repository { get; }
-        public async Task<List<ViewIdea>> GetWFilter(FilterIdea idea)
+        public async Task<List<ViewIdea>> GetWFilter(FilterIdea filter)
         {
-            List<IdeasTbl> ideas = (await Repository.ListAsync(idea)).ToList();
+            List<IdeasTbl> ideas = (await Repository.ListAsync(filter)).ToList();
             return DBConvert.TblToViewIdea(ideas);
         }
         public async Task Insert(NewIdea idea)
@@ -39,6 +39,11 @@ namespace BusinessLogicLib.Service
         public int Count()
         {
             return Repository.IdeasCount;
+        }
+
+        public async Task<int> GetCount(FilterIdea filter)
+        {
+            return await Repository.CountAsync(filter);
         }
     }
 }

@@ -119,5 +119,12 @@ namespace RepositoryLib.Implementations
         {
             throw new NotImplementedException();
         }
+
+        public Task<int> CountAsync(FilterIdea filter)
+        {
+            return Context.IdeasTbl
+                .Where(i => !filter.OnlyNewIdeas || i.CreatedAt == i.UpdatedAt) 
+                .CountAsync();
+        }
     }
 }

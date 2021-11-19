@@ -13,7 +13,7 @@ namespace RepositoryLib.Interfaces
         public Task UpdateAsync(IdeasTbl model);
         public Task<IdeasTbl> FindByIdAsync(int id);
         public Task AddRangeAsync(IEnumerable<IdeasTbl> metrics);
-        public Task<int> CountAsync(FilterIdea idea);
+        public Task<int> CountAsync(FilterIdea filter);
 
     }
 }

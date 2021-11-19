@@ -27,10 +27,14 @@ namespace IdeaBank.Pages
         private bool IsAuthorized { get; set; }
         public int NumOfPages { get; set; }
         public int CurrentPage { get; set; } = 1;
+        public int AllIdeasCount { get; set; } = 0;
+        
         protected override async Task OnInitializedAsync()
         {
             _editContext = new EditContext(_filterIdea);
             _editContext.OnFieldChanged += EditContext_OnFieldChanged;
+            _filterIdea.OnlyNewIdeas = false;
+            AllIdeasCount = await Ideas.GetCount(_filterIdea);
             _filterIdea.Sorting = Sort.CreatedAtDesc;
             _filterIdea.CurrentPage = CurrentPage;
             _filterIdea.IdeasShownCount = IdeasShownCount;
