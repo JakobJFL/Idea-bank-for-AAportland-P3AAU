@@ -16,6 +16,8 @@ namespace IdeaBank.Pages
         [Inject]
         public IIdeasDataAccess Ideas { get; set; }
         [Inject]
+        public ICommentsDataAccess Comments { get; set; }
+        [Inject]
         public IDBTableConfiguration Config { get; set; }
 
         private EditContext _editContext;
@@ -71,6 +73,11 @@ namespace IdeaBank.Pages
         public async Task Update()
         {
             _ideaList = await Ideas.GetWFilter(_filterIdea);
+            foreach(ViewIdea idea in _ideaList)
+            {
+               idea.CommentsCount = await Comments.GetCommentsCount(idea.Id);
+            }
+
             NumOfPages = (int)Math.Ceiling((decimal)Ideas.Count() / IdeasShownCount);
             StateHasChanged();
         }

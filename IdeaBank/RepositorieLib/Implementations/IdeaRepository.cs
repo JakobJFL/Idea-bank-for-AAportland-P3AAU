@@ -68,11 +68,13 @@ namespace RepositoryLib.Implementations
             ideas = ideas.Skip((filter.CurrentPage-1) * filter.IdeasShownCount).Take(filter.IdeasShownCount);
             return await ideas.ToListAsync();
         }
+
         public async Task AddAsync(IdeasTbl model)
         {
             await Context.IdeasTbl.AddAsync(model);
             await Context.SaveChangesAsync();
         }
+
         public async Task RemoveByIdAsync(int ideaId)
         {
             IdeasTbl ideaToRemove = Context.IdeasTbl.SingleOrDefault(x => x.Id == ideaId);
@@ -109,6 +111,11 @@ namespace RepositoryLib.Implementations
         }
 
         public Task<IEnumerable<IdeasTbl>> ListAsync(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        Task IRepository<IdeasTbl>.CountAsync()
         {
             throw new NotImplementedException();
         }

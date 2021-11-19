@@ -143,22 +143,23 @@
               {
                 if (IsAuthorized || !idea.IsHidden)
                 {
-                  <tr title="Klik for at læse mere" @onclick="() => Modal.Open(idea, this)">
-                    <td style="min-width: 150px;" class="select-filter-text">
-                      <div class="d-flex">
-                        @idea.ProjectName
-                        @if (idea.IsHidden)
-                        {
-                          <p class="text-show-hidden">Skjult</p>}
-                      </div>
-                    </td>
-                    <td>@idea.IdeaBusinessUnitStr</td>
-                    <td>@idea.IdeaDepartmentStr</td>
-                    <td>@idea.StatusStr</td>
-                    <td>@idea.PriorityStr</td>
-                    <td>@idea.CreatedAt.ToShortDateString()</td>
-                    <td>@idea.UpdatedAt.ToShortDateString()</td>
-                  </tr>
+            <tr title="Klik for at læse mere" @onclick="() => Modal.Open(idea, this)">
+              <td style="min-width: 150px;" class="select-filter-text">
+                <div class="d-flex">
+                  @idea.ProjectName
+                  @if (idea.IsHidden)
+                  {
+                    <p class="text-show-hidden">Skjult</p>}
+                </div>
+              </td>
+              <td>@idea.IdeaBusinessUnitStr</td>
+              <td>@idea.IdeaDepartmentStr</td>
+              <td>@idea.StatusStr</td>
+              <td>@idea.PriorityStr</td>
+              <td>@idea.CreatedAt.ToShortDateString()</td>
+              <td>@idea.UpdatedAt.ToShortDateString()</td>
+              <td>@idea.CommentsCount</td>
+            </tr>
                 }
               }
             }

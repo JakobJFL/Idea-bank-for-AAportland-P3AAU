@@ -14,5 +14,6 @@ namespace RepositoryLib.Interfaces
         Task<T> FindByIdAsync(int id);
         Task RemoveByIdAsync(int id);
         Task UpdateAsync(T model);
+        Task CountAsync();
     }
 }

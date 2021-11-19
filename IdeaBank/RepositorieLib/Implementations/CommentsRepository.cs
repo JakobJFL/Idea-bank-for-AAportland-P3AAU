@@ -55,5 +55,11 @@ namespace RepositoryLib.Implementations
             throw new NotImplementedException();
         }
 
+        public async Task<int> CountAsync(int ideaId)
+        {
+            return await Context.CommentsTbl
+                .Where(c => c.Idea.Id == ideaId)
+                .CountAsync();
+        }
     }
 }

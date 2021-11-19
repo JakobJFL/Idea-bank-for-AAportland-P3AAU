@@ -8,7 +8,7 @@
 
 <partial name="_StatusMessage" for="StatusMessage" />
 <h1>@ViewData["Title"]</h1>
-@if (!await repository.Kat() || User.Identity.IsAuthenticated)
+@if (!await repository.IsAnyUsers() || User.Identity.IsAuthenticated)
 {
 <div class="row">
     <div class="col-md-4">
