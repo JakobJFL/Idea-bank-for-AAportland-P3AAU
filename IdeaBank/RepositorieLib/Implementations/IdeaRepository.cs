@@ -123,7 +123,7 @@ namespace RepositoryLib.Implementations
         public Task<int> CountAsync(FilterIdea filter)
         {
             return Context.IdeasTbl
-                .Where(i => !filter.OnlyNewIdeas || i.CreatedAt == i.UpdatedAt) 
+                .Where(i => !filter.OnlyNewIdeas || i.CreatedAt.Millisecond == i.UpdatedAt.Millisecond) 
                 .CountAsync();
         }
     }

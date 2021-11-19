@@ -27,14 +27,13 @@ namespace IdeaBank.Pages
         private bool IsAuthorized { get; set; }
         public int NumOfPages { get; set; }
         public int CurrentPage { get; set; } = 1;
-        public int AllIdeasCount { get; set; } = 0;
-        
+        public Dashboard Dashboard { get; set; } = new Dashboard();
+
         protected override async Task OnInitializedAsync()
         {
             _editContext = new EditContext(_filterIdea);
             _editContext.OnFieldChanged += EditContext_OnFieldChanged;
-            _filterIdea.OnlyNewIdeas = false;
-            AllIdeasCount = await Ideas.GetCount(_filterIdea);
+            await SetDashboard();
             _filterIdea.Sorting = Sort.CreatedAtDesc;
             _filterIdea.CurrentPage = CurrentPage;
             _filterIdea.IdeasShownCount = IdeasShownCount;
@@ -43,6 +42,14 @@ namespace IdeaBank.Pages
             {
                 await Update();
             }
+        }
+        private async Task SetDashboard()
+        {
+            _filterIdea.OnlyNewIdeas = false;
+            Dashboard.AllIdeas = await Ideas.GetCount(_filterIdea);
+            _filterIdea.OnlyNewIdeas = true;
+            Dashboard.NewIdeas = await Ideas.GetCount(_filterIdea);
+            Dashboard.AllComments = await Comments.GetCommentsCount(0);
         }
         
         // Note: The OnFieldChanged event is raised for each field in the model

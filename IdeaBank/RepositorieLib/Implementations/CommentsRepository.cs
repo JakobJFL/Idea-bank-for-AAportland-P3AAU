@@ -58,7 +58,7 @@ namespace RepositoryLib.Implementations
         public async Task<int> CountAsync(int ideaId)
         {
             return await Context.CommentsTbl
-                .Where(c => c.Idea.Id == ideaId)
+                .Where(c => ideaId == 0 || c.Idea.Id == ideaId)
                 .CountAsync();
         }
     }
