@@ -65,7 +65,7 @@
                 {<img src="/svg/filter.svg" />}
               </th>
 
-              <th scope="col" style="width: 220px;" class="bg-primary text-white select-filter-text align-middle">
+              <th scope="col" style="width: 180px;" class="bg-primary text-white select-filter-text align-middle">
                 <InputSelect class="btn form-select select-filter noFocus" @bind-Value="_filterIdea.BusinessUnit">
                   <option value="0" selected>Forretningsenhed</option>
                   <option value="1">Ikke Angivet</option>
@@ -85,7 +85,7 @@
                   <option value="5">Vedligehold</option>
                   <option value="6">Finans</option>
                   <option value="7">HR</option>
-                  <option value="8">PMO & Transformation</option>
+                  <option value="8">PMO & Trans</option>
                 </InputSelect>
               </th>
               <th scope="col" style="width: 120px;" class="bg-primary text-white select-filter-text align-middle">
@@ -117,6 +117,15 @@
               </th>
               <th scope="col" style="width: 160px;" class="sort-select bg-primary select-filter-text align-middle" @onclick="ChangeUpdatedAtSort">
                 Sidst opdateret
+                @if (_filterIdea.Sorting == Sort.UpdatedAtAsc)
+                {<img src="/svg/sort-up.svg" />}
+                else if (_filterIdea.Sorting == Sort.UpdatedAtDesc)
+                {<img src="/svg/sort-down.svg" /> }
+                else
+                {<img src="/svg/filter.svg" />}
+              </th>
+              <th scope="col" style="width: 126px;" class="sort-select bg-primary select-filter-text align-middle">
+                Kommentar
                 @if (_filterIdea.Sorting == Sort.UpdatedAtAsc)
                 {<img src="/svg/sort-up.svg" />}
                 else if (_filterIdea.Sorting == Sort.UpdatedAtDesc)
