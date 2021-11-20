@@ -35,12 +35,10 @@ namespace BusinessLogicLib.Service
             Console.WriteLine(idea.AuthorDepartment);
             await Repository.UpdateAsync(DBConvert.EditIdeaToTbl(idea));
         }
-
-        public int Count()
+        public int GetIdeasCount()
         {
             return Repository.IdeasCount;
         }
-
         public async Task<int> GetCount(FilterIdea filter)
         {
             return await Repository.CountAsync(filter);

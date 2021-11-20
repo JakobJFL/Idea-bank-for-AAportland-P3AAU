@@ -33,16 +33,6 @@ namespace RepositoryLib.Implementations
             await Context.SaveChangesAsync();
         }
 
-        public Task AddRangeAsync(IEnumerable<CommentsTbl> metrics)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<CommentsTbl> FindByIdAsync(int id)
-        {
-            throw new NotImplementedException();
-        }
-
         public async Task RemoveByIdAsync(int id)
         {
             CommentsTbl c = await Context.CommentsTbl.FindAsync(id);
@@ -50,16 +40,26 @@ namespace RepositoryLib.Implementations
             Context.SaveChanges();
         }
 
-        public void Update(CommentsTbl model)
-        {
-            throw new NotImplementedException();
-        }
-
         public async Task<int> CountAsync(int ideaId)
         {
             return await Context.CommentsTbl
                 .Where(c => ideaId == 0 || c.Idea.Id == ideaId)
                 .CountAsync();
+        }
+
+        public Task UpdateAsync(IdeasTbl model)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<IdeasTbl> FindByIdAsync(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<int> CountAsync(FilterIdea filter)
+        {
+            throw new NotImplementedException();
         }
     }
 }

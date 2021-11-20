@@ -88,8 +88,8 @@ namespace IdeaBank.Pages
             {
                idea.CommentsCount = await Comments.GetCommentsCount(idea.Id);
             }
-
-            NumOfPages = (int)Math.Ceiling((decimal)Ideas.Count() / IdeasShownCount);
+            _filterIdea.OnlyNewIdeas = false;
+            NumOfPages = (int)Math.Ceiling((decimal)Ideas.GetIdeasCount() / IdeasShownCount);
             StateHasChanged();
         }
         private async void Reset()

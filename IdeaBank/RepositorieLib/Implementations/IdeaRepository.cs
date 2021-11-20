@@ -100,11 +100,12 @@ namespace RepositoryLib.Implementations
             else
                 throw new ArgumentNullException("Idea not found");
         }
-        public Task AddRangeAsync(IEnumerable<IdeasTbl> metrics)
+        public Task<int> CountAsync(FilterIdea filter)
         {
-            throw new NotImplementedException();
+            return Context.IdeasTbl
+                .Where(i => !filter.OnlyNewIdeas || i.CreatedAt.Millisecond == i.UpdatedAt.Millisecond)
+                .CountAsync();
         }
-
         public Task<IdeasTbl> FindByIdAsync(int id)
         {
             throw new NotImplementedException();
@@ -118,13 +119,6 @@ namespace RepositoryLib.Implementations
         Task IRepository<IdeasTbl>.CountAsync()
         {
             throw new NotImplementedException();
-        }
-
-        public Task<int> CountAsync(FilterIdea filter)
-        {
-            return Context.IdeasTbl
-                .Where(i => !filter.OnlyNewIdeas || i.CreatedAt.Millisecond == i.UpdatedAt.Millisecond) 
-                .CountAsync();
         }
     }
 }
