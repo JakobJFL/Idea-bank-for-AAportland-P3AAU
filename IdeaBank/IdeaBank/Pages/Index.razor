@@ -39,24 +39,44 @@
 
 <section class="py-5 bg-light">
     <div class="container p-0">
-        <div class="row">
-            <div class="col-sm text-center">
-                <p>Idéer i alt</p>
-                <p>@Dashboard.AllIdeas</p>
+      <div class="row mb-5">
+        <div class="col-sm">
+          <div class="d-flex flex-row justify-content-between card card-body rounded-cos border-0">
+            <div>
+              <h6 class="text-muted">Idéer i alt</h6>
+              <h4 class="mb-0 text-primary">@Dashboard.AllIdeas</h4>
             </div>
-            <div class="col-sm text-center">
-                <p>Nye idéer</p>
-                <p>@Dashboard.NewIdeas</p>
-            </div>
-            <div class="col-sm text-center">
-                <p>Alle</p>
-                <p>@Dashboard.AllComments</p>
-            </div>
-            <div class="col-sm text-center">
-                <p>fdgf4</p>
-                <p>kage2</p>
-            </div>
+            <img class="data-card-icon" src="svg/question-circle.svg">
+          </div>
         </div>
+        <div class="col-sm">
+          <div class="d-flex flex-row justify-content-between card card-body rounded-cos border-0">
+            <div>
+              <h6 class="text-muted">Nye idéer</h6>
+              <h4 class="mb-0 text-primary">@Dashboard.NewIdeas</h4>
+            </div>
+            <img class="data-card-icon" src="svg/question-circle.svg">
+          </div>
+        </div>
+        <div class="col-sm">
+          <div class="d-flex flex-row justify-content-between card card-body rounded-cos border-0">
+            <div>
+              <h6 class="text-muted">Antal kommentarer i alt</h6>
+              <h4 class="mb-0 text-primary">@Dashboard.AllComments</h4>
+            </div>
+            <img class="data-card-icon" src="svg/question-circle.svg">
+          </div>
+        </div>
+        <div class="col-sm">
+          <div class="d-flex flex-row justify-content-between card card-body rounded-cos border-0">
+            <div>
+              <h6 class="text-muted">Godkendt ideer</h6>
+              <h4 class="mb-0 text-primary">@Dashboard.ApprovedIdeas</h4>
+            </div>
+            <img class="data-card-icon" src="svg/question-circle.svg">
+          </div>
+        </div>
+      </div>
         <h2 class="text-center">Idéoversigt</h2>
         <p class="text-center mb-5">Klik på en idé for at læse mere </p>
         <div class="d-flex justify-content-between mb-1">
@@ -185,7 +205,7 @@
                         else
                         {
                             <tr>
-                                <td colspan="7" class="m-3 fs-5 text-center">Indlæser idéer...</td>
+                                <td colspan="100%" class="m-3 fs-5 text-center">Indlæser idéer...</td>
                             </tr>
                         }
                     </tbody>

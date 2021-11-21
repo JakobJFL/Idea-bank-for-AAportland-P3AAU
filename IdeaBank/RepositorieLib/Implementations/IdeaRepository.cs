@@ -104,6 +104,7 @@ namespace RepositoryLib.Implementations
         {
             return Context.IdeasTbl
                 .Where(i => !filter.OnlyNewIdeas || i.CreatedAt.Millisecond == i.UpdatedAt.Millisecond)
+                .Where(i => filter.Status == 0 || i.Status == filter.Status)
                 .CountAsync();
         }
         public Task<IdeasTbl> FindByIdAsync(int id)

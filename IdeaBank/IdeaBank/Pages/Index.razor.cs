@@ -45,13 +45,16 @@ namespace IdeaBank.Pages
         }
         private async Task SetDashboard()
         {
-            _filterIdea.OnlyNewIdeas = false;
-            Dashboard.AllIdeas = await Ideas.GetCount(_filterIdea);
             _filterIdea.OnlyNewIdeas = true;
             Dashboard.NewIdeas = await Ideas.GetCount(_filterIdea);
+            _filterIdea.OnlyNewIdeas = false;
+            Dashboard.AllIdeas = await Ideas.GetCount(_filterIdea);
+            _filterIdea.Status = 2;
+            Dashboard.ApprovedIdeas = await Ideas.GetCount(_filterIdea);
             Dashboard.AllComments = await Comments.GetCommentsCount(0);
+            _filterIdea.Status = 0;
         }
-        
+
         // Note: The OnFieldChanged event is raised for each field in the model
         private async void EditContext_OnFieldChanged(object sender, FieldChangedEventArgs e)
         {
