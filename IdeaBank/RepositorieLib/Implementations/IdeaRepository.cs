@@ -32,6 +32,7 @@ namespace RepositoryLib.Implementations
                 .Include(d => d.AuthorBusinessUnit)
                 .Include(d => d.AuthorDepartment)
                 .Include(i => i.Comments)
+                .Where(f => filter.ShowHidden || !f.IsHidden)
                 .Where(f => filter.BusinessUnit == 0 || filter.BusinessUnit == f.IdeaBusinessUnit.Id)
                 .Where(f => filter.Department == 0 || filter.Department == f.IdeaDepartment.Id)
                 .Where(f => filter.Priority == 0 || filter.Priority == f.Priority)

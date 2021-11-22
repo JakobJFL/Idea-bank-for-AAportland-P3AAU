@@ -90,6 +90,7 @@ namespace IdeaBank.Pages
         /// <returns></returns>
         public async Task Update()
         {
+            _filterIdea.ShowHidden = IsAuthorized;
             _ideaList = await Ideas.GetWFilter(_filterIdea);
             foreach(ViewIdea idea in _ideaList)
             {

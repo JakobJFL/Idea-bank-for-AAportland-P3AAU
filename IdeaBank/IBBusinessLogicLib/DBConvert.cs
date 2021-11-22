@@ -105,6 +105,7 @@ namespace BusinessLogicLib
             idea.CreatedAt = editIdea.CreatedAt;
             idea.Status = editIdea.Status;
             idea.Priority = editIdea.Priority;
+            idea.IsHidden = editIdea.IsHidden;
             idea.Team = editIdea.Team;
             idea.ExpectedResults = editIdea.ExpectedResults;
             idea.UpdatedAt = DateTime.Now;
