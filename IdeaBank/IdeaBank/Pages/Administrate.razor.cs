@@ -7,6 +7,7 @@ using BusinessLogicLib.Interfaces;
 using DataBaseLib.Models;
 using BusinessLogicLib.Models;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Identity;
 
 namespace IdeaBank.Pages
 {
@@ -19,7 +20,15 @@ namespace IdeaBank.Pages
         [Inject]
         public IIdeasDataAccess Ideas { get; set; }
         [Inject]
+        public IDBTableConfiguration TableConfig { get; set; }
+        [Inject]
         public Settings Settings { get; set; }
+        public List<IdentityUser> UserList {get; set;}
+
+        protected override async Task OnInitializedAsync()
+        {
+            UserList = await TableConfig.GetUsers();
+        }
 
         /// <summary>
         /// Downloads ideas as CSV file

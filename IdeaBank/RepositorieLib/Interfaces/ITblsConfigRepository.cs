@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 
 namespace RepositoryLib.Interfaces
 {
@@ -12,5 +13,6 @@ namespace RepositoryLib.Interfaces
         public Task<bool> IsBuAndDepEmpty();
         public Task<bool> DoesDatabaseExist();
         public Task<bool> Kat();
+        public Task<List<IdentityUser>> GetUsernameList();
     }
 }

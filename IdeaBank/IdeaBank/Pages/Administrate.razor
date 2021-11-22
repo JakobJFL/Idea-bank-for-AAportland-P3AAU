@@ -2,32 +2,65 @@
 @using System.IO
 @using System
 @using IdeaBank
+@using Microsoft.AspNetCore.Identity
 
 <main class="bgImg">
-    <section class="py-4 text-center container">
-        <div class="row py-lg-5">
-            <div class="col-lg-6 col-md-6 mx-auto">
-                <h1 class="fw-light">Administrer</h1>
-                <p class="fs-5 py-1"></p>
-            </div>
+  <section class="py-4 text-center container">
+    <div class="row py-lg-5">
+      <div class="col-lg-6 col-md-6 mx-auto">
+        <h1 class="fw-light">Administrer</h1>
+        <p class="fs-5 py-1"></p>
+      </div>
+    </div>
+  </section>
+  <section class="p-5 bg-light">
+    <div class="container col-lg-8 mx-auto p-3 py-1">
+      <h2>Indstillinger</h2>
+      <div class="mb-4">
+        <h5>Slå kommentarer til/fra</h5>
+        <label class="switch d-flex">
+          <input type="checkbox" @bind-value="Settings.CommentsEnabled">
+          <span class="slider"></span>
+          <span class="text-checked">Kun administratorer kan kommentere</span>
+          <span class="text-not-checked">Alle kan kommentere</span>
+        </label>
+      </div>
+      <hr />
+      <h2>Exportér</h2>
+      <p class="my-2">Download alle idéer til Excel</p>
+      <button class="btn btn-primary mb-4" @onclick="async () => { await DownloadIdeasToCSV(); }">Download</button>
+      <hr />
+      <h2>Alle admins</h2>
+      <div class="row">
+        <div class="col-lg-6 col-lg-offset-1 col-xs-12">
+          <div class="table-responsive rounded-cos my-2">
+            <table class="table my-0 table-primary table-striped">
+              <thead>
+                <tr>
+                  <th scope="col" class="bg-primary align-middle text-white">
+                    Brugernavn
+                  </th>
+                  <th scope="col" class="bg-primary align-middle text-white">
+                    Email
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                @if (UserList != null)
+                {
+                  foreach (IdentityUser user in UserList)
+                  {
+                    <tr>
+                      <td>@user.UserName</td>
+                      <td>@user.Email</td>
+                    </tr>
+                  }
+                }
+              </tbody>
+            </table>
+          </div>
         </div>
-    </section>
-    <section class="p-5 bg-light">
-        <div class="container col-lg-8 mx-auto p-3 py-1">
-            <h2>Indstillinger</h2>
-                <div class="mb-4">
-            <h5>Slå kommentarer til/fra</h5>
-                    <label class="switch d-flex">
-                        <input type="checkbox" @bind-value="Settings.CommentsEnabled">
-                        <span class="slider"></span>
-                        <span class="text-checked">Kun administratorer kan kommentere</span>
-                        <span class="text-not-checked">Alle kan kommentere</span>
-                    </label>
-                </div>
-            <hr />
-            <h2>Exportér</h2>
-            <p class="my-2">Download alle idéer til Excel</p>
-            <button class="btn btn-primary" @onclick="async () => { await DownloadIdeasToCSV(); }">Download</button>
-        </div>
-    </section>
+      </div>
+    </div>
+  </section>
 </main>

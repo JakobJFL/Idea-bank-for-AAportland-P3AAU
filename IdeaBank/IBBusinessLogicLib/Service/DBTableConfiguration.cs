@@ -1,6 +1,7 @@
 using BusinessLogicLib.Interfaces;
 using DataBaseLib.DataAccess;
 using DataBaseLib.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using RepositoryLib.Interfaces;
 using System.Collections.Generic;
@@ -28,6 +29,11 @@ namespace BusinessLogicLib
 
             if (await Repository.IsBuAndDepEmpty())
                 await Repository.SetDefaultDeBuTbls(); 
+        }
+
+        public async Task<List<IdentityUser>> GetUsers()
+        {
+            return await Repository.GetUsernameList();
         }
     }
 }
