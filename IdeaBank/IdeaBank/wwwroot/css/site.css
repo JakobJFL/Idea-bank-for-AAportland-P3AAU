@@ -160,3 +160,11 @@ textarea {
 h6 {
   font-weight: 600;
 }
+
+.form-signin {
+  width: 100%;
+  max-width: 330px;
+  padding: 15px;
+  margin: auto;
+  margin-top: 8%;
+}

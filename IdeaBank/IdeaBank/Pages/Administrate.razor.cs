@@ -15,12 +15,11 @@ namespace IdeaBank.Pages
         public readonly int MaxIdesInCSVFile = 10000;
 
         [Inject]
-        public IJSRuntime JS { get; set; }
+        private IJSRuntime JS { get; set; }
         [Inject]
-        public IIdeasDataAccess Ideas { get; set; }
+        private IIdeasDataAccess Ideas { get; set; }
         [Inject]
-        public Settings Settings { get; set; }
-
+        private Settings Settings { get; set; }
         private async Task DownloadFileFromStream()
         {
             FilterIdea filterIdea = new();
