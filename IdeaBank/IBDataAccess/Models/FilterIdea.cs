@@ -20,6 +20,6 @@ namespace DataBaseLib.Models
         public int IdeasShownCount { get; set; }
         public Sort Sorting { get; set; } = Sort.CreatedAtDesc;
         public string SearchStr { get; set; } = "";
-
+        public bool OnlyNewIdeas { get; set; } = false;
     }
 }

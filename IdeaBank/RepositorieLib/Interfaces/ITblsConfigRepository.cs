@@ -11,6 +11,6 @@ namespace RepositoryLib.Interfaces
         public Task SetDefaultDeBuTbls();
         public Task<bool> IsBuAndDepEmpty();
         public Task<bool> DoesDatabaseExist();
-        public Task<bool> Kat();
+        public Task<bool> IsAnyUsers();
     }
 }

@@ -9,5 +9,6 @@ namespace BusinessLogicLib.Interfaces
         public Task<List<Comment>> GetWFilter(int id);
         public Task Insert(Comment comment);
         public Task DeleteByID(int id);
+        public Task<int> GetCommentsCount(int ideaId);
     }
 }

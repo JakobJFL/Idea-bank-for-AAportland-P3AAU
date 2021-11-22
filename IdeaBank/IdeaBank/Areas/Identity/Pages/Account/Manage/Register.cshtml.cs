@@ -77,7 +77,7 @@ namespace IdeaBank.Areas.Identity.Pages.Account
 
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
-            if (!await Repository.Kat() || User.Identity.IsAuthenticated)
+            if (!await Repository.IsAnyUsers() || User.Identity.IsAuthenticated)
             {
                 returnUrl ??= Url.Content("~/");
                 ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();

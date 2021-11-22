@@ -10,9 +10,9 @@ namespace RepositoryLib.Interfaces
     {
         Task<IEnumerable<T>> ListAsync(int id);
         Task AddAsync(T model);
-        Task AddRangeAsync(IEnumerable<T> metrics);
         Task<T> FindByIdAsync(int id);
         Task RemoveByIdAsync(int id);
         Task UpdateAsync(T model);
+        Task CountAsync();
     }
 }

@@ -18,7 +18,7 @@ namespace RepositoryLib.Implementations
         private readonly string[] _businessUnits = { "Ikke Angivet", "Aalborg Portland", "Unicon DK", "Unicon NO", "Kudsk & Dahl" };
         private readonly string[] _departments = { "Ikke Angivet", "Salg", "SCM", "Produktion", "Vedligehold", "Finans", "HR", "PMO & Trans" };
 
-        public async Task<bool> Kat()
+        public async Task<bool> IsAnyUsers()
         {
            return await Context.Users.AnyAsync();
         }

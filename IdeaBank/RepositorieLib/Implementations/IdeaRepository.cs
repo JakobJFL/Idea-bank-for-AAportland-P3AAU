@@ -68,11 +68,13 @@ namespace RepositoryLib.Implementations
             ideas = ideas.Skip((filter.CurrentPage-1) * filter.IdeasShownCount).Take(filter.IdeasShownCount);
             return await ideas.ToListAsync();
         }
+
         public async Task AddAsync(IdeasTbl model)
         {
             await Context.IdeasTbl.AddAsync(model);
             await Context.SaveChangesAsync();
         }
+
         public async Task RemoveByIdAsync(int ideaId)
         {
             IdeasTbl ideaToRemove = Context.IdeasTbl.SingleOrDefault(x => x.Id == ideaId);
@@ -98,17 +100,24 @@ namespace RepositoryLib.Implementations
             else
                 throw new ArgumentNullException("Idea not found");
         }
-        public Task AddRangeAsync(IEnumerable<IdeasTbl> metrics)
+        public Task<int> CountAsync(FilterIdea filter)
         {
-            throw new NotImplementedException();
+            return Context.IdeasTbl
+                .Where(i => !filter.OnlyNewIdeas || i.CreatedAt.Millisecond == i.UpdatedAt.Millisecond)
+                .Where(i => filter.Status == 0 || i.Status == filter.Status)
+                .CountAsync();
         }
-
         public Task<IdeasTbl> FindByIdAsync(int id)
         {
             throw new NotImplementedException();
         }
 
         public Task<IEnumerable<IdeasTbl>> ListAsync(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        Task IRepository<IdeasTbl>.CountAsync()
         {
             throw new NotImplementedException();
         }
