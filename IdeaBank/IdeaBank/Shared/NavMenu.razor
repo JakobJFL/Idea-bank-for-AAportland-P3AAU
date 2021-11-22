@@ -1,28 +1,54 @@
-<header class="p-3 shadow bg-primary text-white">
-    <div class="container">
-        <div class="d-flex justify-content-between">
-            <NavLink href="/" class="d-none d-sm-block align-middle">
-                <img src="/svg/logo.svg" />
-            </NavLink>
-            <NavLink href="/" class="d-block d-sm-none">
-                <img src="/svg/logo-short.svg" />
-            </NavLink>
-            <div class="d-flex">
-                <NavLink class="btn btn-outline-light rounded-cos mx-1" href="/Guide">Guide</NavLink>
-                <NavLink class="btn btn-outline-light rounded-cos mx-1" href="/NewIdea">Tilføj ide</NavLink>
-                <AuthorizeView>
-                    <NotAuthorized>
-                        <NavLink class="btn text-white noFocus mx-1" href="Identity/Account/Login">Admin login</NavLink>
-                    </NotAuthorized>
-                    <Authorized>
-                      <NavLink class="btn text-white noFocus" href="/Administrate">Administrer</NavLink>
-                      <NavLink class="btn text-white noFocus" href="/Identity/Account/Manage">Konto</NavLink>
-                      <form method="post" action="Identity/Account/LogOut">
-                        <button type="submit" class="btn text-white noFocus">Log ud</button>
-                      </form>
-                    </Authorized>
-                </AuthorizeView>
-            </div>
+<header>
+  <nav class="p-3 bg-primary text-white navbar navbar-expand-lg shadow">
+    <div class="d-flex justify-content-between w-100">
+      <div>
+        <NavLink href="/" class="d-none navbar-brand d-sm-inline">
+          <img src="/svg/logo.svg" />
+        </NavLink>
+        <NavLink href="/" class="d-inline d-sm-none">
+          <img src="/svg/logo-short.svg" />
+        </NavLink>
+      </div>
+      <div class="text-end">
+        <div>
+          <button class="navbar-toggler btn btn-icon noFocus mb-2" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <img src="/svg/list.svg" />
+          </button>
         </div>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <NavLink class="btn btn-outline-light rounded-cos m-1" href="/" Match="NavLinkMatch.All">Startside</NavLink>
+            </li>
+            <li class="nav-item">
+              <NavLink class="btn btn-outline-light rounded-cos m-1" href="/Guide">Guide</NavLink>
+            </li>
+            <li class="nav-item">
+              <NavLink class="btn btn-outline-light rounded-cos m-1" href="/NewIdea">Tilføj ide</NavLink>
+            </li>
+            <AuthorizeView>
+              <NotAuthorized>
+                <li class="nav-item">
+                  <NavLink class="btn text-white noFocus m-1" href="Identity/Account/Login">Admin login</NavLink>
+                </li>
+              </NotAuthorized>
+              <Authorized>
+                <li class="nav-item">
+                  <NavLink class="btn text-white noFocus" href="/Administrate">Administrer</NavLink>
+                </li>
+                <li class="nav-item">
+                  <NavLink class="btn text-white noFocus" href="/Identity/Account/Manage">Konto</NavLink>
+                </li>
+                <li class="nav-item">
+                  <form method="post" action="Identity/Account/LogOut">
+                    <button type="submit" class="btn text-white noFocus">Log ud</button>
+                  </form>
+                </li>
+              </Authorized>
+            </AuthorizeView>
+          </ul>
+        </div>
+      </div>
     </div>
+  </nav>
 </header>

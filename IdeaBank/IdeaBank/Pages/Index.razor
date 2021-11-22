@@ -61,7 +61,7 @@
         <div class="col-sm">
           <div class="d-flex flex-row justify-content-between card card-body rounded-cos border-0">
             <div>
-              <h6 class="text-muted">Antal kommentarer i alt</h6>
+              <h6 class="text-muted">Antal svar i alt</h6>
               <h4 class="mb-0 text-primary">@Dashboard.AllComments</h4>
             </div>
             <img class="data-card-icon" src="svg/dashboard/chat-left-text.svg">
@@ -145,7 +145,7 @@
                                     <option value="4">Ikke angivet</option>
                                 </InputSelect>
                             </th>
-                            <th scope="col" style="width: 110px;" class="sort-select bg-primary select-filter-text align-middle" @onclick="ChangeCreatedAtSort">
+                            <th scope="col" style="width: 115px;" class="sort-select bg-primary select-filter-text align-middle" @onclick="ChangeCreatedAtSort">
                                 Oprettet
                                 @if (_filterIdea.Sorting == Sort.CreatedAtAsc)
                                 {<img src="/svg/sort-up.svg" />}
@@ -154,8 +154,8 @@
                                 else
                                 {<img src="/svg/filter.svg" />}
                             </th>
-                            <th scope="col" style="width: 160px;" class="sort-select bg-primary select-filter-text align-middle" @onclick="ChangeUpdatedAtSort">
-                                Sidst opdateret
+                            <th scope="col" style="width: 115px;" class="sort-select bg-primary select-filter-text align-middle" @onclick="ChangeUpdatedAtSort">
+                                Opdateret
                                 @if (_filterIdea.Sorting == Sort.UpdatedAtAsc)
                                 {<img src="/svg/sort-up.svg" />}
                                 else if (_filterIdea.Sorting == Sort.UpdatedAtDesc)
@@ -163,14 +163,8 @@
                                 else
                                 {<img src="/svg/filter.svg" />}
                             </th>
-                            <th scope="col" style="width: 126px;" class="sort-select bg-primary select-filter-text align-middle">
-                                Kommentar
-                                @if (_filterIdea.Sorting == Sort.UpdatedAtAsc)
-                                {<img src="/svg/sort-up.svg" />}
-                                else if (_filterIdea.Sorting == Sort.UpdatedAtDesc)
-                                {<img src="/svg/sort-down.svg" /> }
-                                else
-                                {<img src="/svg/filter.svg" />}
+                            <th scope="col" style="width: 57px;" class="bg-primary select-filter-text text-white mx-2 align-middle">
+                              Svar
                             </th>
                         </tr>
                     </thead>

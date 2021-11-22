@@ -60,23 +60,7 @@
             </table>
           </div>
         </div>
-    </section>
-    <section class="p-5 bg-light">
-        <div class="container col-lg-8 mx-auto p-3 py-1">
-            <h2>Indstillinger</h2>
-                <div class="mb-4">
-            <h5>Slå kommentarer til/fra</h5>
-                    <label class="switch d-flex">
-                        <input type="checkbox" @bind="Settings.CommentsEnabled">
-                        <span class="slider"></span>
-                        <span class="text-checked">Kun administratorer kan kommentere</span>
-                        <span class="text-not-checked">Alle kan kommentere</span>
-                    </label>
-                </div>
-            <hr />
-            <h2>Exportér</h2>
-            <p class="my-2">Download alle idéer til Excel</p>
-            <button class="btn btn-primary" @onclick="async () => { await DownloadFileFromStream(); }">Download</button>
-        </div>
-    </section>
+      </div>
+  </div>
+  </section>
 </main>
