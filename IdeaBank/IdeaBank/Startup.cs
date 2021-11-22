@@ -14,6 +14,8 @@ using BusinessLogicLib.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Components.Authorization;
 using Ideabank.Areas.Identity;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 
 namespace IdeaBank
 {
@@ -77,6 +79,8 @@ namespace IdeaBank
 
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapGet("/Identity/Account/Register", context => Task.Factory.StartNew(() => context.Response.Redirect("/Identity/Account/Login", true, true)));
+                endpoints.MapPost("/Identity/Account/Register", context => Task.Factory.StartNew(() => context.Response.Redirect("/Identity/Account/Login", true, true)));
                 endpoints.MapBlazorHub();
                 endpoints.MapFallbackToPage("/_Host");
             });
