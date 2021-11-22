@@ -17,15 +17,10 @@ namespace BusinessLogicLib.Service
             Repository = repository;
         }
         public IIdeaRepository Repository { get; }
-
-        /// <summary>
-        /// Get a list of ideas that match the filter FilterIdea
-        /// </summary>
-        /// <param name="idea">Filter object</param>
-        /// <returns>List of filtered ideas of type ViewIdea</returns>
-        public async Task<List<ViewIdea>> GetWFilter(FilterIdea idea)
+        
+        public async Task<List<ViewIdea>> GetWFilter(FilterIdea filter)
         {
-            List<IdeasTbl> ideas = (await Repository.ListAsync(idea)).ToList();
+            List<IdeasTbl> ideas = (await Repository.ListAsync(filter)).ToList();
             return DBConvert.TblToViewIdea(ideas);
         }
         /// <summary>
@@ -52,13 +47,13 @@ namespace BusinessLogicLib.Service
         {
             await Repository.UpdateAsync(DBConvert.EditIdeaToTbl(idea));
         }
-        /// <summary>
-        /// Number of total ideas
-        /// </summary>
-        /// <returns>Amount of total ideas</returns>
-        public int Count()
+        public int GetIdeasCount()
         {
             return Repository.IdeasCount;
+        }
+        public async Task<int> GetCount(FilterIdea filter)
+        {
+            return await Repository.CountAsync(filter);
         }
     }
 }

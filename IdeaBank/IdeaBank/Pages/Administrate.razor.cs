@@ -16,9 +16,9 @@ namespace IdeaBank.Pages
         public readonly int MaxIdesInCSVFile = 10000;
 
         [Inject]
-        public IJSRuntime JS { get; set; }
+        private IJSRuntime JS { get; set; }
         [Inject]
-        public IIdeasDataAccess Ideas { get; set; }
+        private IIdeasDataAccess Ideas { get; set; }
         [Inject]
         public IDBTableConfiguration TableConfig { get; set; }
         [Inject]

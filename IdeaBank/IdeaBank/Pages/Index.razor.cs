@@ -16,6 +16,8 @@ namespace IdeaBank.Pages
         [Inject]
         public IIdeasDataAccess Ideas { get; set; }
         [Inject]
+        public ICommentsDataAccess Comments { get; set; }
+        [Inject]
         public IDBTableConfiguration Config { get; set; }
 
         private EditContext _editContext;
@@ -25,11 +27,13 @@ namespace IdeaBank.Pages
         private bool IsAuthorized { get; set; }
         public int NumOfPages { get; set; }
         public int CurrentPage { get; set; } = 1;
+        public Dashboard Dashboard { get; set; } = new Dashboard();
 
         protected override async Task OnInitializedAsync()
         {
             _editContext = new EditContext(_filterIdea);
             _editContext.OnFieldChanged += EditContext_OnFieldChanged;
+            await SetDashboard();
             _filterIdea.Sorting = Sort.CreatedAtDesc;
             _filterIdea.CurrentPage = CurrentPage;
             _filterIdea.IdeasShownCount = IdeasShownCount;
@@ -39,7 +43,18 @@ namespace IdeaBank.Pages
                 await Update();
             }
         }
-        
+        private async Task SetDashboard()
+        {
+            _filterIdea.OnlyNewIdeas = true;
+            Dashboard.NewIdeas = await Ideas.GetCount(_filterIdea);
+            _filterIdea.OnlyNewIdeas = false;
+            Dashboard.AllIdeas = await Ideas.GetCount(_filterIdea);
+            _filterIdea.Status = 2;
+            Dashboard.ApprovedIdeas = await Ideas.GetCount(_filterIdea);
+            Dashboard.AllComments = await Comments.GetCommentsCount(0);
+            _filterIdea.Status = 0;
+        }
+
         // Note: The OnFieldChanged event is raised for each field in the model
         private async void EditContext_OnFieldChanged(object sender, FieldChangedEventArgs e)
         {
@@ -76,7 +91,12 @@ namespace IdeaBank.Pages
         public async Task Update()
         {
             _ideaList = await Ideas.GetWFilter(_filterIdea);
-            NumOfPages = (int)Math.Ceiling((decimal)Ideas.Count() / IdeasShownCount);
+            foreach(ViewIdea idea in _ideaList)
+            {
+               idea.CommentsCount = await Comments.GetCommentsCount(idea.Id);
+            }
+            _filterIdea.OnlyNewIdeas = false;
+            NumOfPages = (int)Math.Ceiling((decimal)Ideas.GetIdeasCount() / IdeasShownCount);
             StateHasChanged();
         }
 

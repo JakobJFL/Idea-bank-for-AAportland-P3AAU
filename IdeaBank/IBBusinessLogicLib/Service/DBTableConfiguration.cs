@@ -23,7 +23,8 @@ namespace BusinessLogicLib
         /// </summary>
         public async Task ConfigureDBTables()
         {
-            await Repository.Kat();
+            await Repository.IsAnyUsers();
+
             if (!(await Repository.DoesDatabaseExist())) 
                 throw new DbNoConnectionException();
 

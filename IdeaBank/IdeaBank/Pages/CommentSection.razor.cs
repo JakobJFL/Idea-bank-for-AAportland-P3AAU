@@ -18,7 +18,7 @@ namespace IdeaBank.Pages
         [Inject]
         private IJSRuntime JsRuntime { get; set; }
         [Inject]
-        public Settings Settings { get; set; }
+        private Settings Settings { get; set; }
         public bool IsAuthorized { get; set; }
 
         private Comment _comment = new();

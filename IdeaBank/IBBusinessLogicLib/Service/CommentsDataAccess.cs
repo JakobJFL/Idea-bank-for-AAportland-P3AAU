@@ -45,5 +45,9 @@ namespace BusinessLogicLib.Service
         {
             await Repository.RemoveByIdAsync(id);
         }
+        public async Task<int> GetCommentsCount(int ideaId)
+        {
+            return await Repository.CountAsync(ideaId);
+        }
     }
 }

@@ -12,7 +12,7 @@ namespace RepositoryLib.Interfaces
         public Task SetDefaultDeBuTbls();
         public Task<bool> IsBuAndDepEmpty();
         public Task<bool> DoesDatabaseExist();
-        public Task<bool> Kat();
         public Task<List<IdentityUser>> GetUsernameList();
+        public Task<bool> IsAnyUsers();
     }
 }
