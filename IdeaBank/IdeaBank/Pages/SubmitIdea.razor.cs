@@ -35,7 +35,7 @@ namespace IdeaBank.Pages
                 await JsRuntime.InvokeVoidAsync("alert", _dbUpdateExceptionText);
             }
         }
-        private async void Regret()
+        private async void Regret() // please new name
         {
             if (string.IsNullOrEmpty(_idea.ProjectName) &&
                 string.IsNullOrEmpty(_idea.Description) &&

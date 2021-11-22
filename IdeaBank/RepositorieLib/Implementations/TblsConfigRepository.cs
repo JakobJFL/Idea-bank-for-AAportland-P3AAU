@@ -1,7 +1,9 @@
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using DataBaseLib.DataAccess;
 using DataBaseLib.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using RepositoryLib.Interfaces;
 
@@ -22,6 +24,11 @@ namespace RepositoryLib.Implementations
         {
            return await Context.Users.AnyAsync();
         }
+
+        public async Task<List<IdentityUser>> GetUsernameList()
+        {
+            return await Context.Users.ToListAsync();
+        } 
         public async Task SetDefaultDeBuTbls()
         {
             for (int i = 0; i < _departments.Length; i++)

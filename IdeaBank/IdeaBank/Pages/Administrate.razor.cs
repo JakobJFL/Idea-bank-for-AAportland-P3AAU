@@ -7,6 +7,7 @@ using BusinessLogicLib.Interfaces;
 using DataBaseLib.Models;
 using BusinessLogicLib.Models;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Identity;
 
 namespace IdeaBank.Pages
 {
@@ -19,14 +20,26 @@ namespace IdeaBank.Pages
         [Inject]
         private IIdeasDataAccess Ideas { get; set; }
         [Inject]
-        private Settings Settings { get; set; }
-        private async Task DownloadFileFromStream()
+        public IDBTableConfiguration TableConfig { get; set; }
+        [Inject]
+        public Settings Settings { get; set; }
+        public List<IdentityUser> UserList {get; set;}
+
+        protected override async Task OnInitializedAsync()
+        {
+            UserList = await TableConfig.GetUsers();
+        }
+
+        /// <summary>
+        /// Downloads ideas as CSV file
+        /// </summary>
+        private async Task DownloadIdeasToCSV()
         {
             FilterIdea filterIdea = new();
             filterIdea.CurrentPage = 1;
             filterIdea.IdeasShownCount = MaxIdesInCSVFile;
             List<ViewIdea> ideaList = await Ideas.GetWFilter(filterIdea);
-
+             
             string csvContext = "Projekt navn;" +
                                 "Initialer;" +
                                 "Forfatterens forretningsenhed;" +

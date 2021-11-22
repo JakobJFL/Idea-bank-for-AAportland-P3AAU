@@ -84,6 +84,10 @@ namespace IdeaBank.Pages
             await Update();
         }
 
+        /// <summary>
+        /// Updates the table of ideas.
+        /// </summary>
+        /// <returns></returns>
         public async Task Update()
         {
             _ideaList = await Ideas.GetWFilter(_filterIdea);
@@ -95,6 +99,10 @@ namespace IdeaBank.Pages
             NumOfPages = (int)Math.Ceiling((decimal)Ideas.GetIdeasCount() / IdeasShownCount);
             StateHasChanged();
         }
+
+        /// <summary>
+        /// Reset all filters to default values.
+        /// </summary>
         private async void Reset()
         {
             _filterIdea.BusinessUnit = 0;
