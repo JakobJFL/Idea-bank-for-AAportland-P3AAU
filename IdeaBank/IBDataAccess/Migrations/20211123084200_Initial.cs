@@ -71,6 +71,21 @@ namespace DataBaseLib.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "GuideTextTbl",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Purpose = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    HomepageGuide = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    SubmitGuide = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_GuideTextTbl", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "AspNetRoleClaims",
                 columns: table => new
                 {
@@ -334,6 +349,9 @@ namespace DataBaseLib.Migrations
 
             migrationBuilder.DropTable(
                 name: "CommentsTbl");
+
+            migrationBuilder.DropTable(
+                name: "GuideTextTbl");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");

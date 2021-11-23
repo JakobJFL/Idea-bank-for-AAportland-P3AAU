@@ -11,6 +11,6 @@ namespace DataBaseLib.DataAccess
         public DbSet<DepartmentsTbl> DepartmentsTbl { get; set; }
         public DbSet<CommentsTbl> CommentsTbl { get; set; }
         public DbSet<BusinessUnitsTbl> BusinessUnitsTbl { get; set; }
-        public DbSet<GuideTextTbl> AdministrateTbl { get; set; }
+        public DbSet<GuideTextTbl> GuideTextTbl { get; set; }
     }
 }

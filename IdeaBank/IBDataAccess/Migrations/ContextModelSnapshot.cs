@@ -79,6 +79,27 @@ namespace DataBaseLib.Migrations
                     b.ToTable("DepartmentsTbl");
                 });
 
+            modelBuilder.Entity("DataBaseLib.Models.GuideTextTbl", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("HomepageGuide")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Purpose")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SubmitGuide")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("GuideTextTbl");
+                });
+
             modelBuilder.Entity("DataBaseLib.Models.IdeasTbl", b =>
                 {
                     b.Property<int>("Id")
