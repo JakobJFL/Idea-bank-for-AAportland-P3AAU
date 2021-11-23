@@ -17,9 +17,12 @@
 <section class="py-5 bg-light">
   <div class="container p-0">
     <AuthorizeView>
-        <Authorized>
-            <button class="btn btn-primary m-2" @onclick="() => IsEditing = true">Redigér</button>
-        </Authorized>
+      <Authorized>
+          @if (!IsEditing)
+          {
+            <button class="btn btn-primary m-2" @onclick="EditGuideText">Redigér</button>
+          }
+      </Authorized>
     </AuthorizeView>
     <EditForm Model="@SettingsGuideText" OnValidSubmit="@HandleValidEdit">
       <h3 class="text-center">Idébankens formål</h3>
@@ -29,7 +32,7 @@
       }
       else if (SettingsGuideText != null)
       {
-        <p class="text-center mb-5">@SettingsGuideText.Purpose</p>
+        <p class="text-center mb-5">@((MarkupString)SettingsGuideText.Purpose)</p>
       }
       else
       {
@@ -44,7 +47,7 @@
           }
           else if (SettingsGuideText != null)
           {
-            <p>@SettingsGuideText.HomepageGuide</p>
+            <p>@((MarkupString)SettingsGuideText.HomepageGuide)</p>
           }
         </div>
         <div class="col-sm">
@@ -55,7 +58,7 @@
           }
           else if (SettingsGuideText != null)
           {
-            <p>@SettingsGuideText.SubmitGuide</p>
+            <p>@((MarkupString)SettingsGuideText.SubmitGuide)</p>
           }
         </div>
       </div>

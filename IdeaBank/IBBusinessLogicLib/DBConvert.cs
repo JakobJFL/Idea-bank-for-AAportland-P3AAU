@@ -148,9 +148,9 @@ namespace BusinessLogicLib
         public static Settings GuideTblToSettings(GuideTextTbl guideText)
         {
             Settings newSettings = new();
-            newSettings.HomepageGuide = guideText.HomepageGuide;
-            newSettings.Purpose = guideText.Purpose;
-            newSettings.SubmitGuide = guideText.SubmitGuide;
+            newSettings.HomepageGuide = StrNewLineToBr(guideText.HomepageGuide);
+            newSettings.Purpose = StrNewLineToBr(guideText.Purpose);
+            newSettings.SubmitGuide = StrNewLineToBr(guideText.SubmitGuide);
             return newSettings;
         }
 

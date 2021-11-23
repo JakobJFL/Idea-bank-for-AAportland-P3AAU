@@ -1,5 +1,6 @@
 using System;
 using System.Threading.Tasks;
+using BusinessLogicLib;
 using BusinessLogicLib.Interfaces;
 using BusinessLogicLib.Models;
 using Microsoft.AspNetCore.Components;
@@ -22,7 +23,16 @@ namespace IdeaBank.Pages
         {
             IsEditing = false;
             await Config.EditGuideText(SettingsGuideText);
+            SettingsGuideText = await Config.GetGuideText();
             StateHasChanged();
+        }
+
+        private void EditGuideText()
+        {
+            IsEditing = true;
+            SettingsGuideText.HomepageGuide =  DBConvert.StrBrToNewLine(SettingsGuideText.HomepageGuide);
+            SettingsGuideText.Purpose =  DBConvert.StrBrToNewLine(SettingsGuideText.Purpose);
+            SettingsGuideText.SubmitGuide = DBConvert.StrBrToNewLine(SettingsGuideText.SubmitGuide);
         }
     }
    

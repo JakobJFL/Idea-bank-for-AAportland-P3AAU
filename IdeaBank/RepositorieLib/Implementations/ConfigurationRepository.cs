@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using DataBaseLib.DataAccess;
 using DataBaseLib.Models;
@@ -19,6 +20,8 @@ namespace RepositoryLib.Implementations
 
         private readonly string[] _businessUnits = { "Ikke Angivet", "Aalborg Portland", "Unicon DK", "Unicon NO", "Kudsk & Dahl" };
         private readonly string[] _departments = { "Ikke Angivet", "Salg", "SCM", "Produktion", "Vedligehold", "Finans", "HR", "PMO & Trans" };
+        private readonly int _guideTextID = 1;
+
 
         public async Task<bool> IsAnyUsers()
         {
@@ -63,10 +66,18 @@ namespace RepositoryLib.Implementations
         {
             return !(await Context.DepartmentsTbl.AnyAsync() && await Context.BusinessUnitsTbl.AnyAsync());
         }
-        public async Task UpdateGuideText(GuideTextTbl guideText)
+        public async Task UpdateGuideText(GuideTextTbl model)
         {
-            Context.GuideTextTbl.Update(guideText);
-            await Context.SaveChangesAsync();
+            GuideTextTbl guideTextToUpdate = Context.GuideTextTbl.SingleOrDefault(g => g.Id == _guideTextID);
+            if (guideTextToUpdate != null)
+            {
+                guideTextToUpdate.HomepageGuide = model.HomepageGuide;
+                guideTextToUpdate.Purpose = model.Purpose;
+                guideTextToUpdate.SubmitGuide = model.SubmitGuide;
+                await Context.SaveChangesAsync();
+            }
+            else
+                throw new ArgumentNullException("Idea not found");
         }
         public Task<GuideTextTbl> GetGuideText()
         {
@@ -75,7 +86,7 @@ namespace RepositoryLib.Implementations
         public async Task SetDefaultGuideText()
         {
             GuideTextTbl guideText = new();
-            guideText.Id = 1;
+            guideText.Id = _guideTextID;
             guideText.HomepageGuide = "Ikke angivet.";
             guideText.Purpose = "Ikke angivet.";
             guideText.SubmitGuide = "Ikke angivet.";
