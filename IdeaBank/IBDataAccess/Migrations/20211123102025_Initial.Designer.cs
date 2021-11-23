@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataBaseLib.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20211123084200_Initial")]
+    [Migration("20211123102025_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -84,9 +84,7 @@ namespace DataBaseLib.Migrations
             modelBuilder.Entity("DataBaseLib.Models.GuideTextTbl", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
 
                     b.Property<string>("HomepageGuide")
                         .HasColumnType("nvarchar(max)");

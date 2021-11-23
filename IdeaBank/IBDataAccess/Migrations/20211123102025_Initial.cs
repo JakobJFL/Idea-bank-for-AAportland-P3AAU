@@ -74,8 +74,7 @@ namespace DataBaseLib.Migrations
                 name: "GuideTextTbl",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<int>(type: "int", nullable: false),
                     Purpose = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     HomepageGuide = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     SubmitGuide = table.Column<string>(type: "nvarchar(max)", nullable: true)

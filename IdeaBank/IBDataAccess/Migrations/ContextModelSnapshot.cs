@@ -82,9 +82,7 @@ namespace DataBaseLib.Migrations
             modelBuilder.Entity("DataBaseLib.Models.GuideTextTbl", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
 
                     b.Property<string>("HomepageGuide")
                         .HasColumnType("nvarchar(max)");
