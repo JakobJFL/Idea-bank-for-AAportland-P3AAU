@@ -20,14 +20,14 @@ namespace IdeaBank.Pages
         [Inject]
         private IIdeasDataAccess Ideas { get; set; }
         [Inject]
-        public IDBTableConfiguration TableConfig { get; set; }
+        public IConfig Config { get; set; }
         [Inject]
         public Settings Settings { get; set; }
         public List<IdentityUser> UserList {get; set;}
 
         protected override async Task OnInitializedAsync()
         {
-            UserList = await TableConfig.GetUsers();
+            UserList = await Config.GetUsers();
         }
 
         /// <summary>

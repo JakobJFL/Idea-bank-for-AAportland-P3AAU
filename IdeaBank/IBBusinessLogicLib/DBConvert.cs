@@ -136,6 +136,23 @@ namespace BusinessLogicLib
             newIdea.UpdatedAt = DateTime.Now;
             return newIdea;
         }
+        public static GuideTextTbl SettingsToGuideTbl(Settings setting)
+        {
+            GuideTextTbl newGuideText = new();
+            newGuideText.HomepageGuide = setting.HomepageGuide;
+            newGuideText.Purpose = setting.Purpose;
+            newGuideText.SubmitGuide = setting.SubmitGuide;
+            return newGuideText;
+        }
+
+        public static Settings GuideTblToSettings(GuideTextTbl guideText)
+        {
+            Settings newSettings = new();
+            newSettings.HomepageGuide = guideText.HomepageGuide;
+            newSettings.Purpose = guideText.Purpose;
+            newSettings.SubmitGuide = guideText.SubmitGuide;
+            return newSettings;
+        }
 
         /// <summary>
         /// Converts priority int to string.

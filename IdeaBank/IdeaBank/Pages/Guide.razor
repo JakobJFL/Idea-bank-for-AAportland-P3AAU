@@ -1,5 +1,6 @@
 @page "/Guide"
 
+
 <div class="bgImg">
     <section class="py-4 text-center container">
         <div class="row py-lg-5">
@@ -14,33 +15,59 @@
 </div>
 
 <section class="py-5 bg-light">
-    <div class="container p-0">
-        <h3 class="text-center">Idébankens formål</h3>
-        <p class="text-center mb-5">Tekst fra Aalborg portland omkring hvad de ansatte kan forvente af idebanken.</p>
-        <div class="row">
-            <div class="col-sm">
-                <h3 class="text-center">Forsiden</h3>
-                Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.
-                Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.
-                Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim q
-                ui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.
-                Nam liber tempor soluta nobis eleifend option congue nihil imperdiet doming id quod mazim placerat facer possim assum.
-            </div>
-            <div class="col-sm">
-                <h3 class="text-center">Indsend idé</h3>
-                Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.
-                Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.
-                Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim q
-                ui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.
-                Nam liber tempor soluta nobis eleifend option congue nihil imperdiet doming id quod mazim placerat facer possim assum.
-            </div>
+  <div class="container p-0">
+    <AuthorizeView>
+        <Authorized>
+            <button class="btn btn-primary m-2" @onclick="() => IsEditing = true">Redigér</button>
+        </Authorized>
+    </AuthorizeView>
+    <EditForm Model="@SettingsGuideText" OnValidSubmit="@HandleValidEdit">
+      <h3 class="text-center">Idébankens formål</h3>
+      @if (IsEditing)
+      {
+        <InputTextArea class="form-control" rows="3" maxlength=1500 @bind-Value="SettingsGuideText.Purpose"></InputTextArea>
+      }
+      else if (SettingsGuideText != null)
+      {
+        <p class="text-center mb-5">@SettingsGuideText.Purpose</p>
+      }
+      else
+      {
+        <p class="text-center mb-5">indlæser</p>
+      }
+      <div class="row">
+        <div class="col-sm">
+          <h3 class="text-center">Forsiden</h3>
+          @if (IsEditing)
+          {
+            <InputTextArea class="form-control" rows="3" maxlength=1500 @bind-Value="SettingsGuideText.HomepageGuide"></InputTextArea>
+          }
+          else if (SettingsGuideText != null)
+          {
+            <p>@SettingsGuideText.HomepageGuide</p>
+          }
         </div>
-    </div>
+        <div class="col-sm">
+          <h3 class="text-center">Indsend idé</h3>
+          @if (IsEditing)
+          {
+            <InputTextArea class="form-control" rows="3" maxlength=1500 @bind-Value="SettingsGuideText.SubmitGuide"></InputTextArea>
+          }
+          else if (SettingsGuideText != null)
+          {
+            <p>@SettingsGuideText.SubmitGuide</p>
+          }
+        </div>
+      </div>
+      @if (IsEditing)
+      {
+        <button type="submit" class="btn btn-primary m-2">Gem</button>
+      }
+    </EditForm>
+  </div>
     <section class="py-5 text-center container">
         <div class="col-lg-6 col-md-6 mx-auto">
-            <NavLink href="/">
-                <button class="btn btn-lg btn-primary my-1 p-3 rounded-cos">Tilbage</button>
-            </NavLink>
+            <NavLink class="btn btn-lg btn-primary my-1 p-3 rounded-cos" href="/">Tilbage</NavLink>
         </div>
     </section>
 </section>

@@ -35,8 +35,8 @@ namespace IdeaBank
             services.AddServerSideBlazor();
             services.AddScoped<IIdeaRepository, IdeaRepository>();
             services.AddScoped<ICommentsRepository, CommentsRepository>();
-            services.AddScoped<ITblsConfigRepository, TblsConfigRepository>();
-            services.AddScoped<IDBTableConfiguration, DBTableConfiguration>();
+            services.AddScoped<IConfigurationRepository, ConfigurationRepository>();
+            services.AddScoped<IConfig, Config>();
             services.AddScoped<IIdeasDataAccess, IdeasDataAccess>();
             services.AddScoped<ICommentsDataAccess, CommentsDataAccess>();
             services.AddSingleton<Settings>();

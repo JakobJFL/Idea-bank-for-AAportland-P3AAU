@@ -1,4 +1,5 @@
 using BusinessLogicLib.Interfaces;
+using BusinessLogicLib.Models;
 using DataBaseLib.DataAccess;
 using DataBaseLib.Models;
 using Microsoft.AspNetCore.Identity;
@@ -9,11 +10,11 @@ using System.Threading.Tasks;
 
 namespace BusinessLogicLib
 {
-    public class DBTableConfiguration : IDBTableConfiguration
+    public class Config : IConfig
     {
-        public ITblsConfigRepository Repository { get; }
+        public IConfigurationRepository Repository { get; }
 
-        public DBTableConfiguration(ITblsConfigRepository repository)
+        public Config(IConfigurationRepository repository)
         {
             Repository = repository;
         }
@@ -29,12 +30,24 @@ namespace BusinessLogicLib
                 throw new DbNoConnectionException();
 
             if (await Repository.IsBuAndDepEmpty())
-                await Repository.SetDefaultDeBuTbls(); 
-        }
+                await Repository.SetDefaultDeBuTbls();
 
+            if (await Repository.IsGuideTextEmpty())
+                await Repository.SetDefaultGuideText();
+        }
         public async Task<List<IdentityUser>> GetUsers()
         {
             return await Repository.GetUsernameList();
+        }
+
+        public async Task EditGuideText(Settings settings)
+        {
+            await Repository.UpdateGuideText(DBConvert.SettingsToGuideTbl(settings));
+        }
+
+        public async Task<Settings> GetGuideText()
+        {
+            return DBConvert.GuideTblToSettings(await Repository.GetGuideText());
         }
     }
 }

@@ -26,7 +26,7 @@ namespace IdeaBank.Areas.Identity.Pages.Account
             SignInManager<IdentityUser> signInManager,
             ILogger<RegisterModel> logger,
             IEmailSender emailSender,
-            ITblsConfigRepository repository)
+            IConfigurationRepository repository)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -40,7 +40,7 @@ namespace IdeaBank.Areas.Identity.Pages.Account
         public InputModel Input { get; set; }
 
         public string ReturnUrl { get; set; }
-        public ITblsConfigRepository Repository { get; }
+        private IConfigurationRepository Repository { get; }
 
         public IList<AuthenticationScheme> ExternalLogins { get; set; }
 

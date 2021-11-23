@@ -9,9 +9,9 @@ using RepositoryLib.Interfaces;
 
 namespace RepositoryLib.Implementations
 {
-    public class TblsConfigRepository : ITblsConfigRepository
+    public class ConfigurationRepository : IConfigurationRepository
     {
-        public TblsConfigRepository(Context context)
+        public ConfigurationRepository(Context context)
         {
             Context = context;
         }
@@ -55,7 +55,6 @@ namespace RepositoryLib.Implementations
                 throw new DbUpdateException("Updating tables in database failed." + ex.Message);
             }
         }
-
         public async Task<bool> DoesDatabaseExist()
         {
             return await Context.Database.CanConnectAsync();
@@ -63,6 +62,30 @@ namespace RepositoryLib.Implementations
         public async Task<bool> IsBuAndDepEmpty()
         {
             return !(await Context.DepartmentsTbl.AnyAsync() && await Context.BusinessUnitsTbl.AnyAsync());
+        }
+        public async Task UpdateGuideText(GuideTextTbl guideText)
+        {
+            Context.GuideTextTbl.Update(guideText);
+            await Context.SaveChangesAsync();
+        }
+        public Task<GuideTextTbl> GetGuideText()
+        {
+            return Context.GuideTextTbl.FirstOrDefaultAsync();
+        }
+        public async Task SetDefaultGuideText()
+        {
+            GuideTextTbl guideText = new();
+            guideText.Id = 1;
+            guideText.HomepageGuide = "Ikke angivet.";
+            guideText.Purpose = "Ikke angivet.";
+            guideText.SubmitGuide = "Ikke angivet.";
+            await Context.GuideTextTbl.AddAsync(guideText);
+            await Context.SaveChangesAsync();
+        }
+
+        public async Task<bool> IsGuideTextEmpty()
+        {
+            return !await Context.GuideTextTbl.AnyAsync();
         }
     }
 }

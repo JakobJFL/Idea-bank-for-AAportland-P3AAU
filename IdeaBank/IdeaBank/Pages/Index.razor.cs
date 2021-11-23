@@ -18,7 +18,7 @@ namespace IdeaBank.Pages
         [Inject]
         public ICommentsDataAccess Comments { get; set; }
         [Inject]
-        public IDBTableConfiguration Config { get; set; }
+        public IConfig Config { get; set; }
 
         private EditContext _editContext;
         private List<ViewIdea> _ideaList;

@@ -11,6 +11,7 @@ namespace DataBaseLib.Models
     public class GuideTextTbl
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int Id { get; set; }
         public string Purpose { get; set; }
         public string HomepageGuide { get; set; }
