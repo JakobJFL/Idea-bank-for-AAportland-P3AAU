@@ -57,7 +57,7 @@ namespace RepositoryLib.Implementations
             throw new NotImplementedException();
         }
 
-        public Task<int> CountAsync(FilterIdea filter)
+        public Task<int> CountAsync(FilterSortIdea filter)
         {
             throw new NotImplementedException();
         }

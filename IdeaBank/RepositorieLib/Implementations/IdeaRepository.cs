@@ -12,6 +12,9 @@ namespace RepositoryLib.Implementations
 {
     public class IdeaRepository : IIdeaRepository, IRepository<IdeasTbl>
     {
+        public IdeaRepository()
+        {
+        }
         public IdeaRepository(Context context)
         {
             Context = context;
@@ -24,24 +27,40 @@ namespace RepositoryLib.Implementations
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public async Task<IEnumerable<IdeasTbl>> ListAsync(FilterIdea filter)
+        public async Task<IEnumerable<IdeasTbl>> ListAsync(FilterSortIdea filterSort)
         {
             IQueryable<IdeasTbl> ideas = Context.IdeasTbl
                 .Include(b => b.IdeaBusinessUnit)
                 .Include(d => d.IdeaDepartment)
                 .Include(d => d.AuthorBusinessUnit)
                 .Include(d => d.AuthorDepartment)
-                .Include(i => i.Comments)
-                .Where(f => filter.ShowHidden || !f.IsHidden)
+                .Include(i => i.Comments);
+
+            ideas = await Filter(ideas, filterSort);
+
+            if (!string.IsNullOrEmpty(filterSort.SearchStr))
+                ideas = await Search(ideas, filterSort);
+
+            ideas = await Sorting(ideas, filterSort);
+            IdeasCount = await ideas.CountAsync();
+            ideas = ideas.Skip((filterSort.CurrentPage-1) * filterSort.IdeasShownCount).Take(filterSort.IdeasShownCount);
+            return await ideas.ToListAsync();
+        }
+        public Task<IQueryable<IdeasTbl>> Filter(IQueryable<IdeasTbl> ideas, FilterSortIdea filter)
+        {
+            return Task.FromResult(ideas.Where(f => filter.ShowHidden || !f.IsHidden)
                 .Where(f => filter.BusinessUnit == 0 || filter.BusinessUnit == f.IdeaBusinessUnit.Id)
                 .Where(f => filter.Department == 0 || filter.Department == f.IdeaDepartment.Id)
                 .Where(f => filter.Priority == 0 || filter.Priority == f.Priority)
                 .Where(f => filter.Status == 0 || filter.Status == f.Status)
-                .Where(f => filter.Id == 0 || filter.Id == f.Id);
-            if (!string.IsNullOrEmpty(filter.SearchStr))
-            {
-                ideas = ideas.Where(f => f.ProjectName.Contains(filter.SearchStr));
-            }
+                .Where(f => filter.Id == 0 || filter.Id == f.Id));
+        }
+        public Task<IQueryable<IdeasTbl>> Search(IQueryable<IdeasTbl> ideas, FilterSortIdea filter)
+        {
+            return Task.FromResult(ideas = ideas.Where(f => f.ProjectName.Contains(filter.SearchStr)));
+        }
+        public Task<IQueryable<IdeasTbl>> Sorting(IQueryable<IdeasTbl> ideas, FilterSortIdea filter)
+        {
             switch (filter.Sorting)
             {
                 case Sort.ProjectNameAsc:
@@ -65,9 +84,7 @@ namespace RepositoryLib.Implementations
                 default:
                     throw new ArgumentException("Sorting was not was not within range of Sort");
             }
-            IdeasCount = await ideas.CountAsync();
-            ideas = ideas.Skip((filter.CurrentPage-1) * filter.IdeasShownCount).Take(filter.IdeasShownCount);
-            return await ideas.ToListAsync();
+            return Task.FromResult(ideas);
         }
 
         public async Task AddAsync(IdeasTbl model)
@@ -101,7 +118,7 @@ namespace RepositoryLib.Implementations
             else
                 throw new ArgumentNullException("Idea not found");
         }
-        public Task<int> CountAsync(FilterIdea filter)
+        public Task<int> CountAsync(FilterSortIdea filter)
         {
             return Context.IdeasTbl
                 .Where(i => !filter.OnlyNewIdeas || i.CreatedAt.Millisecond == i.UpdatedAt.Millisecond)

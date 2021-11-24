@@ -83,8 +83,8 @@ namespace IdeaBank.Areas.Identity.Pages.Account
                 ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
                 if (ModelState.IsValid)
                 {
-                    var user = new IdentityUser { UserName = Input.UserName, Email = Input.Email };
-                    var result = await _userManager.CreateAsync(user, Input.Password);
+                    IdentityUser user = new IdentityUser { UserName = Input.UserName, Email = Input.Email };
+                    IdentityResult result = await _userManager.CreateAsync(user, Input.Password);
                     if (result.Succeeded)
                     {
                         _logger.LogInformation("User created a new account with password.");
@@ -92,7 +92,7 @@ namespace IdeaBank.Areas.Identity.Pages.Account
                         await _signInManager.SignInAsync(user, isPersistent: false);
                         return LocalRedirect(returnUrl);
                     }
-                    foreach (var error in result.Errors)
+                    foreach (IdentityError error in result.Errors)
                     {
                         ModelState.AddModelError(string.Empty, error.Description);
                     }

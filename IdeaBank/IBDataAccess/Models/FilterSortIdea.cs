@@ -9,7 +9,7 @@ namespace DataBaseLib.Models
         UpdatedAtAsc,
         UpdatedAtDesc
     }
-    public class FilterIdea
+    public class FilterSortIdea
     {
         public int Id { get; set; }
         public int BusinessUnit { get; set; }

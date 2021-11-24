@@ -35,7 +35,7 @@ namespace IdeaBank.Pages
         /// </summary>
         private async Task DownloadIdeasToCSV()
         {
-            FilterIdea filterIdea = new();
+            FilterSortIdea filterIdea = new();
             filterIdea.CurrentPage = 1;
             filterIdea.IdeasShownCount = MaxIdesInCSVFile;
             List<ViewIdea> ideaList = await Ideas.GetWFilter(filterIdea);

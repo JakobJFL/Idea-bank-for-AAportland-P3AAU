@@ -23,7 +23,7 @@ namespace IdeaBank.Pages
         private EditContext _editContext;
         private List<ViewIdea> _ideaList;
         private Modal Modal { get; set; }
-        private FilterIdea _filterIdea = new();
+        private FilterSortIdea _filterIdea = new();
         private bool IsAuthorized { get; set; }
         public int NumOfPages { get; set; }
         public int CurrentPage { get; set; } = 1;

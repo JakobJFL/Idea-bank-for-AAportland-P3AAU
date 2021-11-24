@@ -18,7 +18,7 @@ namespace BusinessLogicLib.Service
         }
         public IIdeaRepository Repository { get; }
         
-        public async Task<List<ViewIdea>> GetWFilter(FilterIdea filter)
+        public async Task<List<ViewIdea>> GetWFilter(FilterSortIdea filter)
         {
             List<IdeasTbl> ideas = (await Repository.ListAsync(filter)).ToList();
             return DBConvert.TblToViewIdea(ideas);
@@ -51,7 +51,7 @@ namespace BusinessLogicLib.Service
         {
             return Repository.IdeasCount;
         }
-        public async Task<int> GetCount(FilterIdea filter)
+        public async Task<int> GetCount(FilterSortIdea filter)
         {
             return await Repository.CountAsync(filter);
         }
