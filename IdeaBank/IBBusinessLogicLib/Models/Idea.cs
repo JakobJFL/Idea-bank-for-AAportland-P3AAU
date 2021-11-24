@@ -21,7 +21,7 @@ namespace BusinessLogicLib.Models
         public int? AuthorDepartment { get; set; } = 1;
         public int? IdeaBusinessUnit { get; set; } = 1;
         public int? IdeaDepartment { get; set; } = 1;
-        public int Priority { get; set; } = 0;
+        public int Priority { get; set; } = 1;
         public int Status { get; set; } = 1;
     }
 }

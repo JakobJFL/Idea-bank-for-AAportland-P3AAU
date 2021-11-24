@@ -132,6 +132,7 @@ namespace BusinessLogicLib
             newIdea.ExpectedResults = idea.ExpectedResults;
             newIdea.IsHidden = idea.IsHidden;
             newIdea.Status = 1;
+            newIdea.Priority = 1;
             newIdea.CreatedAt = DateTime.Now;
             newIdea.UpdatedAt = DateTime.Now;
             return newIdea;
@@ -159,14 +160,16 @@ namespace BusinessLogicLib
         /// </summary>
         /// <param name="index"></param>
         /// <returns>Name of a priority.</returns>
-        private static string GetPriorityStr(int index)
+        public static string GetPriorityStr(int index)
         {
             switch (index)
             {
-                case 1: return "Lav";
-                case 2: return "Mellem";
-                case 3: return "Høj";
-                default: return "Ikke angivet";
+                case 1: return "Ikke angivet";
+                case 2: return "Lav";
+                case 3: return "Mellem";
+                case 4: return "Høj";
+                default:
+                    throw new ArgumentException("index for GetPriorityStr was not within range");
             }
         }
 
@@ -175,7 +178,7 @@ namespace BusinessLogicLib
         /// </summary>
         /// <param name="index"></param>
         /// <returns>Name of status.</returns>
-        private static string GetStatusStr(int index)
+        public static string GetStatusStr(int index)
         {
             switch (index)
             {
@@ -183,7 +186,8 @@ namespace BusinessLogicLib
                 case 2: return "Godkendt";
                 case 3: return "Arkiveret";
                 case 4: return "Afsluttet";
-                default: throw new ArgumentException("index for getStatusStr was not within range");
+                default:
+                    throw new ArgumentException("index for getStatusStr was not within range");
             }
         }
 
