@@ -55,6 +55,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\IBBusinessLogicLib\BusinessLogicLib.csproj" />
+    <ProjectReference Include="..\xUnitTesting\xUnitTesting.csproj" />
   </ItemGroup>
 
 </Project>

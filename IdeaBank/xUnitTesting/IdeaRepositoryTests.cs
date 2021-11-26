@@ -26,12 +26,9 @@ namespace XUnitTesting
             FilterSortIdea filter = new();
             filter.Priority = 1;
 
-            List<IdeasTbl> ideasDB = MakeDB();
-
             int[] resultId = new int[] { 2, 3 };
 
             // act
-            IQueryable<IdeasTbl> ideas = ideasDB.AsQueryable();
             IQueryable<IdeasTbl> mus = await Repository.Filter(ideas, filter);
             List<IdeasTbl> result = mus.ToList();
 
