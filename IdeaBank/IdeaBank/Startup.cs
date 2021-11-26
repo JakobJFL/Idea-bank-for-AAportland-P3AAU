@@ -16,6 +16,7 @@ using Microsoft.AspNetCore.Components.Authorization;
 using Ideabank.Areas.Identity;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
+using XUnitTesting;
 
 namespace IdeaBank
 {
@@ -39,6 +40,7 @@ namespace IdeaBank
             services.AddScoped<IConfig, Config>();
             services.AddScoped<IIdeasDataAccess, IdeasDataAccess>();
             services.AddScoped<ICommentsDataAccess, CommentsDataAccess>();
+            services.AddScoped<IIdeaRepositoryTests, IdeaRepositoryTests>();
             services.AddSingleton<Settings>();
 
             services.AddDbContext<Context>(options =>

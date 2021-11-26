@@ -1,5 +1,6 @@
 using DataBaseLib.Models;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace RepositoryLib.Interfaces
@@ -13,6 +14,9 @@ namespace RepositoryLib.Interfaces
         public Task UpdateAsync(IdeasTbl model);
         public Task<IdeasTbl> FindByIdAsync(int id);
         public Task<int> CountAsync(FilterSortIdea filter);
+        public Task<IQueryable<IdeasTbl>> Filter(IQueryable<IdeasTbl> ideas, FilterSortIdea filter);
+        public Task<IQueryable<IdeasTbl>> Search(IQueryable<IdeasTbl> ideas, FilterSortIdea filter);
+        public Task<IQueryable<IdeasTbl>> Sorting(IQueryable<IdeasTbl> ideas, FilterSortIdea filter);
 
     }
 }

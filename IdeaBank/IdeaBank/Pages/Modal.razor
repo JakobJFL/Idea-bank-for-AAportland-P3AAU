@@ -59,44 +59,7 @@
                 <div class="col-12">
                   <div class="row">
                     <div class="col">
-                      <h6 class="text-primary mb-1">Vedrørende forretningsenhed</h6>
-                      @if (IsEditing)
-                      {
-                        <InputSelect class="form-select" required @bind-Value="_editIdea.IdeaBusinessUnit">
-                          <option value="1">Ikke angivet</option>
-                          <option value="2">Aalborg Portland</option>
-                          <option value="3">Unicon DK</option>
-                          <option value="4">Unicon NO</option>
-                          <option value="5">Kudsk & Dahl</option>
-                        </InputSelect>
-                      }
-                      else
-                      {
-                        <p>@_idea.IdeaBusinessUnitStr</p>}
-
-                    </div>
-                    <div class="col">
-                      <h6 class="text-primary mb-1">Vedrørende afdeling</h6>
-                      @if (IsEditing)
-                      {
-                        <InputSelect class="form-select" @bind-Value="_editIdea.IdeaDepartment">
-                          <option value="1">Ikke angivet</option>
-                          <option value="2">Salg</option>
-                          <option value="3">SCM</option>
-                          <option value="4">Produktion</option>
-                          <option value="5">Vedligehold</option>
-                          <option value="6">Finans</option>
-                          <option value="7">HR</option>
-                          <option value="8">PMO & Trans</option>
-                        </InputSelect>
-                      }
-                      else
-                      {
-                        <p>@_idea.IdeaDepartmentStr</p>
-                      }
-                    </div>
-                    <div class="col">
-                      <h6 class="mb-1">Forfatterens forretningsenhed</h6>
+                      <h6 class="mb-1 text-primary">Forfatterens forretningsenhed</h6>
                       @if (IsEditing)
                       {
                         <InputSelect class="form-select" required @bind-Value="_editIdea.AuthorBusinessUnit">
@@ -113,7 +76,7 @@
 
                     </div>
                     <div class="col">
-                      <h6 class="mb-1">Forfatterens afdeling</h6>
+                      <h6 class="mb-1 text-primary">Forfatterens afdeling</h6>
                       @if (IsEditing)
                       {
                         <InputSelect class="form-select" @bind-Value="_editIdea.AuthorDepartment">
@@ -130,6 +93,43 @@
                       else
                       {
                         <p>@_idea.AuthorDepartmentStr</p>
+                      }
+                    </div>
+                    <div class="col">
+                      <h6 class="mb-1">Vedrørende forretningsenhed</h6>
+                      @if (IsEditing)
+                      {
+                        <InputSelect class="form-select" required @bind-Value="_editIdea.IdeaBusinessUnit">
+                          <option value="1">Ikke angivet</option>
+                          <option value="2">Aalborg Portland</option>
+                          <option value="3">Unicon DK</option>
+                          <option value="4">Unicon NO</option>
+                          <option value="5">Kudsk & Dahl</option>
+                        </InputSelect>
+                      }
+                      else
+                      {
+                        <p>@_idea.IdeaBusinessUnitStr</p>}
+
+                    </div>
+                    <div class="col">
+                      <h6 class="mb-1">Vedrørende afdeling</h6>
+                      @if (IsEditing)
+                      {
+                        <InputSelect class="form-select" @bind-Value="_editIdea.IdeaDepartment">
+                          <option value="1">Ikke angivet</option>
+                          <option value="2">Salg</option>
+                          <option value="3">SCM</option>
+                          <option value="4">Produktion</option>
+                          <option value="5">Vedligehold</option>
+                          <option value="6">Finans</option>
+                          <option value="7">HR</option>
+                          <option value="8">PMO & Trans</option>
+                        </InputSelect>
+                      }
+                      else
+                      {
+                        <p>@_idea.IdeaDepartmentStr</p>
                       }
                     </div>
                   </div>

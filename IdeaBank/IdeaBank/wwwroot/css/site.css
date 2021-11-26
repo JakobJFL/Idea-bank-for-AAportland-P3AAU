@@ -173,3 +173,7 @@ h6 {
   font-size: 11pt;
   color: #43484d;
 }
+
+.date-text {
+  font-size: 0.8rem;
+}

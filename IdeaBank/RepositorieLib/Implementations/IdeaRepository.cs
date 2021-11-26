@@ -12,9 +12,6 @@ namespace RepositoryLib.Implementations
 {
     public class IdeaRepository : IIdeaRepository, IRepository<IdeasTbl>
     {
-        public IdeaRepository()
-        {
-        }
         public IdeaRepository(Context context)
         {
             Context = context;
@@ -46,7 +43,7 @@ namespace RepositoryLib.Implementations
             ideas = ideas.Skip((filterSort.CurrentPage-1) * filterSort.IdeasShownCount).Take(filterSort.IdeasShownCount);
             return await ideas.ToListAsync();
         }
-        public Task<IQueryable<IdeasTbl>> Filter(IQueryable<IdeasTbl> ideas, FilterSortIdea filter)
+        private Task<IQueryable<IdeasTbl>> Filter(IQueryable<IdeasTbl> ideas, FilterSortIdea filter)
         {
             return Task.FromResult(ideas.Where(f => filter.ShowHidden || !f.IsHidden)
                 .Where(f => filter.BusinessUnit == 0 || filter.BusinessUnit == f.IdeaBusinessUnit.Id)
@@ -55,11 +52,11 @@ namespace RepositoryLib.Implementations
                 .Where(f => filter.Status == 0 || filter.Status == f.Status)
                 .Where(f => filter.Id == 0 || filter.Id == f.Id));
         }
-        public Task<IQueryable<IdeasTbl>> Search(IQueryable<IdeasTbl> ideas, FilterSortIdea filter)
+        private Task<IQueryable<IdeasTbl>> Search(IQueryable<IdeasTbl> ideas, FilterSortIdea filter)
         {
             return Task.FromResult(ideas = ideas.Where(f => f.ProjectName.Contains(filter.SearchStr)));
         }
-        public Task<IQueryable<IdeasTbl>> Sorting(IQueryable<IdeasTbl> ideas, FilterSortIdea filter)
+        private Task<IQueryable<IdeasTbl>> Sorting(IQueryable<IdeasTbl> ideas, FilterSortIdea filter)
         {
             switch (filter.Sorting)
             {
