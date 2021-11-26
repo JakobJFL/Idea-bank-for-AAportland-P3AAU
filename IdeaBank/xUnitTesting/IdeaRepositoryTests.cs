@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using DataBaseLib.DataAccess;
 using DataBaseLib.Models;
+using Microsoft.EntityFrameworkCore;
 using RepositoryLib.Implementations;
 using RepositoryLib.Interfaces;
 using Xunit;
@@ -11,32 +12,30 @@ using Xunit;
 namespace XUnitTesting
 
 {
-    public class IdeaRepositoryTests : IIdeaRepositoryTests
+    public class IdeaRepositoryTests
     {
-        public IIdeaRepository Repository { get; set; }
-        public IdeaRepositoryTests(IIdeaRepository repository)
-        {
-            Repository = repository;
-        }
+        private readonly string _connectionString = "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=IdeaBank;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
 
         [Fact]
-        public async void StrNewLineToBr_StringWNL_StringWBr()
+        public async void Kat()
         {
+            DbContextOptionsBuilder optionsBuilder = new DbContextOptionsBuilder<Context>();
+            optionsBuilder.UseSqlServer(_connectionString);
+            Context context = new Context(optionsBuilder.Options);
             // arrange
             FilterSortIdea filter = new();
             filter.Priority = 1;
+            filter.CurrentPage = 1;
+            filter.IdeasShownCount = 1;
 
-            int[] resultId = new int[] { 2, 3 };
 
-            // act
-            IQueryable<IdeasTbl> mus = await Repository.Filter(ideas, filter);
-            List<IdeasTbl> result = mus.ToList();
+            IdeaRepository repository = new(context);
+
+            List<IdeasTbl> result = (await repository.ListAsync(filter)).ToList();
 
             // assert
-            for (int i = 0; i < result.Count(); i++)
-            {
-                Assert.Equal(result[i].Id, resultId[i]);
-            }
+
+            Assert.Equal(1, 1);
         }
 
        
