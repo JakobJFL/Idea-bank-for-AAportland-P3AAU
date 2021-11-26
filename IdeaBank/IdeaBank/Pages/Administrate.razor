@@ -21,12 +21,19 @@
           <h2>Indstillinger</h2>
           <div class="mb-4">
             <h5>Slå kommentarer til/fra</h5>
-            <label class="switch d-flex">
-              <input type="checkbox" @bind-value="Settings.CommentsEnabled">
-              <span class="slider"></span>
-              <span class="text-checked">Kun administratorer kan kommentere</span>
-              <span class="text-not-checked">Alle kan kommentere</span>
-            </label>
+              <label class="switch d-flex">
+                @if (Settings.CommentsEnabled)
+                {
+                  <input type="checkbox" @bind-value="Settings.CommentsEnabled" checked>
+                }
+                else
+                {
+                  <input type="checkbox" @bind-value="Settings.CommentsEnabled">
+                }
+                <span class="slider"></span>
+                <span class="text-not-checked">Kun administratorer kan kommentere</span>
+                <span class="text-checked">Alle kan kommentere</span>
+              </label>
           </div>
           <hr />
           <h2>Exportér</h2>

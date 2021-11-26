@@ -13,18 +13,21 @@
 <div class="p-2 my-3 bg-light rounded-cos">
   <div class="container-fluid">
     <h3 class="my-2">Svar</h3>
-    @if (IsAuthorized || !Settings.CommentsEnabled)
-    {
-<EditForm Model="@_comment" OnValidSubmit="@HandleValidSubmit">
-  <DataAnnotationsValidator />
-  <div class="d-flex flex-row mb-2">
-    <InputTextArea class="form-control rounded-cos my-1" required placeholder="Skriv din kommentar her" @bind-Value="_comment.Message"></InputTextArea>
-    <div>
-      <InputText class="form-control mx-2 my-1 rounded-cos" required maxlength="5" placeholder="Initialer" @bind-Value="_comment.Initials"></InputText>
-      <button type="submit" class="btn btn-primary mx-2 my-1 rounded-cos w-100">Kommenter</button>
+    <div id="submitComments">
+      @if (IsAuthorized || Settings.CommentsEnabled)
+      {
+        <EditForm Model="@_comment" OnValidSubmit="@HandleValidSubmit">
+          <DataAnnotationsValidator />
+          <div class="d-flex flex-row mb-2">
+            <InputTextArea class="form-control rounded-cos my-1" required placeholder="Skriv din kommentar her" @bind-Value="_comment.Message"></InputTextArea>
+            <div>
+              <InputText class="form-control mx-2 my-1 rounded-cos" required maxlength="5" placeholder="Initialer" @bind-Value="_comment.Initials"></InputText>
+              <button type="submit" class="btn btn-primary mx-2 my-1 rounded-cos w-100">Kommenter</button>
+            </div>
+          </div>
+        </EditForm>
+      }
     </div>
-  </div>
-</EditForm>}
 
 
     @if (AllComment != null)

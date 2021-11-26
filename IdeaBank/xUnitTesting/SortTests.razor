@@ -1,0 +1,55 @@
+@code {[Fact]
+    public void SortIconClickOnceTest()
+    {
+      //arrange
+      using var ctx = InitializeTestContext();
+
+      // Act
+      var cut = ctx.Render(@<IdeaBank.Pages.Index />);
+      var th1 = cut.Find("th");
+      th1.Click();
+
+      // Assert
+      th1.MarkupMatches(@<th scope="col" style="min-width: 150px;" class="sort-select bg-primary select-filter-text align-middle">
+                          Projektnavn
+                          <img src="/svg/alfa-desc.svg" />
+                        </th>);
+    }
+
+    [Fact]
+    public void SortIconClickTwiceTest()
+    {
+      //arrange
+      using var ctx = InitializeTestContext();
+
+      // Act
+      var cut = ctx.Render(@<IdeaBank.Pages.Index />);
+      var th1 = cut.Find("th");
+      th1.Click();
+      th1.Click();
+
+      // Assert
+      th1.MarkupMatches(@<th scope="col" style="min-width: 150px;" class="sort-select bg-primary select-filter-text align-middle">
+                          Projektnavn
+                          <img src="/svg/alfa-asc.svg" />
+                        </th>);
+    }
+
+    private TestContext InitializeTestContext()
+    {
+      var ctx = new TestContext();
+      ctx.AddTestAuthorization();
+      ctx.Services.AddScoped<IIdeaRepository, IdeaRepository>();
+      ctx.Services.AddScoped<ICommentsRepository, CommentsRepository>();
+      ctx.Services.AddScoped<IConfigurationRepository, ConfigurationRepository>();
+      ctx.Services.AddScoped<IConfig, Config>();
+      ctx.Services.AddScoped<IIdeasDataAccess, IdeasDataAccess>();
+      ctx.Services.AddScoped<ICommentsDataAccess, CommentsDataAccess>();
+      ctx.Services.AddSingleton<Settings>();
+      ctx.Services.AddDbContext<Context>(options =>
+      {
+        options.UseSqlServer("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=IdeaBank;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
+      });
+      return ctx;
+    }
+}
