@@ -16,26 +16,32 @@ namespace XUnitTesting
     {
         private readonly string _connectionString = "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=IdeaBank;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
 
-        [Fact]
-        public async void Kat()
+        public IdeaRepository GetIdeasRepositoryConnection()
         {
             DbContextOptionsBuilder optionsBuilder = new DbContextOptionsBuilder<Context>();
             optionsBuilder.UseSqlServer(_connectionString);
             Context context = new Context(optionsBuilder.Options);
+            IdeaRepository repository = new(context);
+            return repository;
+        }
+
+        [Fact]
+        public async void Kat()
+        {
+            
+            IdeaRepository repository = GetIdeasRepositoryConnection();
             // arrange
             FilterSortIdea filter = new();
             filter.Priority = 1;
             filter.CurrentPage = 1;
             filter.IdeasShownCount = 1;
-
-
-            IdeaRepository repository = new(context);
-
             List<IdeasTbl> result = (await repository.ListAsync(filter)).ToList();
 
             // assert
-
-            Assert.Equal(1, 1);
+            for (int i = 0; i < result.Count(); i++)
+            {
+            Assert.Equal(1, result[i].Priority);
+            }
         }
 
        
