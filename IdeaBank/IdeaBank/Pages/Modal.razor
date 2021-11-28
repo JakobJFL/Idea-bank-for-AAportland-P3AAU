@@ -29,7 +29,7 @@
         <EditForm Model="@_editIdea" OnValidSubmit="@HandleValidEdit">
           @if (_idea == null)
           {
-            <h5>Indlæser ideen...</h5>
+            <h5>Indlæser idéen...</h5>
           }
           else
           {
@@ -272,12 +272,12 @@
             </div>
             @if (IsEditing)
             {
-              <label class="my-2">Skjul ideen</label>
+              <label class="my-2">Skjul idéen</label>
               <label class="switch d-flex">
                 <input @bind="_editIdea.IsHidden" type="checkbox">
                 <span class="slider"></span>
-                <span class="text-checked">Kun administrator kan se ideen</span>
-                <span class="text-not-checked">Alle kan se ideen</span>
+                <span class="text-checked">Kun administratorer kan se idéen</span>
+                <span class="text-not-checked">Alle kan se idéen</span>
               </label>
               <div class="d-flex justify-content-end">
                 <a class="btn btn-secondary m-2" @onclick="async () => await CancelEditing()">Fortryd</a>

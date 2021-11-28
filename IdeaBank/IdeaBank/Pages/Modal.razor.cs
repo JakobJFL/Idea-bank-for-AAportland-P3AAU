@@ -28,7 +28,7 @@ namespace IdeaBank.Pages
         private CommentSection CommentSection { get; set; }
         private bool IsEditing { get; set; } = false;
 
-        private readonly string _confirmDeleteIdea = "Er du sikker på, at du vil slette ideen?";
+        private readonly string _confirmDeleteIdea = "Er du sikker på, at du vil slette idéen?";
         private readonly string _confirmCancel = "Er du sikker på, at du vil slette dine ændringer?";
 
         public async Task Open(ViewIdea idea, Index indexView)

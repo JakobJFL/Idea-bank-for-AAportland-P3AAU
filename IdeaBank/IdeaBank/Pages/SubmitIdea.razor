@@ -21,7 +21,7 @@
     <div class="container col-lg-8 mx-auto p-3 py-1">
       <h3>Udfyld formularen</h3>
       <p class="mb-1">Indsend eventuelt idéer relateret til optimering af processor, bedre udnyttelse af ressourcer eller andre lignende projektidéer.</p>
-      <p>Bemærk at du ikke kan foretage ændringer efter idèen er gemt.</p>
+      <p>Bemærk at du ikke kan foretage ændringer, efter idéen er gemt.</p>
       <p class="mb-4 text-danger">*Skal udfyldes</p>
       <div class="row g-5">
         <EditForm Model="@_idea" OnValidSubmit="@HandleValidSubmit">
@@ -40,14 +40,14 @@
               <div class="input-group">
                 <InputText type="text" class="form-control" placeholder="AAA" required
                            @bind-Value="_idea.Initials" maxlength=5 />
-                <div class="invalid-feedback">Initialer er noget værre noget.</div>
+                <div class="invalid-feedback">Initialer blev ikke godkendt.</div>
               </div>
             </div>
 
             <div class="col-12 mb-4">
               <div class="form-group">
                 <label class="form-label">Idébeskrivelse<label class="text-danger">*</label></label>
-                <InputTextArea class="form-control" rows="3" maxlength=1500 placeholder="Beskriv idéen og andet relavant information" required @bind-Value="_idea.Description"></InputTextArea>
+                <InputTextArea class="form-control" rows="3" maxlength=1500 placeholder="Beskrivelse af idéen og andet relavant information" required @bind-Value="_idea.Description"></InputTextArea>
               </div>
             </div>
             <div class="col-md-3">
@@ -114,24 +114,24 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label>Forventet resultat</label>
-                <p class="form-label small-text">Hvad det forventes at opnå med ideen. </p>
-                <InputTextArea class="form-control" rows="3" maxlength=500 placeholder="Det resultat der forventes efter projektet gennemførsel" @bind-Value="_idea.ExpectedResults"></InputTextArea>
+                <p class="form-label small-text">Hvad der forventes at opnå med projektet. </p>
+                <InputTextArea class="form-control" rows="3" maxlength=500 placeholder="Det resultat der forventes efter projektets gennemførsel" @bind-Value="_idea.ExpectedResults"></InputTextArea>
               </div>
             </div>
             <div class="col-md-6">
               <div class="form-group">
                 <label>Team</label>
-                <p class="form-label small-text">Arbejdstitel eller initialer på deltager i projektet.</p>
+                <p class="form-label small-text">Arbejdstitel eller initialer på deltagere i projektet.</p>
                 <InputText type="text" class="form-control" maxlength=75 placeholder="AAA, BBB, CCC" @bind-Value="_idea.Team"></InputText>
               </div>
             </div>
             <div>
-              <label class="my-2">Skjul ideen (kun administrator vil kunne se ideen)</label>
+              <label class="my-2">Skjul idéen (kun administratorer vil kunne se idéen)</label>
               <label class="switch d-flex">
                 <input @bind="_idea.IsHidden" type="checkbox">
                 <span class="slider"></span>
-                <span class="text-checked">Kun administrator kan se ideen</span>
-                <span class="text-not-checked">Alle kan se ideen</span>
+                <span class="text-checked">Kun administratorer kan se idéen</span>
+                <span class="text-not-checked">Alle kan se idéen</span>
               </label>
             </div>
 

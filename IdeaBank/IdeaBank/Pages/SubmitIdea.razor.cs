@@ -20,7 +20,7 @@ namespace IdeaBank.Pages
         [Inject]
         private IJSRuntime JsRuntime { get; set; }
 
-        private readonly string _confirmRegretSubmit = "Er du sikker på du vil fortryde og slette denne ide?";
+        private readonly string _confirmRegretSubmit = "Er du sikker på, at du vil fortryde og slette denne idé?";
         private readonly string _dbUpdateExceptionText = "Der skete en fejl under indsendelse af din idé. Prøv igen senere";
 
         private async void HandleValidSubmit()
