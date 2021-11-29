@@ -12,10 +12,18 @@ using Xunit;
 namespace XUnitTesting
 
 {
-    public class IdeaRepositoryTests
+    public class CommentsRepositoryTests
     {
         private readonly string _connectionString = "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=IdeaBank;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
 
+        public CommentsRepository GetCommentsRepositoryConnection()
+        {
+            DbContextOptionsBuilder optionsBuilder = new DbContextOptionsBuilder<Context>();
+            optionsBuilder.UseSqlServer(_connectionString);
+            Context context = new Context(optionsBuilder.Options);
+            CommentsRepository repository = new(context);
+            return repository;
+        }
         public IdeaRepository GetIdeasRepositoryConnection()
         {
             DbContextOptionsBuilder optionsBuilder = new DbContextOptionsBuilder<Context>();
@@ -26,64 +34,47 @@ namespace XUnitTesting
         }
 
         [Fact]
-        public async void PriorityFilter()
+        public async void Add_and_Remove()
         {
             // arrange
             IdeaRepository repository = GetIdeasRepositoryConnection();
+            CommentsRepository commentsRepository = GetCommentsRepositoryConnection();
             FilterSortIdea filter = new()
             {
+                Sorting = Sort.CreatedAtDesc,
                 CurrentPage = 1,
                 IdeasShownCount = 15
             };
-            List<IdeasTbl> result;
-
-            // act
-            for (int i = 1; i <= 4; i++)
-            {
-                filter.Priority = i;
-                result = (await repository.ListAsync(filter)).ToList();
-                for (int j = 0; j < result.Count; j++)
-                {
-                    // assert
-                    Assert.Equal(i, result[j].Priority);
-                }
-            }
-        }
-
-        [Fact]
-        public async void AddAsync_and_RemoveById()
-        {
-            // arrange
-            IdeaRepository repository = GetIdeasRepositoryConnection();
-            FilterSortIdea filter = new()
-            {
-                CurrentPage = 1,
-                IdeasShownCount = 15,
-                Sorting = Sort.CreatedAtDesc
-            };
-            Random rnd = new Random();
 
             // act
             IdeasTbl idea = new()
             {
-                ProjectName = rnd.Next(10000, 20000).ToString(),
+                ProjectName = "test",
                 Description = "test description",
                 Initials = "TEST",
                 Priority = 1,
                 Status = 1
             };
             await repository.AddAsync(idea);
-            filter.SearchStr = idea.ProjectName;
-            IdeasTbl foundIdea = (await repository.ListAsync(filter)).First();
+            idea = (await repository.ListAsync(filter)).First();
+            CommentsTbl comment = new()
+            {
+                CreatedAt = DateTime.Now,
+                Idea = idea,
+                Initials = "TEST",
+                Message = "Test comment."
+            };
+            await commentsRepository.AddAsync(comment, idea.Id);
 
             // assert
-            Assert.Equal(idea.ProjectName, foundIdea.ProjectName);
+            Assert.True((await commentsRepository.ListAsync(idea.Id)).Any());
 
             // act
-            await repository.RemoveByIdAsync(foundIdea.Id);
+            comment = (await commentsRepository.ListAsync(idea.Id)).First();
+            await commentsRepository.RemoveByIdAsync(comment.Id);
 
             // assert
-            Assert.False((await repository.ListAsync(filter)).Any());
+            Assert.Equal(0, await commentsRepository.CountAsync(idea.Id));
         }
     }
 }

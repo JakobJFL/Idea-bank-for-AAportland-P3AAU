@@ -37,7 +37,7 @@ namespace RepositoryLib.Implementations
         {
             CommentsTbl c = await Context.CommentsTbl.FindAsync(id);
             Context.CommentsTbl.Remove(c);
-            Context.SaveChanges();
+            await Context.SaveChangesAsync();
         }
 
         public async Task<int> CountAsync(int ideaId)
