@@ -46,20 +46,5 @@ namespace RepositoryLib.Implementations
                 .Where(c => ideaId == 0 || c.Idea.Id == ideaId)
                 .CountAsync();
         }
-
-        public Task UpdateAsync(IdeasTbl model)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<IdeasTbl> FindByIdAsync(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<int> CountAsync(FilterSortIdea filter)
-        {
-            throw new NotImplementedException();
-        }
     }
 }
