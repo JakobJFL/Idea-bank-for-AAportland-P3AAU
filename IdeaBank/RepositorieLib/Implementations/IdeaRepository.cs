@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using RepositoryLib.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -61,10 +62,10 @@ namespace RepositoryLib.Implementations
             switch (filter.Sorting)
             {
                 case Sort.ProjectNameAsc:
-                    ideas = ideas.OrderBy(s => s.ProjectName);
+                    ideas = ideas.OrderBy(s => EF.Functions.Collate(s.ProjectName, "Danish_Norwegian_CI_AS"));
                     break;
                 case Sort.ProjectNameDesc:
-                    ideas = ideas.OrderByDescending(s => s.ProjectName);
+                    ideas = ideas.OrderByDescending(s => EF.Functions.Collate(s.ProjectName, "Danish_Norwegian_CI_AS"));
                     break;
                 case Sort.CreatedAtAsc:
                     ideas = ideas.OrderBy(s => s.CreatedAt);
