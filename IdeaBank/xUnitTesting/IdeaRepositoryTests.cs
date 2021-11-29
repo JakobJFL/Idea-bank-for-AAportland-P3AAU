@@ -26,24 +26,26 @@ namespace XUnitTesting
         }
 
         [Fact]
-        public async void Kat()
+        public async void PriorityFilter()
         {
-            
-            IdeaRepository repository = GetIdeasRepositoryConnection();
             // arrange
+            IdeaRepository repository = GetIdeasRepositoryConnection();
             FilterSortIdea filter = new();
-            filter.Priority = 1;
             filter.CurrentPage = 1;
-            filter.IdeasShownCount = 1;
-            List<IdeasTbl> result = (await repository.ListAsync(filter)).ToList();
+            filter.IdeasShownCount = 15;
+            List<IdeasTbl> result;
 
-            // assert
-            for (int i = 0; i < result.Count(); i++)
+            // act
+            for (int i = 1; i <= 4; i++)
             {
-            Assert.Equal(1, result[i].Priority);
+                filter.Priority = i;
+                result = (await repository.ListAsync(filter)).ToList();
+                for (int j = 0; j < result.Count; j++)
+                {
+                    // assert
+                    Assert.Equal(i, result[j].Priority);
+                }
             }
         }
-
-       
     }
 }

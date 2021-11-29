@@ -34,10 +34,10 @@ namespace XUnitTesting
 
         [Theory]
         // arrange
-        [InlineData(1, "Lav")]
-        [InlineData(2, "Mellem")]
-        [InlineData(3, "Høj")]
-        [InlineData(0, "Ikke angivet")]
+        [InlineData(1, "Ikke angivet")]
+        [InlineData(2, "Lav")]
+        [InlineData(3, "Mellem")]
+        [InlineData(4, "Høj")]
         public void GetPriorityStr_validDomain(int input, string expected)
         {
             // act
