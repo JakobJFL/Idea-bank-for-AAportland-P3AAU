@@ -4,15 +4,15 @@
   [Fact]
   public void Auth()
   {
-    // Arrange
+    // arrange
     var ctx = InitializeTestContext();
 
-    // Act
+    // act
     ctx.Services.GetService<Settings>().CommentsEnabled = false;
     var cut = ctx.Render(@<CommentSection/>);
     var submitSection = cut.Find("#submitComments");
 
-    // Assert
+    // assert
     submitSection.MarkupMatches(@<div id="submitComments"></div>);
     }
     private TestContext InitializeTestContext()
