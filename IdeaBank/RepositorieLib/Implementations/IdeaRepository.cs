@@ -44,6 +44,12 @@ namespace RepositoryLib.Implementations
             ideas = ideas.Skip((filterSort.CurrentPage-1) * filterSort.IdeasShownCount).Take(filterSort.IdeasShownCount);
             return await ideas.ToListAsync();
         }
+        /// <summary>
+        /// If business unit is equal to 0, it will get all ideas from all busines´ unit because of short circuiting. 
+        /// </summary>
+        /// <param name="ideas"></param>
+        /// <param name="filter"></param>
+        /// <returns>Returns a filltered list</returns>
         private Task<IQueryable<IdeasTbl>> Filter(IQueryable<IdeasTbl> ideas, FilterSortIdea filter)
         {
             return Task.FromResult(ideas.Where(f => filter.ShowHidden || !f.IsHidden)
