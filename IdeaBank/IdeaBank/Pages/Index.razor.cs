@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Components;
 using DataBaseLib.Models;
 using Microsoft.JSInterop;
 using System;
+using Microsoft.AspNetCore.Components.Authorization;
+using System.Security.Claims;
 
 namespace IdeaBank.Pages
 {
@@ -19,18 +21,22 @@ namespace IdeaBank.Pages
         public ICommentsDataAccess Comments { get; set; }
         [Inject]
         public IConfig Config { get; set; }
+        [CascadingParameter]
+        private Task<AuthenticationState> AuthenticationStateTask { get; set; }
+        private ClaimsPrincipal _user;
 
         private EditContext _editContext;
         private List<ViewIdea> _ideaList;
         private Modal Modal { get; set; }
         private FilterSortIdea _filterIdea = new();
-        private bool IsAuthorized { get; set; }
         public int NumOfPages { get; set; }
         public int CurrentPage { get; set; } = 1;
         public Dashboard Dashboard { get; set; } = new Dashboard();
 
         protected override async Task OnInitializedAsync()
         {
+            AuthenticationState authState = await AuthenticationStateTask;
+            _user = authState.User;
             _editContext = new EditContext(_filterIdea);
             _editContext.OnFieldChanged += EditContext_OnFieldChanged;
             await SetDashboard();
@@ -90,7 +96,7 @@ namespace IdeaBank.Pages
         /// <returns></returns>
         public async Task Update()
         {
-            _filterIdea.ShowHidden = IsAuthorized;
+            _filterIdea.ShowHidden = _user.Identity.IsAuthenticated;
             _ideaList = await Ideas.GetWFilter(_filterIdea);
             foreach(ViewIdea idea in _ideaList)
             {

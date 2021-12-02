@@ -8,6 +8,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
+using Microsoft.AspNetCore.Components.Authorization;
+using System.Security.Claims;
 
 namespace IdeaBank.Pages
 {
@@ -19,13 +21,21 @@ namespace IdeaBank.Pages
         private IJSRuntime JsRuntime { get; set; }
         [Inject]
         private Settings Settings { get; set; }
-        public bool IsAuthorized { get; set; }
+        [CascadingParameter]
+        private Task<AuthenticationState> AuthenticationStateTask { get; set; }
+        private ClaimsPrincipal _user;
 
         private Comment _comment = new();
         private List<Comment> AllComment { get; set; }
         private int IdeaId { get; set; }
 
         private readonly string _confirmDeleteComment = "Er du sikker på, at du vil slette kommentaren?";
+
+        protected override async Task OnInitializedAsync()
+        {
+            AuthenticationState authState = await AuthenticationStateTask;
+            _user = authState.User;
+        }
 
         /// <summary>
         /// Load all comments for an idea.
@@ -51,6 +61,7 @@ namespace IdeaBank.Pages
             _comment.Message = "";
             StateHasChanged();
         }
+
         /// <summary>
         /// Delete comment
         /// </summary>
