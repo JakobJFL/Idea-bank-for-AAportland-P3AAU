@@ -21,9 +21,8 @@ namespace IdeaBank.Pages
         public ICommentsDataAccess Comments { get; set; }
         [Inject]
         public IConfig Config { get; set; }
-        [CascadingParameter]
-        private Task<AuthenticationState> AuthenticationStateTask { get; set; }
-        private ClaimsPrincipal _user;
+        [Inject]
+        public AuthenticationStateProvider AuthState { get; set; }
 
         private EditContext _editContext;
         private List<ViewIdea> _ideaList;
@@ -33,10 +32,10 @@ namespace IdeaBank.Pages
         public int CurrentPage { get; set; } = 1;
         public Dashboard Dashboard { get; set; } = new Dashboard();
 
+
+
         protected override async Task OnInitializedAsync()
         {
-            AuthenticationState authState = await AuthenticationStateTask;
-            _user = authState.User;
             _editContext = new EditContext(_filterIdea);
             _editContext.OnFieldChanged += EditContext_OnFieldChanged;
             await SetDashboard();
@@ -96,7 +95,7 @@ namespace IdeaBank.Pages
         /// <returns></returns>
         public async Task Update()
         {
-            _filterIdea.ShowHidden = _user.Identity.IsAuthenticated;
+            _filterIdea.ShowHidden = (await AuthState.GetAuthenticationStateAsync()).User.Identity.IsAuthenticated;
             _ideaList = await Ideas.GetWFilter(_filterIdea);
             foreach(ViewIdea idea in _ideaList)
             {

@@ -21,20 +21,19 @@ namespace IdeaBank.Pages
         private IJSRuntime JsRuntime { get; set; }
         [Inject]
         private Settings Settings { get; set; }
-        [CascadingParameter]
-        private Task<AuthenticationState> AuthenticationStateTask { get; set; }
-        private ClaimsPrincipal _user;
+        [Inject]
+        public AuthenticationStateProvider AuthState { get; set; }
 
         private Comment _comment = new();
         private List<Comment> AllComment { get; set; }
         private int IdeaId { get; set; }
+        private ClaimsPrincipal _user;
 
         private readonly string _confirmDeleteComment = "Er du sikker på, at du vil slette kommentaren?";
 
         protected override async Task OnInitializedAsync()
         {
-            AuthenticationState authState = await AuthenticationStateTask;
-            _user = authState.User;
+            _user = (await AuthState.GetAuthenticationStateAsync()).User;
         }
 
         /// <summary>
