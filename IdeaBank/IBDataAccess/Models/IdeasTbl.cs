@@ -43,13 +43,13 @@ namespace DataBaseLib.Models
         public int? AuthorBusinessUnitId { get; set; } = 1;
         public int? AuthorDepartmentId { get; set; } = 1;
         [ForeignKey("IdeaBusinessUnitId")]
-        public virtual BusinessUnitsTbl IdeaBusinessUnit { get; set; }
+        public BusinessUnitsTbl IdeaBusinessUnit { get; set; }
         [ForeignKey("IdeaDepartmentId")]
-        public virtual DepartmentsTbl IdeaDepartment { get; set; }
+        public DepartmentsTbl IdeaDepartment { get; set; }
         [ForeignKey("AuthorBusinessUnitId")]
-        public virtual BusinessUnitsTbl AuthorBusinessUnit { get; set; }
+        public BusinessUnitsTbl AuthorBusinessUnit { get; set; }
         [ForeignKey("AuthorDepartmentId")]
-        public virtual DepartmentsTbl AuthorDepartment { get; set; }
+        public DepartmentsTbl AuthorDepartment { get; set; }
         public List<CommentsTbl> Comments { get; set; }
     }
 }

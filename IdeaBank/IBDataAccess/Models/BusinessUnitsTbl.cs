@@ -17,9 +17,9 @@ namespace DataBaseLib.Models
         public string Name { get; set; }
 
         [InverseProperty("IdeaBusinessUnit")]
-        public virtual ICollection<IdeasTbl> IdeaIdeas { get; set; }
+        public ICollection<IdeasTbl> IdeaIdeas { get; set; }
         [InverseProperty("AuthorBusinessUnit")]
-        public virtual ICollection<IdeasTbl> AuthorIdeas { get; set; }
+        public ICollection<IdeasTbl> AuthorIdeas { get; set; }
 
     }
 
