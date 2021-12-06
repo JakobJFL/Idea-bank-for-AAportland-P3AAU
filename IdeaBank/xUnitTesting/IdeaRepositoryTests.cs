@@ -61,13 +61,13 @@ namespace XUnitTesting
                 IdeasShownCount = 15,
                 Sorting = Sort.CreatedAtDesc
             };
-            Random rnd = new Random();
+            Random rnd = new();
 
             // act
             IdeasTbl idea = new()
             {
                 ProjectName = rnd.Next(10000, 20000).ToString(),
-                Description = "test description",
+                Description = "Test description",
                 Initials = "TEST",
                 Priority = 1,
                 Status = 1

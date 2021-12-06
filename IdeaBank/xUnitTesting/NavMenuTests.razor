@@ -1,6 +1,6 @@
 @code {
     [Fact]
-    public void NavMenuTestLoggedIn()
+    public void NavShouldShowAdminNavWhenLoggedIn()
     {
         // arrange
         using var ctx = new TestContext();
@@ -19,7 +19,7 @@
                               <a href = "/Guide" class="btn btn-outline-light rounded-cos m-1">Guide</a>
                             </li>
                             <li class="nav-item">
-                              <a href = "/NewIdea" class="btn btn-outline-light rounded-cos m-1">Tilføj ide</a>
+                              <a href = "/NewIdea" class="btn btn-outline-light rounded-cos m-1">Tilføj idé</a>
                             </li>
                             <li class="nav-item">
                               <a href = "/Administrate" class="btn text-white noFocus">Administrer</a>
@@ -36,7 +36,7 @@
     }
 
     [Fact]
-    public void NavMenuTestNotLoggedIn()
+    public void NavShouldNotShowAdminNavWhenLoggedOut()
     {
       // arrange
       using var ctx = new TestContext();
@@ -54,7 +54,7 @@
                             <a href = "/Guide" class="btn btn-outline-light rounded-cos m-1">Guide</a>
                           </li>
                           <li class="nav-item">
-                            <a href = "/NewIdea" class="btn btn-outline-light rounded-cos m-1">Tilføj ide</a>
+                            <a href = "/NewIdea" class="btn btn-outline-light rounded-cos m-1">Tilføj idé</a>
                           </li>
                           <li class="nav-item">
                             <a class="btn text-white noFocus m-1" href="Identity/Account/Login">Admin login</a>

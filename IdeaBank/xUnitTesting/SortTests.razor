@@ -1,35 +1,33 @@
 @code {[Fact]
-    public void SortIconClickOnceTest()
+    public void SortIconShouldShowDescWhenClicked()
     {
       // arrange
       using var ctx = InitializeTestContext();
 
       // act
-      var cut = ctx.Render(@<IdeaBank.Pages.Index />);
-      var th1 = cut.Find("th");
-      th1.Click();
+      var cut = ctx.Render(@<IdeaBank.Pages.Index />).Find("th");
+      cut.Click();
 
       // assert
-      th1.MarkupMatches(@<th scope="col" style="min-width: 150px;" class="sort-select bg-primary select-filter-text align-middle">
+      cut.MarkupMatches(@<th scope="col" style="min-width: 150px;" class="sort-select bg-primary select-filter-text align-middle">
                           Projektnavn
                           <img src="/svg/alfa-desc.svg" />
                         </th>);
     }
 
     [Fact]
-    public void SortIconClickTwiceTest()
+    public void SortIconShouldShowAscWhenClickedTwice()
     {
       // arrange
       using var ctx = InitializeTestContext();
 
       // act
-      var cut = ctx.Render(@<IdeaBank.Pages.Index />);
-      var th1 = cut.Find("th");
-      th1.Click();
-      th1.Click();
+      var cut = ctx.Render(@<IdeaBank.Pages.Index />).Find("th");
+      cut.Click();
+      cut.Click();
 
       // assert
-      th1.MarkupMatches(@<th scope="col" style="min-width: 150px;" class="sort-select bg-primary select-filter-text align-middle">
+      cut.MarkupMatches(@<th scope="col" style="min-width: 150px;" class="sort-select bg-primary select-filter-text align-middle">
                           Projektnavn
                           <img src="/svg/alfa-asc.svg" />
                         </th>);

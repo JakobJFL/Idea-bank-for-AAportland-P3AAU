@@ -56,16 +56,19 @@ namespace XUnitTesting
         public void GetStatusStr_validDomain(int input, string expected)
         {
             // act
-            string result = DBConvert.GetStatusStr(input); // change GetStatusStr to public for testing purposes
+            string result = DBConvert.GetStatusStr(input);
 
             // assert
             Assert.Equal(expected, result);
         }
 
-        [Fact]
-        public void GetStatusStr_InvalidDomain()
+        [Theory]
+        [InlineData(-1)]
+        [InlineData(0)]
+        [InlineData(6)]
+        public void GetStatusStr_InvalidDomain(int input)
         {
-            Assert.Throws<ArgumentException>(() => DBConvert.GetStatusStr(6)); // change GetStatusStr to public for testing purposes
+            Assert.Throws<ArgumentException>(() => DBConvert.GetStatusStr(input));
         }
     }
 }

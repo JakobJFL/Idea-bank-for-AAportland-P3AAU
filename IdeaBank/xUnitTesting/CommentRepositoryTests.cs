@@ -34,10 +34,10 @@ namespace XUnitTesting
         }
 
         [Fact]
-        public async void Add_and_Remove()
+        public async void AddComment()
         {
             // arrange
-            IdeaRepository repository = GetIdeasRepositoryConnection();
+            IdeaRepository ideaRepository = GetIdeasRepositoryConnection();
             CommentsRepository commentsRepository = GetCommentsRepositoryConnection();
             FilterSortIdea filter = new()
             {
@@ -55,8 +55,8 @@ namespace XUnitTesting
                 Priority = 1,
                 Status = 1
             };
-            await repository.AddAsync(idea);
-            idea = (await repository.ListAsync(filter)).First();
+            await ideaRepository.AddAsync(idea);
+            idea = (await ideaRepository.ListAsync(filter)).First();
             CommentsTbl comment = new()
             {
                 CreatedAt = DateTime.Now,
@@ -69,12 +69,94 @@ namespace XUnitTesting
             // assert
             Assert.True((await commentsRepository.ListAsync(idea.Id)).Any());
 
+            // clean up
+            await ideaRepository.RemoveByIdAsync(idea.Id);
+        }
+
+        [Fact]
+        public async void RemoveComment()
+        {
+            // arrange
+            IdeaRepository ideaRepository = GetIdeasRepositoryConnection();
+            CommentsRepository commentsRepository = GetCommentsRepositoryConnection();
+            FilterSortIdea filter = new()
+            {
+                Sorting = Sort.CreatedAtDesc,
+                CurrentPage = 1,
+                IdeasShownCount = 15
+            };
             // act
+            IdeasTbl idea = new()
+            {
+                ProjectName = "test",
+                Description = "test description",
+                Initials = "TEST",
+                Priority = 1,
+                Status = 1
+            };
+            await ideaRepository.AddAsync(idea);
+            idea = (await ideaRepository.ListAsync(filter)).First();
+            CommentsTbl comment = new()
+            {
+                CreatedAt = DateTime.Now,
+                Idea = idea,
+                Initials = "TEST",
+                Message = "Test comment."
+            };
+            await commentsRepository.AddAsync(comment, idea.Id);
+
             comment = (await commentsRepository.ListAsync(idea.Id)).First();
             await commentsRepository.RemoveByIdAsync(comment.Id);
 
             // assert
             Assert.Equal(0, await commentsRepository.CountAsync(idea.Id));
+
+            // clean up
+            await ideaRepository.RemoveByIdAsync(idea.Id);
         }
+
+        //[Fact]
+        //public async void Add_and_Remove()
+        //{
+        //    // arrange
+        //    IdeaRepository repository = GetIdeasRepositoryConnection();
+        //    CommentsRepository commentsRepository = GetCommentsRepositoryConnection();
+        //    FilterSortIdea filter = new()
+        //    {
+        //        Sorting = Sort.CreatedAtDesc,
+        //        CurrentPage = 1,
+        //        IdeasShownCount = 15
+        //    };
+
+        //    // act
+        //    IdeasTbl idea = new()
+        //    {
+        //        ProjectName = "test",
+        //        Description = "test description",
+        //        Initials = "TEST",
+        //        Priority = 1,
+        //        Status = 1
+        //    };
+        //    await repository.AddAsync(idea);
+        //    idea = (await repository.ListAsync(filter)).First();
+        //    CommentsTbl comment = new()
+        //    {
+        //        CreatedAt = DateTime.Now,
+        //        Idea = idea,
+        //        Initials = "TEST",
+        //        Message = "Test comment."
+        //    };
+        //    await commentsRepository.AddAsync(comment, idea.Id);
+
+        //    // assert
+        //    Assert.True((await commentsRepository.ListAsync(idea.Id)).Any());
+
+        //    // act
+        //    comment = (await commentsRepository.ListAsync(idea.Id)).First();
+        //    await commentsRepository.RemoveByIdAsync(comment.Id);
+
+        //    // assert
+        //    Assert.Equal(0, await commentsRepository.CountAsync(idea.Id));
+        //}
     }
 }
