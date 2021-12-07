@@ -1,8 +1,7 @@
 @page "/NewIdea"
 @using Microsoft.Extensions.Configuration
 @using BusinessLogicLib.Interfaces;
-
-
+@using DataBaseLib.Models;
 
 <main class="bgImg">
   <section class="py-4 text-center container">
@@ -55,11 +54,10 @@
                 <label class="form-label">Din forretningsenhed</label>
               </div>
               <InputSelect class="form-select" @bind-Value="_idea.AuthorBusinessUnit">
-                <option value="1" selected class="text-muted">Ikke angivet</option>
-                <option value="2">Aalborg Portland</option>
-                <option value="3">Unicon DK</option>
-                <option value="4">Unicon NO</option>
-                <option value="5">Kudsk & Dahl</option>
+                @foreach (BusinessUnitsTbl bu in (BusinessUnits))
+                {
+                  <option value="@bu.Id">@bu.Name</option>
+                }
               </InputSelect>
             </div>
             <div class="col-md-3">
@@ -67,14 +65,10 @@
                 <label class="form-label">Din afdeling</label>
               </div>
               <InputSelect class="form-select" @bind-Value="_idea.AuthorDepartment">
-                <option value="1" selected class="text-muted">Ikke angivet</option>
-                <option value="2">Salg</option>
-                <option value="3">SCM</option>
-                <option value="4">Produktion</option>
-                <option value="5">Vedligehold</option>
-                <option value="6">Finans</option>
-                <option value="7">HR</option>
-                <option value="8">PMO & Trans</option>
+                @foreach (DepartmentsTbl dep in (Departments))
+                {
+                  <option value="@dep.Id">@dep.Name</option>
+                }
               </InputSelect>
             </div>
             <div class="col-md-3">
@@ -82,11 +76,10 @@
                 <label class="form-label">Vedrørende forretningsenhed</label>
               </div>
               <InputSelect class="form-select" @bind-Value="_idea.IdeaBusinessUnit">
-                <option value="1" selected class="text-muted">Ikke angivet</option>
-                <option value="2">Aalborg Portland</option>
-                <option value="3">Unicon DK</option>
-                <option value="4">Unicon NO</option>
-                <option value="5">Kudsk & Dahl</option>
+                @foreach (BusinessUnitsTbl bu in (BusinessUnits))
+                {
+                  <option value="@bu.Id">@bu.Name</option>
+                }
               </InputSelect>
             </div>
             <div class="col-md-3">
@@ -94,14 +87,10 @@
                 <label class="form-label">Vedrørende afdeling</label>
               </div>
               <InputSelect class="form-select" @bind-Value="_idea.IdeaDepartment">
-                <option value="1" selected class="text-muted">Ikke angivet</option>
-                <option value="2">Salg</option>
-                <option value="3">SCM</option>
-                <option value="4">Produktion</option>
-                <option value="5">Vedligehold</option>
-                <option value="6">Finans</option>
-                <option value="7">HR</option>
-                <option value="8">PMO & Trans</option>
+                @foreach (DepartmentsTbl dep in (Departments))
+                {
+                  <option value="@dep.Id">@dep.Name</option>
+                }
               </InputSelect>
             </div>
             <div class="col-md-6">
@@ -138,7 +127,7 @@
           </div>
           <hr class="my-4">
           <div class="d-flex justify-content-between">
-            <button class="btn my-2 btn-secondary btn-lg" @onclick="Regret" type="button">Fortryd</button>
+            <button class="btn my-2 btn-secondary btn-lg" @onclick="RegretSubmit" type="button">Fortryd</button>
             <button type="submit" class="my-2 btn btn-primary btn-lg">Indsend idé</button>
           </div>
         </EditForm>

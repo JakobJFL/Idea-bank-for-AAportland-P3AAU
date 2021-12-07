@@ -8,11 +8,11 @@ namespace RepositoryLib.Interfaces
 {
     public interface IRepository<T>
     {
-        Task<IEnumerable<T>> ListAsync(int id);
-        Task AddAsync(T model);
-        Task<T> FindByIdAsync(int id);
-        Task RemoveByIdAsync(int id);
-        Task UpdateAsync(T model);
-        Task CountAsync();
+        public Task<IEnumerable<T>> ListAsync(int id);
+        public Task AddAsync(T model);
+        public Task<T> FindByIdAsync(int id);
+        public Task RemoveByIdAsync(int id);
+        public Task UpdateAsync(T model);
+        public Task CountAsync();
     }
 }

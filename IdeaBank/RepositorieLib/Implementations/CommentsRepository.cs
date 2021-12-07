@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace RepositoryLib.Implementations
 {
-    public class CommentsRepository : ICommentsRepository
+    public class CommentsRepository : ICommentsRepository, IRepository<CommentsTbl>
     {
         public CommentsRepository(Context context)
         {
@@ -45,6 +45,26 @@ namespace RepositoryLib.Implementations
             return await Context.CommentsTbl
                 .Where(c => ideaId == 0 || c.Idea.Id == ideaId)
                 .CountAsync();
+        }
+
+        public Task<CommentsTbl> FindByIdAsync(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task UpdateAsync(CommentsTbl model)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task CountAsync()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task AddAsync(CommentsTbl model)
+        {
+            throw new NotImplementedException("There needs to be a ideaID for the comment");
         }
     }
 }

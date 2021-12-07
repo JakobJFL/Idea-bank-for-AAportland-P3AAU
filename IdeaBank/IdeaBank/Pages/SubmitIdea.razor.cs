@@ -1,10 +1,14 @@
 using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using BusinessLogicLib.Interfaces;
 using BusinessLogicLib.Models;
+using DataBaseLib.Models;
 using Microsoft.AspNetCore.Components;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.JSInterop;
+using RepositoryLib.Interfaces;
 
 namespace IdeaBank.Pages
 {
@@ -16,13 +20,25 @@ namespace IdeaBank.Pages
         [Inject]
         public IIdeasDataAccess Ideas { get; set; }
         [Inject]
-        public IConfiguration Config { get; set; }
-        [Inject]
         private IJSRuntime JsRuntime { get; set; }
+        [Inject]
+        private IBusinessUnitsDataAccess BusinessUnitsDataAccess { get; set; }
+        [Inject]
+        private IDepartmentsDataAccess DepartmentsDataAccess { get; set; }
+        private List<BusinessUnitsTbl> BusinessUnits { get; set; } = new();
+        private List<DepartmentsTbl> Departments { get; set; } = new();
 
         private readonly string _confirmRegretSubmit = "Er du sikker på, at du vil fortryde og slette denne idé?";
         private readonly string _dbUpdateExceptionText = "Der skete en fejl under indsendelse af din idé. Prøv igen senere";
-
+        
+        protected override async Task OnInitializedAsync()
+        {
+            BusinessUnits.Add(new BusinessUnitsTbl() { Name = "Indlæser", Id = 0});
+            Departments.Add(new DepartmentsTbl() { Name = "Indlæser", Id = 0 });
+            BusinessUnits = await BusinessUnitsDataAccess.GetAll();
+            Departments = await DepartmentsDataAccess.GetAll();
+        }
+        
         private async void HandleValidSubmit()
         {
             try
@@ -35,7 +51,7 @@ namespace IdeaBank.Pages
                 await JsRuntime.InvokeVoidAsync("alert", _dbUpdateExceptionText);
             }
         }
-        private async void Regret() // please new name
+        private async void RegretSubmit() // please new name
         {
             if (string.IsNullOrEmpty(_idea.ProjectName) &&
                 string.IsNullOrEmpty(_idea.Description) &&

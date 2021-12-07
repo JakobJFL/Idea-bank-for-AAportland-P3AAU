@@ -6,8 +6,10 @@ using BusinessLogicLib.Models;
 
 namespace BusinessLogicLib
 {
-    public static class DBConvert // internal???
+    public static class DBConvert
     {
+        public static string[] PriorityStrs { get; } = new string[] { "Ikke angivet", "Lav", "Mellem", "Høj" };
+        public static string[] StatusStrs { get; } = new string[] { "Oprettet", "Godkendt", "Arkiveret", "Afsluttet", "Kat" };
         /// <summary>
         /// Inserts break line tag in comment.message
         /// </summary>
@@ -69,9 +71,9 @@ namespace BusinessLogicLib
                 idea.IdeaDepartmentStr = i.IdeaDepartment.Name;
 
                 idea.Priority = i.Priority;
-                idea.PriorityStr = GetPriorityStr(i.Priority);
+                idea.PriorityStr = PriorityStrs[i.Priority-1];
                 idea.Status = i.Status;
-                idea.StatusStr = GetStatusStr(i.Status);
+                idea.StatusStr = StatusStrs[i.Status-1];
                 idea.Plan = StrNewLineToBr(i.PlanDescription);
                 idea.Risk = StrNewLineToBr(i.Risk);
                 idea.Team = i.Team;
@@ -154,43 +156,6 @@ namespace BusinessLogicLib
             newSettings.SubmitGuide = StrNewLineToBr(guideText.SubmitGuide);
             return newSettings;
         }
-
-        /// <summary>
-        /// Converts priority int to string.
-        /// </summary>
-        /// <param name="index"></param>
-        /// <returns>Name of a priority.</returns>
-        public static string GetPriorityStr(int index)
-        {
-            switch (index)
-            {
-                case 1: return "Ikke angivet";
-                case 2: return "Lav";
-                case 3: return "Mellem";
-                case 4: return "Høj";
-                default:
-                    throw new ArgumentException("index for GetPriorityStr was not within range");
-            }
-        }
-
-        /// <summary>
-        /// Converts status int to string.
-        /// </summary>
-        /// <param name="index"></param>
-        /// <returns>Name of status.</returns>
-        public static string GetStatusStr(int index)
-        {
-            switch (index)
-            {
-                case 1: return "Oprettet";
-                case 2: return "Godkendt";
-                case 3: return "Arkiveret";
-                case 4: return "Afsluttet";
-                default:
-                    throw new ArgumentException("index for getStatusStr was not within range");
-            }
-        }
-
         public static string StrNewLineToBr(string str)
         {
             if (str != null)

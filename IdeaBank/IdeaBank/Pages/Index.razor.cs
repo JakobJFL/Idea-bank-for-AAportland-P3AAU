@@ -5,10 +5,8 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
 using DataBaseLib.Models;
-using Microsoft.JSInterop;
 using System;
 using Microsoft.AspNetCore.Components.Authorization;
-using System.Security.Claims;
 
 namespace IdeaBank.Pages
 {
@@ -23,6 +21,12 @@ namespace IdeaBank.Pages
         public IConfig Config { get; set; }
         [Inject]
         public AuthenticationStateProvider AuthState { get; set; }
+        [Inject]
+        private IBusinessUnitsDataAccess BusinessUnitsDataAccess { get; set; }
+        [Inject]
+        private IDepartmentsDataAccess DepartmentsDataAccess { get; set; }
+        public List<BusinessUnitsTbl> BusinessUnits { get; set; } = new();
+        public List<DepartmentsTbl> Departments { get; set; } = new();
 
         private EditContext _editContext;
         private List<ViewIdea> _ideaList;
@@ -32,12 +36,14 @@ namespace IdeaBank.Pages
         public int CurrentPage { get; set; } = 1;
         public Dashboard Dashboard { get; set; } = new Dashboard();
 
-
-
         protected override async Task OnInitializedAsync()
         {
             _editContext = new EditContext(_filterIdea);
             _editContext.OnFieldChanged += EditContext_OnFieldChanged;
+            BusinessUnits.Add(new BusinessUnitsTbl() { Name = "Indlæser", Id = 0 });
+            Departments.Add(new DepartmentsTbl() { Name = "Indlæser", Id = 0 });
+            BusinessUnits = await BusinessUnitsDataAccess.GetAll();
+            Departments = await DepartmentsDataAccess.GetAll();
             await SetDashboard();
             _filterIdea.Sorting = Sort.CreatedAtDesc;
             _filterIdea.CurrentPage = CurrentPage;

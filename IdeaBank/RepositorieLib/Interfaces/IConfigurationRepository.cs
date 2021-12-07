@@ -10,7 +10,6 @@ namespace RepositoryLib.Interfaces
 {
     public interface IConfigurationRepository
     {
-        public Task SetDefaultDeBuTbls();
         public Task<bool> IsBuAndDepEmpty();
         public Task<bool> DoesDatabaseExist();
         public Task<List<IdentityUser>> GetUsernameList();
@@ -19,6 +18,5 @@ namespace RepositoryLib.Interfaces
         public Task<bool> IsAnyUsers();
         public Task SetDefaultGuideText();
         public Task<bool> IsGuideTextEmpty();
-
     }
 }

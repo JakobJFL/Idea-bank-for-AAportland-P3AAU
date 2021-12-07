@@ -19,7 +19,7 @@ namespace RepositoryLib.Implementations
         }
         public int IdeasCount { get; set; } = 1;
         public Context Context { get; }
-
+        
         /// <summary>
         /// Filter and sort ideas
         /// </summary>
@@ -30,9 +30,8 @@ namespace RepositoryLib.Implementations
             IQueryable<IdeasTbl> ideas = Context.IdeasTbl
                 .Include(b => b.IdeaBusinessUnit)
                 .Include(d => d.IdeaDepartment)
-                .Include(d => d.AuthorBusinessUnit)
-                .Include(d => d.AuthorDepartment)
-                .Include(i => i.Comments);
+                .Include(b => b.AuthorBusinessUnit)
+                .Include(d => d.AuthorDepartment);
 
             ideas = await Filter(ideas, filterSort);
 
@@ -45,7 +44,7 @@ namespace RepositoryLib.Implementations
             return await ideas.ToListAsync();
         }
         /// <summary>
-        /// If business unit is equal to 0, it will get all ideas from all busines´ unit because of short circuiting. 
+        /// If BusinessUnit, Department, Priority, Status, Id is equal to 0, it will get all ideas that because of short circuiting. 
         /// </summary>
         /// <param name="ideas"></param>
         /// <param name="filter"></param>
@@ -53,11 +52,11 @@ namespace RepositoryLib.Implementations
         private Task<IQueryable<IdeasTbl>> Filter(IQueryable<IdeasTbl> ideas, FilterSortIdea filter)
         {
             return Task.FromResult(ideas.Where(f => filter.ShowHidden || !f.IsHidden)
-                .Where(f => filter.BusinessUnit == 0 || filter.BusinessUnit == f.IdeaBusinessUnit.Id)
-                .Where(f => filter.Department == 0 || filter.Department == f.IdeaDepartment.Id)
-                .Where(f => filter.Priority == 0 || filter.Priority == f.Priority)
-                .Where(f => filter.Status == 0 || filter.Status == f.Status)
-                .Where(f => filter.Id == 0 || filter.Id == f.Id));
+                .Where(i => filter.BusinessUnit == 0 || filter.BusinessUnit == i.IdeaBusinessUnit.Id)
+                .Where(i => filter.Department == 0 || filter.Department == i.IdeaDepartment.Id)
+                .Where(i => filter.Priority == 0 || filter.Priority == i.Priority)
+                .Where(i => filter.Status == 0 || filter.Status == i.Status)
+                .Where(i => filter.Id == 0 || filter.Id == i.Id));
         }
         private Task<IQueryable<IdeasTbl>> Search(IQueryable<IdeasTbl> ideas, FilterSortIdea filter)
         {

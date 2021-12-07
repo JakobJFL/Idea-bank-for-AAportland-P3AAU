@@ -36,9 +36,14 @@ namespace IdeaBank
             services.AddScoped<IIdeaRepository, IdeaRepository>();
             services.AddScoped<ICommentsRepository, CommentsRepository>();
             services.AddScoped<IConfigurationRepository, ConfigurationRepository>();
+            services.AddScoped<IDepartmentsRepository, DepartmentsRepository>();
+            services.AddScoped<IBusinessUnitsRepository, BusinessUnitsRepository>();
+            
             services.AddScoped<IConfig, Config>();
-            services.AddScoped<IIdeasDataAccess, IdeasDataAccess>();
+            services.AddScoped<IIdeasDataAccess, IdeasDataAccess>();    
             services.AddScoped<ICommentsDataAccess, CommentsDataAccess>();
+            services.AddScoped<IBusinessUnitsDataAccess, BusinessUnitsDataAccess>();
+            services.AddScoped<IDepartmentsDataAccess, DepartmentsDataAccess>();
             services.AddSingleton<Settings>();
 
             services.AddDbContext<Context>(options =>
