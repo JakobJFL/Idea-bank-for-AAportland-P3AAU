@@ -34,7 +34,7 @@ namespace XUnitTesting
         }
 
         [Fact]
-        public async void AddComment()
+        public async void AddAsync_Comment_IdeaWComment()
         {
             // arrange
             IdeaRepository ideaRepository = GetIdeasRepositoryConnection();
@@ -56,7 +56,6 @@ namespace XUnitTesting
                 Status = 1
             };
             await ideaRepository.AddAsync(idea);
-            idea = (await ideaRepository.ListAsync(filter)).First();
             CommentsTbl comment = new()
             {
                 CreatedAt = DateTime.Now,
@@ -74,7 +73,7 @@ namespace XUnitTesting
         }
 
         [Fact]
-        public async void RemoveComment()
+        public async void RemoveByIdAsync_RemoveComment_IdeaWNoComments()
         {
             // arrange
             IdeaRepository ideaRepository = GetIdeasRepositoryConnection();
@@ -95,7 +94,6 @@ namespace XUnitTesting
                 Status = 1
             };
             await ideaRepository.AddAsync(idea);
-            idea = (await ideaRepository.ListAsync(filter)).First();
             CommentsTbl comment = new()
             {
                 CreatedAt = DateTime.Now,

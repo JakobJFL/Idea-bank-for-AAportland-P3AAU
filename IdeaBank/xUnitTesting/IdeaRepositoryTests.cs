@@ -26,7 +26,7 @@ namespace XUnitTesting
         }
 
         [Fact]
-        public async void PriorityFilter()
+        public async void Filter_FilterByPriority_PrioritisedIdeas()
         {
             // arrange
             IdeaRepository repository = GetIdeasRepositoryConnection();
@@ -51,7 +51,7 @@ namespace XUnitTesting
         }
 
         [Fact]
-        public async void AddAsync_and_RemoveById()
+        public async void AddAsync_Idea_IdeaAdded()
         {
             // arrange
             IdeaRepository repository = GetIdeasRepositoryConnection();
@@ -61,12 +61,11 @@ namespace XUnitTesting
                 IdeasShownCount = 15,
                 Sorting = Sort.CreatedAtDesc
             };
-            Random rnd = new();
 
             // act
             IdeasTbl idea = new()
             {
-                ProjectName = rnd.Next(10000, 20000).ToString(),
+                ProjectName = new Guid().ToString(),
                 Description = "Test description",
                 Initials = "TEST",
                 Priority = 1,
@@ -78,8 +77,33 @@ namespace XUnitTesting
 
             // assert
             Assert.Equal(idea.ProjectName, foundIdea.ProjectName);
+        }
+
+        [Fact]
+        public async void RemoveById_RemoveIdea_IdeaRemoved()
+        {
+            // arrange
+            IdeaRepository repository = GetIdeasRepositoryConnection();
+            FilterSortIdea filter = new()
+            {
+                CurrentPage = 1,
+                IdeasShownCount = 15,
+                Sorting = Sort.CreatedAtDesc
+            };
 
             // act
+            IdeasTbl idea = new()
+            {
+                ProjectName = new Guid().ToString(),
+                Description = "Test description",
+                Initials = "TEST",
+                Priority = 1,
+                Status = 1
+            };
+            await repository.AddAsync(idea);
+            filter.SearchStr = idea.ProjectName;
+            IdeasTbl foundIdea = (await repository.ListAsync(filter)).First();
+
             await repository.RemoveByIdAsync(foundIdea.Id);
 
             // assert
