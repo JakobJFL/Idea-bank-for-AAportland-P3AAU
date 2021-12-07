@@ -9,7 +9,7 @@ namespace BusinessLogicLib
     public static class DBConvert
     {
         public static string[] PriorityStrs { get; } = new string[] { "Ikke angivet", "Lav", "Mellem", "Høj" };
-        public static string[] StatusStrs { get; } = new string[] { "Oprettet", "Godkendt", "Arkiveret", "Afsluttet", "Kat" };
+        public static string[] StatusStrs { get; } = new string[] { "Oprettet", "Godkendt", "Arkiveret", "Afsluttet" };
         /// <summary>
         /// Inserts break line tag in comment.message
         /// </summary>
