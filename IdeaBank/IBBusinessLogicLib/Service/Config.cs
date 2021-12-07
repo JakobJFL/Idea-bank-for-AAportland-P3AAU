@@ -63,7 +63,6 @@ namespace BusinessLogicLib
             }
             catch (DbUpdateException ex)
             {
-                //FIX Exception  HERE
                 throw new DbUpdateException("Updating tables in database failed." + ex.Message);
             }
         }

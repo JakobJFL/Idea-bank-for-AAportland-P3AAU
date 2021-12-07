@@ -31,7 +31,7 @@ namespace XUnitTesting
             // assert
             Assert.Equal(expected, result);
         }
-
+        /*
         [Theory]
         // arrange
         [InlineData(1, "Ikke angivet")]
@@ -61,6 +61,7 @@ namespace XUnitTesting
             // assert
             Assert.Equal(expected, result);
         }
+        
 
         [Theory]
         [InlineData(-1)]
@@ -70,5 +71,6 @@ namespace XUnitTesting
         {
             Assert.Throws<ArgumentException>(() => DBConvert.GetStatusStr(input));
         }
+        */
     }
 }
