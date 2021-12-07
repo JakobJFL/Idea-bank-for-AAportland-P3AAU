@@ -65,7 +65,7 @@ namespace XUnitTesting
             // act
             IdeasTbl idea = new()
             {
-                ProjectName = new Guid().ToString(),
+                ProjectName = new Random().Next(100000, 999999).ToString(),
                 Description = "Test description",
                 Initials = "TEST",
                 Priority = 1,
@@ -88,18 +88,19 @@ namespace XUnitTesting
             {
                 CurrentPage = 1,
                 IdeasShownCount = 15,
-                Sorting = Sort.CreatedAtDesc
+                Sorting = Sort.CreatedAtDesc,
             };
 
             // act
             IdeasTbl idea = new()
             {
-                ProjectName = new Guid().ToString(),
+                ProjectName = new Random().Next(100000, 999999).ToString(),
                 Description = "Test description",
                 Initials = "TEST",
                 Priority = 1,
                 Status = 1
             };
+
             await repository.AddAsync(idea);
             filter.SearchStr = idea.ProjectName;
             IdeasTbl foundIdea = (await repository.ListAsync(filter)).First();

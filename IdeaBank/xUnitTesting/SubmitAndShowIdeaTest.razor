@@ -1,0 +1,59 @@
+@code {
+    private readonly string _connectionString = "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=IdeaBank;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
+    public IdeaRepository GetIdeasRepositoryConnection()
+    {
+      DbContextOptionsBuilder optionsBuilder = new DbContextOptionsBuilder<Context>();
+      optionsBuilder.UseSqlServer(_connectionString);
+      Context context = new Context(optionsBuilder.Options);
+      IdeaRepository repository = new(context);
+      return repository;
+    }
+
+    [Fact]
+    public async void SubmitIdeaAndShowIdeaInOverview()
+    {
+      // arrange
+      var ctx = InitializeTestContext();
+      IdeaRepository repository = GetIdeasRepositoryConnection();
+
+
+      // act
+      IdeasTbl idea = new()
+      {
+        ProjectName = new Random().Next(100000, 999999).ToString(),
+        Description = "Test description",
+        Initials = "TEST",
+        Priority = 1,
+        Status = 1,
+        CreatedAt = DateTime.Now
+    };
+      await repository.AddAsync(idea);
+      IRenderedFragment cut = ctx.Render(@<IdeaBank.Pages.Index/>);
+      await Task.Delay(500);
+      var firstTableCell = cut.Find("td");
+
+      //assert
+      firstTableCell.MarkupMatches(@<td style = "min-width: 150px;" class="select-filter-text">
+                                        <div class="d-flex">
+                                            @idea.ProjectName
+                                        </div>
+                                    </td>);
+    }
+      private TestContext InitializeTestContext()
+          {
+            var ctx = new TestContext();
+            ctx.AddTestAuthorization();
+            ctx.Services.AddScoped<IIdeaRepository, IdeaRepository>();
+            ctx.Services.AddScoped<ICommentsRepository, CommentsRepository>();
+            ctx.Services.AddScoped<IConfigurationRepository, ConfigurationRepository>();
+            ctx.Services.AddScoped<IConfig, Config>();
+            ctx.Services.AddScoped<IIdeasDataAccess, IdeasDataAccess>();
+            ctx.Services.AddSingleton<Settings>();
+            ctx.Services.AddScoped<ICommentsDataAccess, CommentsDataAccess>();
+            ctx.Services.AddDbContext<Context>(options =>
+            {
+              options.UseSqlServer("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=IdeaBank;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
+            });
+            return ctx;
+          }
+}

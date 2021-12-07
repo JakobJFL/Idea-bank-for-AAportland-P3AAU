@@ -27,7 +27,7 @@ namespace IdeaBank.Pages
         private EditContext _editContext;
         private List<ViewIdea> _ideaList;
         private Modal Modal { get; set; }
-        private FilterSortIdea _filterIdea = new();
+        public FilterSortIdea _filterIdea = new();
         public int NumOfPages { get; set; }
         public int CurrentPage { get; set; } = 1;
         public Dashboard Dashboard { get; set; } = new Dashboard();
