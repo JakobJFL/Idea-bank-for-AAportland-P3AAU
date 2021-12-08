@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using BusinessLogicLib;
 using DataBaseLib.DataAccess;
@@ -11,16 +12,10 @@ using RepositoryLib.Interfaces;
 using Xunit;
 
 namespace XUnitTesting
-
 {
+    [Collection("Test Database")]
     public class IdeaRepositoryTests
     {
-        /* Hvad skal tests:
-            * 
-            * 
-            * 
-            * 
-         */
         [Fact]
         public async void AddAsync_Idea_IdeaAdded()
         {
@@ -69,77 +64,131 @@ namespace XUnitTesting
             Assert.Equal(await commentsRepository.ListAsync(idea.Id), new List<CommentsTbl>()); // Is comments removed
         }
 
-        private readonly int _numOfTestIdeas = 25;
-        private Stack<int> _testDBIdeasID = new();
-
-        private async void SetupTestDB()
-        {
-            IdeaRepository ideasRepository = new(TestStartupManager.GetRepositoryConnection());
-            CommentsRepository commentsRepository = new(TestStartupManager.GetRepositoryConnection());
-
-            for (int i = 0; i < _numOfTestIdeas; i++)
-            {
-                IdeasTbl idea = new()
-                {
-                    ProjectName = "Test "+i,
-                    Description = "Test description "+i,
-                    Initials = "Ini" + i,
-                    Priority = (i+2) % DBConvert.PriorityStrs.Length,
-                    Status = i % DBConvert.StatusStrs.Length,
-                };
-                await ideasRepository.AddAsync(idea);
-
-                _testDBIdeasID.Push(idea.Id);
-                for (int c = 0; c < (i+1)%7; c++)
-                {
-                    CommentsTbl comment = new()
-                    {
-                        Idea = idea,
-                        Message = "Test description " + c,
-                        Initials = "Ini" + c,
-                    };
-                    await commentsRepository.AddAsync(comment, idea.Id);
-                }
-            }
-        }
-
-        private async void CleanUpTestDB()
-        {
-            IdeaRepository repository = new(TestStartupManager.GetRepositoryConnection());
-            foreach (int id in _testDBIdeasID)
-            {
-                await repository.RemoveByIdAsync(id);
-            }
-            _testDBIdeasID.Clear();
-        }
-
         [Fact]
-        //Setup test ideas in db for this test:
         public async void Filter_FilterByPriority_PrioritisedIdeas()
         {
             // arrange
-            SetupTestDB();
             IdeaRepository repository = new(TestStartupManager.GetRepositoryConnection());
+            List<IdeasTbl> result;
             FilterSortIdea filter = new()
             {
-                CurrentPage = 1,
-                IdeasShownCount = 15
+                ShowHidden = true,
+                IdeasShownCount = 0,
             };
-            List<IdeasTbl> result;
 
             // act
-            for (int i = 1; i <= 4; i++)
+            for (int i = 1; i <= DBConvert.PriorityStrs.Length; i++)
             {
                 filter.Priority = i;
                 result = (await repository.ListAsync(filter)).ToList();
-                for (int j = 0; j < result.Count; j++)
+                foreach (IdeasTbl item in result)
                 {
                     // assert
-                    Assert.Equal(i, result[j].Priority);
+                    Assert.Equal(i, item.Priority);
                 }
             }
+        }
 
-            CleanUpTestDB();
+        [Fact]
+        public async void Filter_FilterByZeroPriority_AllIdeas()
+        {
+            // arrange
+            IdeaRepository repository = new(TestStartupManager.GetRepositoryConnection());
+            List<IdeasTbl> result;
+            FilterSortIdea filter = new()
+            {
+                ShowHidden = true,
+                IdeasShownCount = 0,
+                Priority = 0
+            };
+
+            // act
+            result = (await repository.ListAsync(filter)).ToList();
+            int count = await repository.CountAsync(new FilterSortIdea());
+            Assert.Equal(count, result.Count());
+        }
+
+        [Fact]
+        public async void Filter_FilterByStatus_IdeasWCorrectStatus()
+        {
+            // arrange
+            IdeaRepository repository = new(TestStartupManager.GetRepositoryConnection());
+            List<IdeasTbl> result;
+            FilterSortIdea filter = new()
+            {
+                ShowHidden = true,
+                IdeasShownCount = 0,
+            };
+
+            // act
+            for (int i = 1; i <= DBConvert.StatusStrs.Length; i++)
+            {
+                filter.Status = i;
+                result = (await repository.ListAsync(filter)).ToList();
+                foreach (IdeasTbl item in result)
+                {
+                    // assert
+                    Assert.Equal(i, item.Status);
+                }
+            }
+        }
+
+        [Fact]
+        public async void Filter_FilterByZeroStatus_AllIdeas()
+        {
+            // arrange
+            IdeaRepository repository = new(TestStartupManager.GetRepositoryConnection());
+            List<IdeasTbl> result;
+            FilterSortIdea filter = new()
+            {
+                ShowHidden = true,
+                IdeasShownCount = 0,
+                Status = 0
+            };
+
+            // act
+            result = (await repository.ListAsync(filter)).ToList();
+            int count = await repository.CountAsync(new FilterSortIdea());
+            Assert.Equal(count, result.Count());
+        }
+
+        [Fact]
+        public async void Filter_FilterByIsHidden_OnlyPublicIdeas()
+        {
+            // arrange
+            IdeaRepository repository = new(TestStartupManager.GetRepositoryConnection());
+            List<IdeasTbl> result;
+            FilterSortIdea filter = new()
+            {
+                ShowHidden = false,
+                IdeasShownCount = 0,
+            };
+
+            // act
+            result = (await repository.ListAsync(filter)).ToList();
+            foreach (IdeasTbl idea in result)
+            {
+                // assert
+                Assert.False(idea.IsHidden);
+            }
+        }
+
+        [Fact]
+        public async void Filter_FilterByShowHidden_AllIdeas()
+        {
+            // arrange
+            IdeaRepository repository = new(TestStartupManager.GetRepositoryConnection());
+            List<IdeasTbl> result;
+            FilterSortIdea filter = new()
+            {
+                ShowHidden = true,
+                IdeasShownCount = 0,
+            };
+
+            // act
+            result = (await repository.ListAsync(filter)).ToList();
+            int count = await repository.CountAsync(new FilterSortIdea());
+            Assert.Equal(count, result.Count());
         }
     }
 }

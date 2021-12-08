@@ -123,7 +123,7 @@ namespace BusinessLogicLib
         /// </summary>
         /// <param name="idea"></param>
         /// <returns>The new idea of type IdeasTbl</returns>
-        public static IdeasTbl NewIdeaToTbl(Idea idea)
+        public static IdeasTbl IdeaToTbl(Idea idea)
         {
             IdeasTbl newIdea = new();
             newIdea.ProjectName = idea.ProjectName;

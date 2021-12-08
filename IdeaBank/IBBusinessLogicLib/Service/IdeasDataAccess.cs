@@ -27,7 +27,7 @@ namespace BusinessLogicLib.Service
         /// <param name="idea"></param>
         public async Task Insert(Idea idea)
         {
-            await Repository.AddAsync(DBConvert.NewIdeaToTbl(idea));
+            await Repository.AddAsync(DBConvert.IdeaToTbl(idea));
         }
         /// <summary>
         /// Delete an idea.

@@ -40,7 +40,8 @@ namespace RepositoryLib.Implementations
 
             ideas = await Sorting(ideas, filterSort);
             IdeasCount = await ideas.CountAsync();
-            ideas = ideas.Skip((filterSort.CurrentPage-1) * filterSort.IdeasShownCount).Take(filterSort.IdeasShownCount);
+            if (filterSort.IdeasShownCount != 0)
+                ideas = ideas.Skip((filterSort.CurrentPage-1) * filterSort.IdeasShownCount).Take(filterSort.IdeasShownCount);
             return await ideas.ToListAsync();
         }
         /// <summary>

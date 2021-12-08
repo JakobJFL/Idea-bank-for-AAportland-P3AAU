@@ -13,7 +13,7 @@ namespace DataBaseLib.Models
         [Key]
         public int Id { get; set; }
         [Required]
-        [MaxLength(100)]
+        [MaxLength(75)]
         public string ProjectName { get; set; }
         [Required]
         [MaxLength(5)]
