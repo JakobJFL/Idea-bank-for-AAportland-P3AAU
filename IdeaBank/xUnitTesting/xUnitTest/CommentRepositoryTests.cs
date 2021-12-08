@@ -15,30 +15,19 @@ namespace XUnitTesting
     public class CommentsRepositoryTests
     {
         private readonly string _connectionString = "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=IdeaBank;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
-
-        public CommentsRepository GetCommentsRepositoryConnection()
+        public Context GetRepositoryConnection()
         {
             DbContextOptionsBuilder optionsBuilder = new DbContextOptionsBuilder<Context>();
             optionsBuilder.UseSqlServer(_connectionString);
-            Context context = new Context(optionsBuilder.Options);
-            CommentsRepository repository = new(context);
-            return repository;
-        }
-        public IdeaRepository GetIdeasRepositoryConnection()
-        {
-            DbContextOptionsBuilder optionsBuilder = new DbContextOptionsBuilder<Context>();
-            optionsBuilder.UseSqlServer(_connectionString);
-            Context context = new Context(optionsBuilder.Options);
-            IdeaRepository repository = new(context);
-            return repository;
+            return new Context(optionsBuilder.Options);
         }
 
         [Fact]
         public async void AddAsync_Comment_IdeaWComment()
         {
             // arrange
-            IdeaRepository ideaRepository = GetIdeasRepositoryConnection();
-            CommentsRepository commentsRepository = GetCommentsRepositoryConnection();
+            IdeaRepository ideaRepository = new(GetRepositoryConnection());
+            CommentsRepository commentsRepository = new(GetRepositoryConnection());
             FilterSortIdea filter = new()
             {
                 Sorting = Sort.CreatedAtDesc,
@@ -76,8 +65,8 @@ namespace XUnitTesting
         public async void RemoveByIdAsync_RemoveComment_IdeaWNoComments()
         {
             // arrange
-            IdeaRepository ideaRepository = GetIdeasRepositoryConnection();
-            CommentsRepository commentsRepository = GetCommentsRepositoryConnection();
+            IdeaRepository ideaRepository = new(GetRepositoryConnection());
+            CommentsRepository commentsRepository = new(GetRepositoryConnection());
             FilterSortIdea filter = new()
             {
                 Sorting = Sort.CreatedAtDesc,

@@ -16,20 +16,18 @@ namespace XUnitTesting
     {
         private readonly string _connectionString = "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=IdeaBank;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
 
-        public IdeaRepository GetIdeasRepositoryConnection()
+        public Context GetRepositoryConnection()
         {
             DbContextOptionsBuilder optionsBuilder = new DbContextOptionsBuilder<Context>();
             optionsBuilder.UseSqlServer(_connectionString);
-            Context context = new Context(optionsBuilder.Options);
-            IdeaRepository repository = new(context);
-            return repository;
+            return new Context(optionsBuilder.Options);
         }
 
         [Fact]
         public async void Filter_FilterByPriority_PrioritisedIdeas()
         {
             // arrange
-            IdeaRepository repository = GetIdeasRepositoryConnection();
+            IdeaRepository repository = new(GetRepositoryConnection());
             FilterSortIdea filter = new()
             {
                 CurrentPage = 1,
@@ -54,7 +52,7 @@ namespace XUnitTesting
         public async void AddAsync_Idea_IdeaAdded()
         {
             // arrange
-            IdeaRepository repository = GetIdeasRepositoryConnection();
+            IdeaRepository repository = new(GetRepositoryConnection());
             FilterSortIdea filter = new()
             {
                 CurrentPage = 1,
@@ -83,7 +81,7 @@ namespace XUnitTesting
         public async void RemoveById_RemoveIdea_IdeaRemoved()
         {
             // arrange
-            IdeaRepository repository = GetIdeasRepositoryConnection();
+            IdeaRepository repository = new(GetRepositoryConnection());
             FilterSortIdea filter = new()
             {
                 CurrentPage = 1,

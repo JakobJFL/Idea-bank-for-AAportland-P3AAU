@@ -39,21 +39,25 @@
                                         </div>
                                     </td>);
     }
-      private TestContext InitializeTestContext()
-          {
-            var ctx = new TestContext();
-            ctx.AddTestAuthorization();
-            ctx.Services.AddScoped<IIdeaRepository, IdeaRepository>();
-            ctx.Services.AddScoped<ICommentsRepository, CommentsRepository>();
-            ctx.Services.AddScoped<IConfigurationRepository, ConfigurationRepository>();
-            ctx.Services.AddScoped<IConfig, Config>();
-            ctx.Services.AddScoped<IIdeasDataAccess, IdeasDataAccess>();
-            ctx.Services.AddSingleton<Settings>();
-            ctx.Services.AddScoped<ICommentsDataAccess, CommentsDataAccess>();
-            ctx.Services.AddDbContext<Context>(options =>
-            {
-              options.UseSqlServer("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=IdeaBank;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
-            });
-            return ctx;
-          }
+    private TestContext InitializeTestContext()
+    {
+      var ctx = new TestContext();
+      ctx.AddTestAuthorization();
+      ctx.Services.AddScoped<IDepartmentsRepository, DepartmentsRepository>();
+      ctx.Services.AddScoped<IBusinessUnitsRepository, BusinessUnitsRepository>();
+      ctx.Services.AddScoped<IBusinessUnitsDataAccess, BusinessUnitsDataAccess>();
+      ctx.Services.AddScoped<IDepartmentsDataAccess, DepartmentsDataAccess>();
+      ctx.Services.AddScoped<IIdeaRepository, IdeaRepository>();
+      ctx.Services.AddScoped<ICommentsRepository, CommentsRepository>();
+      ctx.Services.AddScoped<IConfigurationRepository, ConfigurationRepository>();
+      ctx.Services.AddScoped<IConfig, Config>();
+      ctx.Services.AddScoped<IIdeasDataAccess, IdeasDataAccess>();
+      ctx.Services.AddSingleton<Settings>();
+      ctx.Services.AddScoped<ICommentsDataAccess, CommentsDataAccess>();
+      ctx.Services.AddDbContext<Context>(options =>
+      {
+        options.UseSqlServer("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=IdeaBank;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
+      });
+      return ctx;
+    }
 }

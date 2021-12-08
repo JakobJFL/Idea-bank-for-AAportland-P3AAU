@@ -38,6 +38,10 @@
     {
       var ctx = new TestContext();
       ctx.AddTestAuthorization();
+      ctx.Services.AddScoped<IDepartmentsRepository, DepartmentsRepository>();
+      ctx.Services.AddScoped<IBusinessUnitsRepository, BusinessUnitsRepository>();
+      ctx.Services.AddScoped<IBusinessUnitsDataAccess, BusinessUnitsDataAccess>();
+      ctx.Services.AddScoped<IDepartmentsDataAccess, DepartmentsDataAccess>();
       ctx.Services.AddScoped<IIdeaRepository, IdeaRepository>();
       ctx.Services.AddScoped<ICommentsRepository, CommentsRepository>();
       ctx.Services.AddScoped<IConfigurationRepository, ConfigurationRepository>();
