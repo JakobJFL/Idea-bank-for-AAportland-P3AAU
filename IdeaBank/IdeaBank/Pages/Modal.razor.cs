@@ -103,11 +103,7 @@ namespace IdeaBank.Pages
         {
             IsEditing = false;
             await IndexView.Ideas.Edit(_editIdea);
-            FilterSortIdea filterIdea = new();
-            filterIdea.Id = _editIdea.Id;
-            filterIdea.CurrentPage = 1;
-            filterIdea.IdeasShownCount = 1;
-            _idea = (await IndexView.Ideas.GetWFilter(filterIdea)).First();
+            _idea = (await IndexView.Ideas.GetByIdAsync(_editIdea.Id));
             await IndexView.Update();
             StateHasChanged();
         }

@@ -31,23 +31,23 @@ namespace IdeaBank.Pages
         private EditContext _editContext;
         private List<ViewIdea> _ideaList;
         private Modal Modal { get; set; }
-        public FilterSortIdea _filterIdea = new();
+        public FilterSortIdea FilterIdea { get; set; } = new();
         public int NumOfPages { get; set; }
         public int CurrentPage { get; set; } = 1;
         public Dashboard Dashboard { get; set; } = new Dashboard();
 
         protected override async Task OnInitializedAsync()
         {
-            _editContext = new EditContext(_filterIdea);
+            _editContext = new EditContext(FilterIdea);
             _editContext.OnFieldChanged += EditContext_OnFieldChanged;
             BusinessUnits.Add(new BusinessUnitsTbl() { Name = "Indlæser", Id = 0 });
             Departments.Add(new DepartmentsTbl() { Name = "Indlæser", Id = 0 });
             BusinessUnits = await BusinessUnitsDataAccess.GetAll();
             Departments = await DepartmentsDataAccess.GetAll();
             await SetDashboard();
-            _filterIdea.Sorting = Sort.CreatedAtDesc;
-            _filterIdea.CurrentPage = CurrentPage;
-            _filterIdea.IdeasShownCount = IdeasShownCount;
+            FilterIdea.Sorting = Sort.CreatedAtDesc;
+            FilterIdea.CurrentPage = CurrentPage;
+            FilterIdea.IdeasShownCount = IdeasShownCount;
             await Config.ConfigureDBTables();
             if (_ideaList == null)
             {
@@ -56,14 +56,14 @@ namespace IdeaBank.Pages
         }
         private async Task SetDashboard()
         {
-            _filterIdea.OnlyNewIdeas = true;
-            Dashboard.NewIdeas = await Ideas.GetCount(_filterIdea);
-            _filterIdea.OnlyNewIdeas = false;
-            Dashboard.AllIdeas = await Ideas.GetCount(_filterIdea);
-            _filterIdea.Status = 2;
-            Dashboard.ApprovedIdeas = await Ideas.GetCount(_filterIdea);
+            FilterIdea.OnlyNewIdeas = true;
+            Dashboard.NewIdeas = await Ideas.GetCount(FilterIdea);
+            FilterIdea.OnlyNewIdeas = false;
+            Dashboard.AllIdeas = await Ideas.GetCount(FilterIdea);
+            FilterIdea.Status = 2;
+            Dashboard.ApprovedIdeas = await Ideas.GetCount(FilterIdea);
             Dashboard.AllComments = await Comments.GetCommentsCount(0);
-            _filterIdea.Status = 0;
+            FilterIdea.Status = 0;
         }
 
         // Note: The OnFieldChanged event is raised for each field in the model
@@ -73,25 +73,25 @@ namespace IdeaBank.Pages
         }
         private async void ChangeProjectNameSort()
         {
-            _filterIdea.Sorting = _filterIdea.Sorting == Sort.ProjectNameAsc ? Sort.ProjectNameDesc : Sort.ProjectNameAsc;
+            FilterIdea.Sorting = FilterIdea.Sorting == Sort.ProjectNameAsc ? Sort.ProjectNameDesc : Sort.ProjectNameAsc;
             await Update();
         }
         private async void ChangeCreatedAtSort()
         {
-            _filterIdea.Sorting = _filterIdea.Sorting == Sort.CreatedAtDesc ? Sort.CreatedAtAsc : Sort.CreatedAtDesc;
+            FilterIdea.Sorting = FilterIdea.Sorting == Sort.CreatedAtDesc ? Sort.CreatedAtAsc : Sort.CreatedAtDesc;
             await Update();
         }
 
         private async void ChangeUpdatedAtSort()
         {
-            _filterIdea.Sorting = _filterIdea.Sorting == Sort.UpdatedAtDesc ? Sort.UpdatedAtAsc : Sort.UpdatedAtDesc;
+            FilterIdea.Sorting = FilterIdea.Sorting == Sort.UpdatedAtDesc ? Sort.UpdatedAtAsc : Sort.UpdatedAtDesc;
             await Update();
         }
 
         private async void ChangeUpdatedAtPage()
         {
-            _filterIdea.CurrentPage = CurrentPage;
-            _filterIdea.IdeasShownCount = IdeasShownCount;
+            FilterIdea.CurrentPage = CurrentPage;
+            FilterIdea.IdeasShownCount = IdeasShownCount;
             await Update();
         }
 
@@ -101,13 +101,13 @@ namespace IdeaBank.Pages
         /// <returns></returns>
         public async Task Update()
         {
-            _filterIdea.ShowHidden = (await AuthState.GetAuthenticationStateAsync()).User.Identity.IsAuthenticated;
-            _ideaList = await Ideas.GetWFilter(_filterIdea);
+            FilterIdea.ShowHidden = (await AuthState.GetAuthenticationStateAsync()).User.Identity.IsAuthenticated;
+            _ideaList = await Ideas.GetWFilter(FilterIdea);
             foreach(ViewIdea idea in _ideaList)
             {
                idea.CommentsCount = await Comments.GetCommentsCount(idea.Id);
             }
-            _filterIdea.OnlyNewIdeas = false;
+            FilterIdea.OnlyNewIdeas = false;
             NumOfPages = (int)Math.Ceiling((decimal)Ideas.GetIdeasCount() / IdeasShownCount);
             StateHasChanged();
         }
@@ -117,12 +117,12 @@ namespace IdeaBank.Pages
         /// </summary>
         private async void Reset()
         {
-            _filterIdea.BusinessUnit = 0;
-            _filterIdea.Department = 0;
-            _filterIdea.Priority = 0;
-            _filterIdea.Status = 0;
-            _filterIdea.SearchStr = "";
-            _filterIdea.Sorting = Sort.CreatedAtDesc;
+            FilterIdea.BusinessUnit = 0;
+            FilterIdea.Department = 0;
+            FilterIdea.Priority = 0;
+            FilterIdea.Status = 0;
+            FilterIdea.SearchStr = "";
+            FilterIdea.Sorting = Sort.CreatedAtDesc;
             await Update();
         }
     }

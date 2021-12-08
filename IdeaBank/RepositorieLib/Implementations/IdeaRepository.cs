@@ -55,8 +55,7 @@ namespace RepositoryLib.Implementations
                 .Where(i => filter.BusinessUnit == 0 || filter.BusinessUnit == i.IdeaBusinessUnit.Id)
                 .Where(i => filter.Department == 0 || filter.Department == i.IdeaDepartment.Id)
                 .Where(i => filter.Priority == 0 || filter.Priority == i.Priority)
-                .Where(i => filter.Status == 0 || filter.Status == i.Status)
-                .Where(i => filter.Id == 0 || filter.Id == i.Id));
+                .Where(i => filter.Status == 0 || filter.Status == i.Status));
         }
         private Task<IQueryable<IdeasTbl>> Search(IQueryable<IdeasTbl> ideas, FilterSortIdea filter)
         {
@@ -128,9 +127,9 @@ namespace RepositoryLib.Implementations
                 .Where(i => filter.Status == 0 || i.Status == filter.Status)
                 .CountAsync();
         }
-        public Task<IdeasTbl> FindByIdAsync(int id)
+        public async Task<IdeasTbl> FindByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            return await Context.IdeasTbl.FindAsync(id);
         }
 
         public Task<IEnumerable<IdeasTbl>> ListAsync(int id)

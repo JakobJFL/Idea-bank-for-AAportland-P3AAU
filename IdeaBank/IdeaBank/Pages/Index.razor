@@ -72,9 +72,9 @@
     <h2 class="text-center">Idéoversigt</h2>
     <p class="text-center mb-5">Klik på en idé for at læse mere </p>
     <div class="d-flex justify-content-between mb-1">
-      <EditForm Model="@_filterIdea" OnValidSubmit="@Update">
+      <EditForm Model="@FilterIdea" OnValidSubmit="@Update">
         <div class="d-flex max-w-500">
-          <InputText class="form-control me-2 rounded-cos" type="search" @bind-Value="_filterIdea.SearchStr" placeholder="Søg" aria-label="Søg" />
+          <InputText class="form-control me-2 rounded-cos" type="search" @bind-Value="FilterIdea.SearchStr" placeholder="Søg" aria-label="Søg" />
           <button class="btn btn-outline-secondary rounded-cos" type="submit">Søg</button>
         </div>
       </EditForm>
@@ -88,16 +88,16 @@
             <tr>
               <th scope="col" style="min-width: 150px;" class="sort-select bg-primary select-filter-text align-middle" @onclick="ChangeProjectNameSort">
                 Projektnavn
-                @if (_filterIdea.Sorting == Sort.ProjectNameAsc)
+                @if (FilterIdea.Sorting == Sort.ProjectNameAsc)
                 {<img src="/svg/alfa-desc.svg" />}
-                else if (_filterIdea.Sorting == Sort.ProjectNameDesc)
+                else if (FilterIdea.Sorting == Sort.ProjectNameDesc)
                 {<img src="/svg/alfa-asc.svg" />}
                 else
                 {<img src="/svg/filter.svg" />}
               </th>
 
               <th scope="col" style="width: 179px;" class="bg-primary text-white select-filter-text align-middle">
-                <InputSelect class="btn form-select select-filter noFocus" @bind-Value="_filterIdea.BusinessUnit">
+                <InputSelect class="btn form-select select-filter noFocus" @bind-Value="FilterIdea.BusinessUnit">
                   <option value="0" selected>Forretningsenhed</option>
                   @foreach (BusinessUnitsTbl bu in (BusinessUnits))
                   {
@@ -106,7 +106,7 @@
                 </InputSelect>
               </th>
               <th scope="col" style="width: 145px;" class="bg-primary text-white select-filter-text align-middle">
-                <InputSelect class="btn form-select select-filter noFocus" @bind-Value="_filterIdea.Department">
+                <InputSelect class="btn form-select select-filter noFocus" @bind-Value="FilterIdea.Department">
                   <option value="0" selected>Afdeling</option>
                   @foreach (DepartmentsTbl dep in (Departments))
                     {
@@ -115,7 +115,7 @@
                 </InputSelect>
               </th>
               <th scope="col" style="width: 120px;" class="bg-primary text-white select-filter-text align-middle">
-                <InputSelect class="btn form-select select-filter noFocus" @bind-Value="_filterIdea.Status">
+                <InputSelect class="btn form-select select-filter noFocus" @bind-Value="FilterIdea.Status">
                   <option value="0" selected>Status</option>
                   @for (int i = 1; i < DBConvert.StatusStrs.Length+1; i++)
                   {
@@ -124,7 +124,7 @@
                 </InputSelect>
               </th>
               <th scope="col" style="width: 138px;" class="bg-primary text-white select-filter-text align-middle">
-                <InputSelect class="btn form-select select-filter noFocus" @bind-Value="_filterIdea.Priority">
+                <InputSelect class="btn form-select select-filter noFocus" @bind-Value="FilterIdea.Priority">
                   <option value="0" selected>Prioritet</option>
                   @for (int i = 1; i < DBConvert.PriorityStrs.Length+1; i++)
                   {
@@ -134,18 +134,18 @@
               </th>
               <th scope="col" style="width: 115px;" class="sort-select bg-primary select-filter-text align-middle" @onclick="ChangeCreatedAtSort">
                 Oprettet
-                @if (_filterIdea.Sorting == Sort.CreatedAtAsc)
+                @if (FilterIdea.Sorting == Sort.CreatedAtAsc)
                 {<img src="/svg/sort-up.svg" />}
-                else if (_filterIdea.Sorting == Sort.CreatedAtDesc)
+                else if (FilterIdea.Sorting == Sort.CreatedAtDesc)
                 {<img src="/svg/sort-down.svg" />}
                 else
                 {<img src="/svg/filter.svg" />}
               </th>
               <th scope="col" style="width: 115px;" class="sort-select bg-primary select-filter-text align-middle" @onclick="ChangeUpdatedAtSort">
                 Opdateret
-                @if (_filterIdea.Sorting == Sort.UpdatedAtAsc)
+                @if (FilterIdea.Sorting == Sort.UpdatedAtAsc)
                 {<img src="/svg/sort-up.svg" />}
-                else if (_filterIdea.Sorting == Sort.UpdatedAtDesc)
+                else if (FilterIdea.Sorting == Sort.UpdatedAtDesc)
                 {<img src="/svg/sort-down.svg" /> }
                 else
                 {<img src="/svg/filter.svg" />}
@@ -161,7 +161,6 @@
             {
               foreach (ViewIdea idea in _ideaList)
               {
-
                 <tr title="Klik for at læse mere" @onclick="() => Modal.Open(idea, this)">
                   <td style="min-width: 150px;" class="select-filter-text">
                     <div class="d-flex">
@@ -209,14 +208,14 @@
         }
         for (int i = 1; i <= NumOfPages; i++)
         {
-          int local = i;
+          int localPageIndex = i;
           if (i == CurrentPage)
           {
             <li class="page-item disabled"><a class="btn bg-primary rounded-0 page-link text-white font-weight-bold">@i</a></li>
           }
           else
           {
-            <li class="page-item"><a class="btn rounded-0 page-link text-primary" @onclick="() => {CurrentPage = local; ChangeUpdatedAtPage(); }">@i</a></li>
+            <li class="page-item"><a class="btn rounded-0 page-link text-primary" @onclick="() => {CurrentPage = localPageIndex; ChangeUpdatedAtPage(); }">@i</a></li>
           }
         }
         if (CurrentPage == NumOfPages)

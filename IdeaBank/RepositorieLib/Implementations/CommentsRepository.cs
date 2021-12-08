@@ -64,7 +64,7 @@ namespace RepositoryLib.Implementations
 
         public Task AddAsync(CommentsTbl model)
         {
-            throw new NotImplementedException("There needs to be a ideaID for the comment");
+            throw new NotImplementedException("There needs to be an ideaID for the comment. AddAsync should take two parameters");
         }
     }
 }

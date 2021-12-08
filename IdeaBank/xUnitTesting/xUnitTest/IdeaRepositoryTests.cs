@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using BusinessLogicLib;
 using DataBaseLib.DataAccess;
 using DataBaseLib.Models;
 using Microsoft.EntityFrameworkCore;
@@ -14,20 +15,111 @@ namespace XUnitTesting
 {
     public class IdeaRepositoryTests
     {
-        private readonly string _connectionString = "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=IdeaBank;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
-
-        public Context GetRepositoryConnection()
+        /* Hvad skal tests:
+            * 
+            * 
+            * 
+            * 
+         */
+        [Fact]
+        public async void AddAsync_Idea_IdeaAdded()
         {
-            DbContextOptionsBuilder optionsBuilder = new DbContextOptionsBuilder<Context>();
-            optionsBuilder.UseSqlServer(_connectionString);
-            return new Context(optionsBuilder.Options);
+            // arrange
+            IdeaRepository repository = new(TestStartupManager.GetRepositoryConnection());
+            IdeasTbl idea = new()
+            {
+                ProjectName = "Test",
+                Description = "Test description",
+                Initials = "test",
+                Priority = 1,
+                Status = 1
+            };
+
+            // act
+            await repository.AddAsync(idea);
+
+            // assert
+            Assert.NotNull(await repository.FindByIdAsync(idea.Id));
+
+            // clean up
+            await repository.RemoveByIdAsync(idea.Id);
         }
 
         [Fact]
+        public async void RemoveById_RemoveIdea_IdeaRemoved()
+        {
+            // arrange
+            IdeaRepository ideasRepository = new(TestStartupManager.GetRepositoryConnection());
+            CommentsRepository commentsRepository = new(TestStartupManager.GetRepositoryConnection());
+            IdeasTbl idea = new()
+            {
+                ProjectName = "testRemoveIdea",
+                Description = "Test description",
+                Initials = "TEST",
+                Priority = 1,
+                Status = 1
+            };
+
+            // act
+            await ideasRepository.AddAsync(idea);
+            await ideasRepository.RemoveByIdAsync(idea.Id);
+
+            // assert
+            Assert.Null(await ideasRepository.FindByIdAsync(idea.Id));
+            Assert.Equal(await commentsRepository.ListAsync(idea.Id), new List<CommentsTbl>()); // Is comments removed
+        }
+
+        private readonly int _numOfTestIdeas = 25;
+        private Stack<int> _testDBIdeasID = new();
+
+        private async void SetupTestDB()
+        {
+            IdeaRepository ideasRepository = new(TestStartupManager.GetRepositoryConnection());
+            CommentsRepository commentsRepository = new(TestStartupManager.GetRepositoryConnection());
+
+            for (int i = 0; i < _numOfTestIdeas; i++)
+            {
+                IdeasTbl idea = new()
+                {
+                    ProjectName = "Test "+i,
+                    Description = "Test description "+i,
+                    Initials = "Ini" + i,
+                    Priority = (i+2) % DBConvert.PriorityStrs.Length,
+                    Status = i % DBConvert.StatusStrs.Length,
+                };
+                await ideasRepository.AddAsync(idea);
+
+                _testDBIdeasID.Push(idea.Id);
+                for (int c = 0; c < (i+1)%7; c++)
+                {
+                    CommentsTbl comment = new()
+                    {
+                        Idea = idea,
+                        Message = "Test description " + c,
+                        Initials = "Ini" + c,
+                    };
+                    await commentsRepository.AddAsync(comment, idea.Id);
+                }
+            }
+        }
+
+        private async void CleanUpTestDB()
+        {
+            IdeaRepository repository = new(TestStartupManager.GetRepositoryConnection());
+            foreach (int id in _testDBIdeasID)
+            {
+                await repository.RemoveByIdAsync(id);
+            }
+            _testDBIdeasID.Clear();
+        }
+
+        [Fact]
+        //Setup test ideas in db for this test:
         public async void Filter_FilterByPriority_PrioritisedIdeas()
         {
             // arrange
-            IdeaRepository repository = new(GetRepositoryConnection());
+            SetupTestDB();
+            IdeaRepository repository = new(TestStartupManager.GetRepositoryConnection());
             FilterSortIdea filter = new()
             {
                 CurrentPage = 1,
@@ -46,67 +138,8 @@ namespace XUnitTesting
                     Assert.Equal(i, result[j].Priority);
                 }
             }
-        }
 
-        [Fact]
-        public async void AddAsync_Idea_IdeaAdded()
-        {
-            // arrange
-            IdeaRepository repository = new(GetRepositoryConnection());
-            FilterSortIdea filter = new()
-            {
-                CurrentPage = 1,
-                IdeasShownCount = 15,
-                Sorting = Sort.CreatedAtDesc
-            };
-
-            // act
-            IdeasTbl idea = new()
-            {
-                ProjectName = new Random().Next(100000, 999999).ToString(),
-                Description = "Test description",
-                Initials = "TEST",
-                Priority = 1,
-                Status = 1
-            };
-            await repository.AddAsync(idea);
-            filter.SearchStr = idea.ProjectName;
-            IdeasTbl foundIdea = (await repository.ListAsync(filter)).First();
-
-            // assert
-            Assert.Equal(idea.ProjectName, foundIdea.ProjectName);
-        }
-
-        [Fact]
-        public async void RemoveById_RemoveIdea_IdeaRemoved()
-        {
-            // arrange
-            IdeaRepository repository = new(GetRepositoryConnection());
-            FilterSortIdea filter = new()
-            {
-                CurrentPage = 1,
-                IdeasShownCount = 15,
-                Sorting = Sort.CreatedAtDesc,
-            };
-
-            // act
-            IdeasTbl idea = new()
-            {
-                ProjectName = new Random().Next(100000, 999999).ToString(),
-                Description = "Test description",
-                Initials = "TEST",
-                Priority = 1,
-                Status = 1
-            };
-
-            await repository.AddAsync(idea);
-            filter.SearchStr = idea.ProjectName;
-            IdeasTbl foundIdea = (await repository.ListAsync(filter)).First();
-
-            await repository.RemoveByIdAsync(foundIdea.Id);
-
-            // assert
-            Assert.False((await repository.ListAsync(filter)).Any());
+            CleanUpTestDB();
         }
     }
 }

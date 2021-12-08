@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using DataBaseLib.Models;
@@ -6,7 +5,6 @@ using System.Linq;
 using RepositoryLib.Interfaces;
 using BusinessLogicLib.Interfaces;
 using BusinessLogicLib.Models;
-using Microsoft.EntityFrameworkCore;
 
 namespace BusinessLogicLib.Service
 {
@@ -17,17 +15,17 @@ namespace BusinessLogicLib.Service
             Repository = repository;
         }
         public IIdeaRepository Repository { get; }
-        
+
         public async Task<List<ViewIdea>> GetWFilter(FilterSortIdea filter)
         {
             List<IdeasTbl> ideas = (await Repository.ListAsync(filter)).ToList();
-            return DBConvert.TblToViewIdea(ideas);
+            return DBConvert.TblListToViewIdea(ideas);
         }
         /// <summary>
         /// Insert an idea.
         /// </summary>
         /// <param name="idea"></param>
-        public async Task Insert(NewIdea idea)
+        public async Task Insert(Idea idea)
         {
             await Repository.AddAsync(DBConvert.NewIdeaToTbl(idea));
         }
@@ -54,6 +52,11 @@ namespace BusinessLogicLib.Service
         public async Task<int> GetCount(FilterSortIdea filter)
         {
             return await Repository.CountAsync(filter);
+        }
+
+        public async Task<ViewIdea> GetByIdAsync(int id)
+        {
+            return DBConvert.TblToViewIdea(await Repository.FindByIdAsync(id));
         }
     }
 }

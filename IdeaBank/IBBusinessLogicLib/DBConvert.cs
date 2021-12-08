@@ -49,41 +49,45 @@ namespace BusinessLogicLib
         /// </summary>
         /// <param name="dbIdeas">All ideas in database</param>
         /// <returns>List of ideas</returns>
-        public static List<ViewIdea> TblToViewIdea(List<IdeasTbl> dbIdeas)
+        public static List<ViewIdea> TblListToViewIdea(List<IdeasTbl> dbIdeas)
         {
             List<ViewIdea> ideas = new();
-            foreach (IdeasTbl i in dbIdeas)
+            foreach (IdeasTbl dbIdea in dbIdeas)
             {
-                ViewIdea idea = new();
-                idea.Id = i.Id;
-                idea.Initials = i.Initials;
-                idea.ProjectName = i.ProjectName;
-                idea.Description = StrNewLineToBr(i.Description);
-
-                idea.AuthorBusinessUnit = i.AuthorBusinessUnitId;
-                idea.AuthorBusinessUnitStr = i.AuthorBusinessUnit.Name;
-                idea.AuthorDepartment = i.AuthorDepartmentId;
-                idea.AuthorDepartmentStr = i.AuthorDepartment.Name;
-
-                idea.IdeaBusinessUnit = i.IdeaBusinessUnitId;
-                idea.IdeaBusinessUnitStr = i.IdeaBusinessUnit.Name;
-                idea.IdeaDepartment = i.IdeaDepartmentId;
-                idea.IdeaDepartmentStr = i.IdeaDepartment.Name;
-
-                idea.Priority = i.Priority;
-                idea.PriorityStr = PriorityStrs[i.Priority-1];
-                idea.Status = i.Status;
-                idea.StatusStr = StatusStrs[i.Status-1];
-                idea.Plan = StrNewLineToBr(i.PlanDescription);
-                idea.Risk = StrNewLineToBr(i.Risk);
-                idea.Team = i.Team;
-                idea.IsHidden = i.IsHidden;
-                idea.ExpectedResults = StrNewLineToBr(i.ExpectedResults);
-                idea.CreatedAt = i.CreatedAt;
-                idea.UpdatedAt = i.UpdatedAt;
-                ideas.Add(idea);
+                ideas.Add(TblToViewIdea(dbIdea));
             }
             return ideas;
+        }
+        public static ViewIdea TblToViewIdea(IdeasTbl dbIdea)
+        {
+            ViewIdea idea = new();
+            idea.Id = dbIdea.Id;
+            idea.Initials = dbIdea.Initials;
+            idea.ProjectName = dbIdea.ProjectName;
+            idea.Description = StrNewLineToBr(dbIdea.Description);
+
+            idea.AuthorBusinessUnit = dbIdea.AuthorBusinessUnitId;
+            idea.AuthorBusinessUnitStr = dbIdea.AuthorBusinessUnit.Name;
+            idea.AuthorDepartment = dbIdea.AuthorDepartmentId;
+            idea.AuthorDepartmentStr = dbIdea.AuthorDepartment.Name;
+
+            idea.IdeaBusinessUnit = dbIdea.IdeaBusinessUnitId;
+            idea.IdeaBusinessUnitStr = dbIdea.IdeaBusinessUnit.Name;
+            idea.IdeaDepartment = dbIdea.IdeaDepartmentId;
+            idea.IdeaDepartmentStr = dbIdea.IdeaDepartment.Name;
+
+            idea.Priority = dbIdea.Priority;
+            idea.PriorityStr = PriorityStrs[dbIdea.Priority - 1];
+            idea.Status = dbIdea.Status;
+            idea.StatusStr = StatusStrs[dbIdea.Status - 1];
+            idea.Plan = StrNewLineToBr(dbIdea.PlanDescription);
+            idea.Risk = StrNewLineToBr(dbIdea.Risk);
+            idea.Team = dbIdea.Team;
+            idea.IsHidden = dbIdea.IsHidden;
+            idea.ExpectedResults = StrNewLineToBr(dbIdea.ExpectedResults);
+            idea.CreatedAt = dbIdea.CreatedAt;
+            idea.UpdatedAt = dbIdea.UpdatedAt;
+            return idea;
         }
         /// <summary>
         /// Converts the edited idea to IdeasTbl so it can be inserted in database.
@@ -119,7 +123,7 @@ namespace BusinessLogicLib
         /// </summary>
         /// <param name="idea"></param>
         /// <returns>The new idea of type IdeasTbl</returns>
-        public static IdeasTbl NewIdeaToTbl(NewIdea idea)
+        public static IdeasTbl NewIdeaToTbl(Idea idea)
         {
             IdeasTbl newIdea = new();
             newIdea.ProjectName = idea.ProjectName;

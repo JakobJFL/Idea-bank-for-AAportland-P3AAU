@@ -14,7 +14,7 @@ namespace IdeaBank.Pages
 {
     public partial class SubmitIdea : ComponentBase
     {
-        private NewIdea _idea = new();
+        private Idea _idea = new();
         [Inject]
         public NavigationManager NavManager { get; set; }
         [Inject]

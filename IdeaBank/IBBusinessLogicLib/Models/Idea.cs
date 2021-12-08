@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace BusinessLogicLib.Models
 {
-    public abstract class Idea
+    public class Idea
     {
         [Required]
         [StringLength(75, ErrorMessage = "Projektnavn må max være 75 tegn")]
