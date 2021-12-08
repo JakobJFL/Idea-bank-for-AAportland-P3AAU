@@ -25,7 +25,8 @@ namespace XUnitTesting.bUnitTest
                 Description = "Test description",
                 Initials = "TEST",
                 Priority = 1,
-                Status = 1
+                Status = 1,
+                CreatedAt = DateTime.Now,
             };
             await repository.AddAsync(idea);
             var cut = ctx.RenderComponent<IdeaBank.Pages.Index>();
