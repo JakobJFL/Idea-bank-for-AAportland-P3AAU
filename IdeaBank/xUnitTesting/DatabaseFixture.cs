@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using BusinessLogicLib;
 using DataBaseLib.Models;
@@ -29,8 +29,8 @@ namespace XUnitTesting
                     ProjectName = "Test " + i,
                     Description = "Test description " + i,
                     Initials = "Ini" + i,
-                    Priority = (i + 2) % DBConvert.PriorityStrs.Length,
-                    Status = i % DBConvert.StatusStrs.Length,
+                    Priority = (i + 2) % DBConvert.PriorityStrs.Length + 1,
+                    Status = i % DBConvert.StatusStrs.Length + 1,
                     IsHidden = i % 5 == 0
                 };
                 await ideasRepository.AddAsync(idea);
