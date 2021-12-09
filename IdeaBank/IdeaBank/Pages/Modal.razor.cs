@@ -113,13 +113,13 @@ namespace IdeaBank.Pages
             try
             {
                 await IndexView.Ideas.Edit(_editIdea);
+                _idea = (await IndexView.Ideas.GetByIdAsync(_editIdea.Id));
+                await IndexView.Update();
             }
             catch (DbUpdateException)
             {
                 await JsRuntime.InvokeVoidAsync("alert", _dbUpdateExceptionText);
             }
-            _idea = (await IndexView.Ideas.GetByIdAsync(_editIdea.Id));
-            await IndexView.Update();
             StateHasChanged();
         }
     }

@@ -13,7 +13,7 @@ namespace IdeaBank.Pages
 {
     public partial class Administrate : ComponentBase
     {
-        public readonly int MaxIdesInCSVFile = 10000;
+        public readonly int MaxIdesInCSVFile = 5000;
 
         [Inject]
         private IJSRuntime JS { get; set; }

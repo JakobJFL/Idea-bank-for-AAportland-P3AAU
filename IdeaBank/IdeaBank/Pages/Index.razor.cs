@@ -121,7 +121,6 @@ namespace IdeaBank.Pages
             }
             FilterIdea.OnlyNewIdeas = false;
             NumOfPages = (int)Math.Ceiling((decimal)Ideas.GetIdeasCount() / IdeasShownCount);
-            await JsRuntime.InvokeVoidAsync("alert", _generalExceptionText);
             StateHasChanged();
         }
 

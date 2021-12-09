@@ -10,12 +10,12 @@
     <h2 class="text-center">Log in</h2>
     <div asp-validation-summary="All" class="text-danger"></div>
     <div class="form-group my-3">
-      <label asp-for="Input.UserName"></label>
+      <label asp-for="Input.UserName">Username</label>
       <input asp-for="Input.UserName" class="form-control rounded-cos" />
       <span asp-validation-for="Input.UserName" class="text-danger"></span>
     </div>
     <div class="form-group my-3">
-      <label asp-for="Input.Password"></label>
+      <label asp-for="Input.Password">Password</label>
       <input asp-for="Input.Password" class="form-control rounded-cos" />
       <span asp-validation-for="Input.Password" class="text-danger"></span>
     </div>

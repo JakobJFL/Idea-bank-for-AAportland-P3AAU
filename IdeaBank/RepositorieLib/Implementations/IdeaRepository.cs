@@ -130,7 +130,12 @@ namespace RepositoryLib.Implementations
         }
         public async Task<IdeasTbl> FindByIdAsync(int id)
         {
-            return await Context.IdeasTbl.FindAsync(id);
+            return await Context.IdeasTbl
+                .Include(b => b.IdeaBusinessUnit)
+                .Include(d => d.IdeaDepartment)
+                .Include(b => b.AuthorBusinessUnit)
+                .Include(d => d.AuthorDepartment)
+                .Where(i => i.Id == id).FirstAsync();
         }
 
         public Task<IEnumerable<IdeasTbl>> ListAsync(int id)
