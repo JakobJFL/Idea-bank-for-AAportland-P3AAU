@@ -14,8 +14,8 @@ namespace XUnitTesting.bUnitTest
         public async void SubmitIdeaAndShowIdeaInOverview()
         {
             // arrange
-            var ctx = TestStartupManager.InitializeTestContext();
-            IdeaRepository repository = new(TestStartupManager.GetRepositoryConnection());
+            var ctx = Utilities.InitializeTestContext();
+            IdeaRepository repository = new(Utilities.GetRepositoryConnection());
 
             // act
             IdeasTbl idea = new()
@@ -29,14 +29,19 @@ namespace XUnitTesting.bUnitTest
             };
             await repository.AddAsync(idea);
             var cut = ctx.RenderComponent<IdeaBank.Pages.Index>();
+            await Task.Delay(Utilities.WaitForDBDelay);
             var firstTableCell = cut.Find("td");
 
             //assert
-            cut.WaitForAssertion(() => firstTableCell.MarkupMatches("<td style=\"min-width: 150px;\" class=\"select-filter-text\" >" +
-                                            "<div class=\"d-flex\">" +
-                                                idea.ProjectName +
-                                            "</div>" +
-                                        "</td>"), TimeSpan.FromSeconds(2));
+            cut.WaitForAssertion(() =>
+                {
+                    cut.Render();
+                    firstTableCell.MarkupMatches("<td style=\"min-width: 150px;\" class=\"select-filter-text\" >" +
+                                             "<div class=\"d-flex\">" +
+                                                 idea.ProjectName +
+                                             "</div>" +
+                                         "</td>");
+                }, TimeSpan.FromSeconds(5));
             // clean up
             await repository.RemoveByIdAsync(idea.Id);
         }

@@ -12,7 +12,7 @@ namespace XUnitTesting.bUnitTest
         public void CommentsDisabledShouldHideSubmit()
         {
             // arrange
-            var ctx = TestStartupManager.InitializeTestContext();
+            var ctx = Utilities.InitializeTestContext();
             ctx.Services.GetService<Settings>().CommentsEnabled = false;
 
             // act

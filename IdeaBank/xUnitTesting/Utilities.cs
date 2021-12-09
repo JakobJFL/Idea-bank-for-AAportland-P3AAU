@@ -17,9 +17,10 @@ using RepositoryLib.Interfaces;
 
 namespace XUnitTesting
 {
-    public static class TestStartupManager
+    public static class Utilities
     {
         private readonly static string _connectionString = "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=IdeaBank;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
+        public readonly static int WaitForDBDelay = 200; //Necessary to prevent problems with loading data asynchronically
         public static Context GetRepositoryConnection()
         {
             DbContextOptionsBuilder optionsBuilder = new DbContextOptionsBuilder<Context>();

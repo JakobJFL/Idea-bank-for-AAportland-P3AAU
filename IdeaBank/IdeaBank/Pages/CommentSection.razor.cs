@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using Microsoft.AspNetCore.Components.Authorization;
 using System.Security.Claims;
+using Microsoft.EntityFrameworkCore;
 
 namespace IdeaBank.Pages
 {
@@ -30,6 +31,9 @@ namespace IdeaBank.Pages
         private ClaimsPrincipal _user;
 
         private readonly string _confirmDeleteComment = "Er du sikker på, at du vil slette kommentaren?";
+        private readonly string _dbUpdateExceptionTextComment = "Der skete en fejl under indsendelse af din kommentar. Prøv igen senere";
+        private readonly string _dbUpdateExceptionTextDel = "Der skete en fejl under ændringen af kommentaren. Prøv igen senere";
+        private readonly string _generalExceptionText = "Der skete en fejl. Prøv igen";
 
         protected override async Task OnInitializedAsync()
         {
@@ -40,9 +44,16 @@ namespace IdeaBank.Pages
         /// Load all comments for an idea.
         /// </summary>
         /// <param name="ideaId"></param>
-        public async void LoadComments(int ideaId)
+        public async Task LoadComments(int ideaId)
         {
-            AllComment = await Comments.GetWFilter(ideaId);
+            try
+            {
+                AllComment = await Comments.GetWFilter(ideaId);
+            }
+            catch (InvalidOperationException)
+            {
+                await JsRuntime.InvokeVoidAsync("alert", _generalExceptionText);
+            }
             IdeaId = ideaId;
             StateHasChanged();
         }
@@ -50,12 +61,23 @@ namespace IdeaBank.Pages
         /// <summary>
         /// Insert comment to database and refresh component.
         /// </summary>
-        private async void HandleValidSubmit()
+        private async Task HandleValidSubmit()
         {
             _comment.CreatedAt = DateTime.Now;
             _comment.IdeaId = IdeaId;
-            await Comments.Insert(_comment);
-            AllComment = await Comments.GetWFilter(IdeaId);
+            try
+            {
+                await Comments.Insert(_comment);
+                AllComment = await Comments.GetWFilter(IdeaId);
+            }
+            catch (DbUpdateException)
+            {
+                await JsRuntime.InvokeVoidAsync("alert", _dbUpdateExceptionTextComment);
+            }
+            catch (InvalidOperationException)
+            {
+                await JsRuntime.InvokeVoidAsync("alert", _generalExceptionText);
+            }
             _comment.Initials = "";
             _comment.Message = "";
             StateHasChanged();
@@ -69,8 +91,19 @@ namespace IdeaBank.Pages
         {
             if (await JsRuntime.InvokeAsync<bool>("confirm", _confirmDeleteComment))
             {
-                await Comments.DeleteByID(c.Id);
-                AllComment = await Comments.GetWFilter(IdeaId);
+                try
+                {
+                    await Comments.DeleteByID(c.Id);
+                    AllComment = await Comments.GetWFilter(IdeaId);
+                }
+                catch (DbUpdateException)
+                {
+                    await JsRuntime.InvokeVoidAsync("alert", _dbUpdateExceptionTextDel);
+                }
+                catch (InvalidOperationException)
+                {
+                    await JsRuntime.InvokeVoidAsync("alert", _generalExceptionText);
+                }
                 StateHasChanged();
             }
         }

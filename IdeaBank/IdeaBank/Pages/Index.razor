@@ -86,7 +86,7 @@
         <table class="table my-0 table-primary table-striped table-hover">
           <thead>
             <tr>
-              <th scope="col" style="min-width: 150px;" class="sort-select bg-primary select-filter-text align-middle" @onclick="ChangeProjectNameSort">
+              <th scope="col" style="min-width: 150px;" class="sort-select bg-primary select-filter-text align-middle" @onclick="async () => await ChangeProjectNameSort()">
                 Projektnavn
                 @if (FilterIdea.Sorting == Sort.ProjectNameAsc)
                 {<img src="/svg/alfa-desc.svg" />}
@@ -132,7 +132,7 @@
                   }
                 </InputSelect>
               </th>
-              <th scope="col" style="width: 115px;" class="sort-select bg-primary select-filter-text align-middle" @onclick="ChangeCreatedAtSort">
+              <th scope="col" style="width: 115px;" class="sort-select bg-primary select-filter-text align-middle" @onclick="async () => await ChangeCreatedAtSort()">
                 Oprettet
                 @if (FilterIdea.Sorting == Sort.CreatedAtAsc)
                 {<img src="/svg/sort-up.svg" />}
@@ -141,7 +141,7 @@
                 else
                 {<img src="/svg/filter.svg" />}
               </th>
-              <th scope="col" style="width: 115px;" class="sort-select bg-primary select-filter-text align-middle" @onclick="ChangeUpdatedAtSort">
+              <th scope="col" style="width: 115px;" class="sort-select bg-primary select-filter-text align-middle" @onclick="async () => await ChangeUpdatedAtSort()">
                 Opdateret
                 @if (FilterIdea.Sorting == Sort.UpdatedAtAsc)
                 {<img src="/svg/sort-up.svg" />}
@@ -194,7 +194,7 @@
     <ul class="pagination justify-content-end mt-3">
       @if (_ideaList != null)
       {
-        if (CurrentPage == 1)
+        if (CurrentPage == 1 && NumOfPages > 1)
         {
           <li class="page-item disabled">
             <a class="btn rounded-0 page-link rounded-start">Forrige</a>
@@ -203,7 +203,7 @@
         else
         {
           <li class="page-item">
-            <a class="btn rounded-0 page-link text-primary rounded-start" @onclick="() => {CurrentPage--; ChangeUpdatedAtPage(); }">Forrige</a>
+            <a class="btn rounded-0 page-link text-primary rounded-start" @onclick="async () => {CurrentPage--; await ChangeUpdatedAtPage(); }">Forrige</a>
           </li>
         }
         for (int i = 1; i <= NumOfPages; i++)
@@ -215,7 +215,7 @@
           }
           else
           {
-            <li class="page-item"><a class="btn rounded-0 page-link text-primary" @onclick="() => {CurrentPage = localPageIndex; ChangeUpdatedAtPage(); }">@i</a></li>
+            <li class="page-item"><a class="btn rounded-0 page-link text-primary" @onclick=" async () => {CurrentPage = localPageIndex; await ChangeUpdatedAtPage(); }">@i</a></li>
           }
         }
         if (CurrentPage == NumOfPages)
@@ -227,7 +227,7 @@
         else
         {
           <li class="page-item">
-            <a class="btn rounded-0 rounded-end page-link text-primary" @onclick="()=> {CurrentPage++; ChangeUpdatedAtPage(); }">Næste</a>
+            <a class="btn rounded-0 rounded-end page-link text-primary" @onclick="async ()=> {CurrentPage++; await ChangeUpdatedAtPage(); }">Næste</a>
           </li>
         }
       }

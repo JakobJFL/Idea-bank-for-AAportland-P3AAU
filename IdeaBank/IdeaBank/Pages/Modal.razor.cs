@@ -11,6 +11,7 @@ using Microsoft.JSInterop;
 using System.Reflection;
 using DataBaseLib.Models;
 using BusinessLogicLib;
+using Microsoft.EntityFrameworkCore;
 
 namespace IdeaBank.Pages
 {
@@ -20,7 +21,6 @@ namespace IdeaBank.Pages
         [Inject]
         private IJSRuntime JsRuntime { get; set; }
         private Index IndexView { get; set; }
-
         private string _modalDisplay = "none;";
         private string _modalClass = "";
         private ViewIdea _idea = new();
@@ -30,6 +30,7 @@ namespace IdeaBank.Pages
 
         private readonly string _confirmDeleteIdea = "Er du sikker på, at du vil slette idéen?";
         private readonly string _confirmCancel = "Er du sikker på, at du vil slette dine ændringer?";
+        private readonly string _dbUpdateExceptionText = "Der skete en fejl under ændringen af idén. Prøv igen senere";
 
         public async Task Open(ViewIdea idea, Index indexView)
         {
@@ -39,7 +40,7 @@ namespace IdeaBank.Pages
             await Task.Delay(150);
             _modalClass = "show";
             _idea = idea;
-            CommentSection.LoadComments(idea.Id);
+            await CommentSection.LoadComments(idea.Id);
             StateHasChanged();
         }
 
@@ -72,7 +73,14 @@ namespace IdeaBank.Pages
         {
             if (await JsRuntime.InvokeAsync<bool>("confirm", _confirmDeleteIdea))
             {
-                await IndexView.Ideas.DeleteByID(_idea.Id);
+                try
+                {
+                    await IndexView.Ideas.DeleteByID(_idea.Id);
+                }
+                catch (DbUpdateException)
+                {
+                    await JsRuntime.InvokeVoidAsync("alert", _dbUpdateExceptionText);
+                }
                 await Close();
                 await IndexView.Update();
                 StateHasChanged();
@@ -102,7 +110,14 @@ namespace IdeaBank.Pages
         private async void HandleValidEdit()
         {
             IsEditing = false;
-            await IndexView.Ideas.Edit(_editIdea);
+            try
+            {
+                await IndexView.Ideas.Edit(_editIdea);
+            }
+            catch (DbUpdateException)
+            {
+                await JsRuntime.InvokeVoidAsync("alert", _dbUpdateExceptionText);
+            }
             _idea = (await IndexView.Ideas.GetByIdAsync(_editIdea.Id));
             await IndexView.Update();
             StateHasChanged();

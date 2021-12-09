@@ -31,8 +31,6 @@ namespace BusinessLogicLib
         /// </summary>
         public async Task ConfigureDBTables()
         {
-            await ConfigeRpository.IsAnyUsers();
-
             if (!(await ConfigeRpository.DoesDatabaseExist())) 
                 throw new DbNoConnectionException();
 

@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Components;
 using DataBaseLib.Models;
 using System;
 using Microsoft.AspNetCore.Components.Authorization;
+using Microsoft.JSInterop;
 
 namespace IdeaBank.Pages
 {
@@ -25,6 +26,8 @@ namespace IdeaBank.Pages
         private IBusinessUnitsDataAccess BusinessUnitsDataAccess { get; set; }
         [Inject]
         private IDepartmentsDataAccess DepartmentsDataAccess { get; set; }
+        [Inject]
+        private IJSRuntime JsRuntime { get; set; }
         public List<BusinessUnitsTbl> BusinessUnits { get; set; } = new();
         public List<DepartmentsTbl> Departments { get; set; } = new();
 
@@ -35,11 +38,13 @@ namespace IdeaBank.Pages
         public int NumOfPages { get; set; }
         public int CurrentPage { get; set; } = 1;
         public Dashboard Dashboard { get; set; } = new Dashboard();
+        private readonly string _generalExceptionText = "Der skete en fejl. Prøv igen";
 
         protected override async Task OnInitializedAsync()
         {
             _editContext = new EditContext(FilterIdea);
             _editContext.OnFieldChanged += EditContext_OnFieldChanged;
+            await Config.ConfigureDBTables();
             BusinessUnits.Add(new BusinessUnitsTbl() { Name = "Indlæser", Id = 0 });
             Departments.Add(new DepartmentsTbl() { Name = "Indlæser", Id = 0 });
             BusinessUnits = await BusinessUnitsDataAccess.GetAll();
@@ -48,7 +53,6 @@ namespace IdeaBank.Pages
             FilterIdea.Sorting = Sort.CreatedAtDesc;
             FilterIdea.CurrentPage = CurrentPage;
             FilterIdea.IdeasShownCount = IdeasShownCount;
-            await Config.ConfigureDBTables();
             if (_ideaList == null)
             {
                 await Update();
@@ -56,14 +60,22 @@ namespace IdeaBank.Pages
         }
         private async Task SetDashboard()
         {
-            FilterIdea.OnlyNewIdeas = true;
-            Dashboard.NewIdeas = await Ideas.GetCount(FilterIdea);
-            FilterIdea.OnlyNewIdeas = false;
-            Dashboard.AllIdeas = await Ideas.GetCount(FilterIdea);
-            FilterIdea.Status = 2;
-            Dashboard.ApprovedIdeas = await Ideas.GetCount(FilterIdea);
-            Dashboard.AllComments = await Comments.GetCommentsCount(0);
-            FilterIdea.Status = 0;
+            try
+            {
+                FilterIdea.OnlyNewIdeas = true;
+                Dashboard.NewIdeas = await Ideas.GetCount(FilterIdea);
+                FilterIdea.OnlyNewIdeas = false;
+                Dashboard.AllIdeas = await Ideas.GetCount(FilterIdea);
+                FilterIdea.Status = 2;
+                Dashboard.ApprovedIdeas = await Ideas.GetCount(FilterIdea);
+                Dashboard.AllComments = await Comments.GetCommentsCount(0);
+                FilterIdea.Status = 0;
+            }
+            catch (InvalidOperationException)
+            {
+                await JsRuntime.InvokeVoidAsync("alert", _generalExceptionText);
+            }
+
         }
 
         // Note: The OnFieldChanged event is raised for each field in the model
@@ -71,24 +83,24 @@ namespace IdeaBank.Pages
         {
             await Update();
         }
-        private async void ChangeProjectNameSort()
+        private async Task ChangeProjectNameSort()
         {
             FilterIdea.Sorting = FilterIdea.Sorting == Sort.ProjectNameAsc ? Sort.ProjectNameDesc : Sort.ProjectNameAsc;
             await Update();
         }
-        private async void ChangeCreatedAtSort()
+        private async Task ChangeCreatedAtSort()
         {
             FilterIdea.Sorting = FilterIdea.Sorting == Sort.CreatedAtDesc ? Sort.CreatedAtAsc : Sort.CreatedAtDesc;
             await Update();
         }
 
-        private async void ChangeUpdatedAtSort()
+        private async Task ChangeUpdatedAtSort()
         {
             FilterIdea.Sorting = FilterIdea.Sorting == Sort.UpdatedAtDesc ? Sort.UpdatedAtAsc : Sort.UpdatedAtDesc;
             await Update();
         }
 
-        private async void ChangeUpdatedAtPage()
+        private async Task ChangeUpdatedAtPage()
         {
             FilterIdea.CurrentPage = CurrentPage;
             FilterIdea.IdeasShownCount = IdeasShownCount;
@@ -103,12 +115,13 @@ namespace IdeaBank.Pages
         {
             FilterIdea.ShowHidden = (await AuthState.GetAuthenticationStateAsync()).User.Identity.IsAuthenticated;
             _ideaList = await Ideas.GetWFilter(FilterIdea);
-            foreach(ViewIdea idea in _ideaList)
+            foreach (ViewIdea idea in _ideaList)
             {
-               idea.CommentsCount = await Comments.GetCommentsCount(idea.Id);
+                idea.CommentsCount = await Comments.GetCommentsCount(idea.Id);
             }
             FilterIdea.OnlyNewIdeas = false;
             NumOfPages = (int)Math.Ceiling((decimal)Ideas.GetIdeasCount() / IdeasShownCount);
+            await JsRuntime.InvokeVoidAsync("alert", _generalExceptionText);
             StateHasChanged();
         }
 

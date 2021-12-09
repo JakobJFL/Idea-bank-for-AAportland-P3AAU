@@ -18,8 +18,8 @@ namespace XUnitTesting
         public async void AddAsync_Comment_IdeaWComment()
         {
             // arrange
-            IdeaRepository ideaRepository = new(TestStartupManager.GetRepositoryConnection());
-            CommentsRepository commentsRepository = new(TestStartupManager.GetRepositoryConnection());
+            IdeaRepository ideaRepository = new(Utilities.GetRepositoryConnection());
+            CommentsRepository commentsRepository = new(Utilities.GetRepositoryConnection());
             IdeasTbl idea = new()
             {
                 ProjectName = "test",
@@ -49,8 +49,8 @@ namespace XUnitTesting
         public async void RemoveByIdAsync_RemoveComment_IdeaWNoComments()
         {
             // arrange
-            IdeaRepository ideaRepository = new(TestStartupManager.GetRepositoryConnection());
-            CommentsRepository commentsRepository = new(TestStartupManager.GetRepositoryConnection());
+            IdeaRepository ideaRepository = new(Utilities.GetRepositoryConnection());
+            CommentsRepository commentsRepository = new(Utilities.GetRepositoryConnection());
             IdeasTbl idea = new()
             {
                 ProjectName = "test",

@@ -27,8 +27,8 @@ namespace RepositoryLib.Implementations
         public async Task AddAsync(CommentsTbl model, int ideaId)
         {
             model.Idea = await Context.IdeasTbl
-              .Where(i => i.Id == ideaId)
-              .FirstOrDefaultAsync();
+            .Where(i => i.Id == ideaId)
+            .FirstOrDefaultAsync();
             await Context.CommentsTbl.AddAsync(model);
             await Context.SaveChangesAsync();
         }

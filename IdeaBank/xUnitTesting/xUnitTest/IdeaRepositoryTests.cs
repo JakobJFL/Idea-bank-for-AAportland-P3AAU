@@ -20,7 +20,7 @@ namespace XUnitTesting
         public async void AddAsync_Idea_IdeaAdded()
         {
             // arrange
-            IdeaRepository repository = new(TestStartupManager.GetRepositoryConnection());
+            IdeaRepository repository = new(Utilities.GetRepositoryConnection());
             IdeasTbl idea = new()
             {
                 ProjectName = "Test",
@@ -44,8 +44,8 @@ namespace XUnitTesting
         public async void RemoveById_RemoveIdea_IdeaRemoved()
         {
             // arrange
-            IdeaRepository ideasRepository = new(TestStartupManager.GetRepositoryConnection());
-            CommentsRepository commentsRepository = new(TestStartupManager.GetRepositoryConnection());
+            IdeaRepository ideasRepository = new(Utilities.GetRepositoryConnection());
+            CommentsRepository commentsRepository = new(Utilities.GetRepositoryConnection());
             IdeasTbl idea = new()
             {
                 ProjectName = "testRemoveIdea",
@@ -68,7 +68,7 @@ namespace XUnitTesting
         public async void Filter_FilterByPriority_PrioritisedIdeas()
         {
             // arrange
-            IdeaRepository repository = new(TestStartupManager.GetRepositoryConnection());
+            IdeaRepository repository = new(Utilities.GetRepositoryConnection());
             List<IdeasTbl> result;
             FilterSortIdea filter = new()
             {
@@ -93,7 +93,7 @@ namespace XUnitTesting
         public async void Filter_FilterByZeroPriority_AllIdeas()
         {
             // arrange
-            IdeaRepository repository = new(TestStartupManager.GetRepositoryConnection());
+            IdeaRepository repository = new(Utilities.GetRepositoryConnection());
             List<IdeasTbl> result;
             FilterSortIdea filter = new()
             {
@@ -112,7 +112,7 @@ namespace XUnitTesting
         public async void Filter_FilterByStatus_IdeasWCorrectStatus()
         {
             // arrange
-            IdeaRepository repository = new(TestStartupManager.GetRepositoryConnection());
+            IdeaRepository repository = new(Utilities.GetRepositoryConnection());
             List<IdeasTbl> result;
             FilterSortIdea filter = new()
             {
@@ -137,7 +137,7 @@ namespace XUnitTesting
         public async void Filter_FilterByZeroStatus_AllIdeas()
         {
             // arrange
-            IdeaRepository repository = new(TestStartupManager.GetRepositoryConnection());
+            IdeaRepository repository = new(Utilities.GetRepositoryConnection());
             List<IdeasTbl> result;
             FilterSortIdea filter = new()
             {
@@ -156,7 +156,7 @@ namespace XUnitTesting
         public async void Filter_FilterByIsHidden_OnlyPublicIdeas()
         {
             // arrange
-            IdeaRepository repository = new(TestStartupManager.GetRepositoryConnection());
+            IdeaRepository repository = new(Utilities.GetRepositoryConnection());
             List<IdeasTbl> result;
             FilterSortIdea filter = new()
             {
@@ -177,7 +177,7 @@ namespace XUnitTesting
         public async void Filter_FilterByShowHidden_AllIdeas()
         {
             // arrange
-            IdeaRepository repository = new(TestStartupManager.GetRepositoryConnection());
+            IdeaRepository repository = new(Utilities.GetRepositoryConnection());
             List<IdeasTbl> result;
             FilterSortIdea filter = new()
             {

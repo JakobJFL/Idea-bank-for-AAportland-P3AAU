@@ -25,12 +25,13 @@ namespace XUnitTesting.bUnitTest
         public async void SortIconShouldShowDescWhenClicked()
         {
             // arrange
-            using var ctx = TestStartupManager.InitializeTestContext();
+            using var ctx = Utilities.InitializeTestContext();
 
             // act
             var cut = ctx.RenderComponent<IdeaBank.Pages.Index>().Find("th");
-            cut.ClickAsync(new MouseEventArgs());
-
+            await Task.Delay(Utilities.WaitForDBDelay);
+            await cut.ClickAsync(new MouseEventArgs());
+            //cut.Click();
             // assert
             cut.MarkupMatches("<th scope=\"col\" style=\"min-width: 150px;\" class=\"sort-select bg-primary select-filter-text align-middle\">" +
                           "Projektnavn" +
@@ -43,10 +44,11 @@ namespace XUnitTesting.bUnitTest
         public async void SortIconShouldShowAscWhenClickedTwice()
         {
             // arrange
-            using var ctx = TestStartupManager.InitializeTestContext();
+            using var ctx = Utilities.InitializeTestContext();
 
             // act
-            var cut = ctx.RenderComponent<IdeaBank.Pages.Index>().Find("th");
+            var cut = ctx.RenderComponent<IdeaBank.Pages.Index>().Find("th");;
+            await Task.Delay(Utilities.WaitForDBDelay); // 
             await cut.ClickAsync(new MouseEventArgs());
             await cut.ClickAsync(new MouseEventArgs());
             // assert

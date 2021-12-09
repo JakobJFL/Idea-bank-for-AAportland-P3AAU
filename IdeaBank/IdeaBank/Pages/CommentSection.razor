@@ -7,7 +7,7 @@
     <div id="submitComments">
       @if (_user.Identity.IsAuthenticated || Settings.CommentsEnabled)
       {
-        <EditForm Model="@_comment" OnValidSubmit="@HandleValidSubmit">
+        <EditForm Model="@_comment" OnValidSubmit="async () => await HandleValidSubmit()">
           <DataAnnotationsValidator />
           <div class="d-flex flex-row mb-2">
             <InputTextArea class="form-control rounded-cos my-1" required placeholder="Skriv din kommentar her" @bind-Value="_comment.Message"></InputTextArea>

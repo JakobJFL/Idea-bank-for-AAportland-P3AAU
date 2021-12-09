@@ -19,8 +19,8 @@ namespace XUnitTesting
 
         private async Task SetupTestDB()
         {
-            IdeaRepository ideasRepository = new(TestStartupManager.GetRepositoryConnection());
-            CommentsRepository commentsRepository = new(TestStartupManager.GetRepositoryConnection());
+            IdeaRepository ideasRepository = new(Utilities.GetRepositoryConnection());
+            CommentsRepository commentsRepository = new(Utilities.GetRepositoryConnection());
 
             for (int i = 0; i <= _numOfTestIdeas; i++)
             {
@@ -51,7 +51,7 @@ namespace XUnitTesting
 
         private async Task CleanUpTestDB()
         {
-            IdeaRepository repository = new(TestStartupManager.GetRepositoryConnection());
+            IdeaRepository repository = new(Utilities.GetRepositoryConnection());
             foreach (int id in _testDBIdeasID)
             {
                 await repository.RemoveByIdAsync(id);

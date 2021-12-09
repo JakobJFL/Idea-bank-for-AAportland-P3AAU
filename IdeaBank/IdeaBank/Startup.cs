@@ -33,23 +33,23 @@ namespace IdeaBank
         { 
             services.AddRazorPages();
             services.AddServerSideBlazor();
-            services.AddScoped<IIdeaRepository, IdeaRepository>();
-            services.AddScoped<ICommentsRepository, CommentsRepository>();
-            services.AddScoped<IConfigurationRepository, ConfigurationRepository>();
-            services.AddScoped<IDepartmentsRepository, DepartmentsRepository>();
-            services.AddScoped<IBusinessUnitsRepository, BusinessUnitsRepository>();
+            services.AddTransient<IIdeaRepository, IdeaRepository>();
+            services.AddTransient<ICommentsRepository, CommentsRepository>();
+            services.AddTransient<IConfigurationRepository, ConfigurationRepository>();
+            services.AddTransient<IDepartmentsRepository, DepartmentsRepository>();
+            services.AddTransient<IBusinessUnitsRepository, BusinessUnitsRepository>();
             
-            services.AddScoped<IConfig, Config>();
-            services.AddScoped<IIdeasDataAccess, IdeasDataAccess>();    
-            services.AddScoped<ICommentsDataAccess, CommentsDataAccess>();
-            services.AddScoped<IBusinessUnitsDataAccess, BusinessUnitsDataAccess>();
-            services.AddScoped<IDepartmentsDataAccess, DepartmentsDataAccess>();
+            services.AddTransient<IConfig, Config>();
+            services.AddTransient<IIdeasDataAccess, IdeasDataAccess>();    
+            services.AddTransient<ICommentsDataAccess, CommentsDataAccess>();
+            services.AddTransient<IBusinessUnitsDataAccess, BusinessUnitsDataAccess>();
+            services.AddTransient<IDepartmentsDataAccess, DepartmentsDataAccess>();
             services.AddSingleton<Settings>();
 
             services.AddDbContext<Context>(options =>
             {
                 options.UseSqlServer(Configuration.GetConnectionString("Default"));
-            });
+            }, ServiceLifetime.Transient);
             services.AddDefaultIdentity<IdentityUser>(options => {
                 options.SignIn.RequireConfirmedAccount = false;
                 options.SignIn.RequireConfirmedEmail = false;
