@@ -16,7 +16,6 @@ namespace XUnitTesting.bUnitTest
             // arrange
             var ctx = TestStartupManager.InitializeTestContext();
             IdeaRepository repository = new(TestStartupManager.GetRepositoryConnection());
-            var textService = new TaskCompletionSource<string>();
 
             // act
             IdeasTbl idea = new()

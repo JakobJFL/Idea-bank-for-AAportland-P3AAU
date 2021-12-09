@@ -15,20 +15,21 @@ using RepositoryLib.Implementations;
 using RepositoryLib.Interfaces;
 using Xunit;
 using IdeaBank.Pages;
+using Microsoft.AspNetCore.Components.Web;
 
 namespace XUnitTesting.bUnitTest
 {
     public class SortTests
     {
         [Fact]
-        public void SortIconShouldShowDescWhenClicked()
+        public async void SortIconShouldShowDescWhenClicked()
         {
             // arrange
             using var ctx = TestStartupManager.InitializeTestContext();
 
             // act
             var cut = ctx.RenderComponent<IdeaBank.Pages.Index>().Find("th");
-            cut.Click();
+            cut.ClickAsync(new MouseEventArgs());
 
             // assert
             cut.MarkupMatches("<th scope=\"col\" style=\"min-width: 150px;\" class=\"sort-select bg-primary select-filter-text align-middle\">" +
@@ -39,21 +40,20 @@ namespace XUnitTesting.bUnitTest
         }
 
         [Fact]
-        public void SortIconShouldShowAscWhenClickedTwice()
+        public async void SortIconShouldShowAscWhenClickedTwice()
         {
             // arrange
             using var ctx = TestStartupManager.InitializeTestContext();
 
             // act
             var cut = ctx.RenderComponent<IdeaBank.Pages.Index>().Find("th");
-            cut.Click();
-            cut.Click();
-
+            await cut.ClickAsync(new MouseEventArgs());
+            await cut.ClickAsync(new MouseEventArgs());
             // assert
-            cut.MarkupMatches("<th scope=\"col\" style=\"min-width: 150px;\" class=\"sort-select bg-primary select-filter-text align-middle\" >" +
-                                  "Projektnavn" +
-                                  "<img src=\"/svg/alfa-asc.svg\" />" +
-                              "</th>");
+            cut.MarkupMatches("<th scope=\"col\" style=\"min-width: 150px;\" class=\"sort-select bg-primary select-filter-text align-middle\">" +
+                          "Projektnavn" +
+                          "<img src=\"/svg/alfa-asc.svg\" />" +
+                        "</th>");
         }
     }
 }
