@@ -1,6 +1,6 @@
 @using Microsoft.AspNetCore.Components.Forms
 @using DataBaseLib.Models
-@using BusinessLogicLib;
+@using BusinessLogicLib.Service;
 
 @inject IJSRuntime JS
 
@@ -132,9 +132,9 @@
                       @if (IsEditing)
                       {
                         <InputSelect class="form-select" required @bind-Value="_editIdea.Priority">
-                          @for (int i = 1; i < DBConvert.PriorityStrs.Length+1; i++)
+                          @for (int i = 1; i < Config.PriorityStrs.Length+1; i++)
                       {
-                      <option value="@i">@DBConvert.PriorityStrs[i-1]</option>}
+                      <option value="@i">@Config.PriorityStrs[i-1]</option>}
                         </InputSelect>
                       }
                       else
@@ -147,9 +147,9 @@
                       @if (IsEditing)
                       {
                         <InputSelect class="form-select" required @bind-Value="_editIdea.Status">
-                          @for (int i = 1; i < DBConvert.StatusStrs.Length+1; i++)
+                          @for (int i = 1; i < Config.StatusStrs.Length+1; i++)
                       {
-                      <option value="@i">@DBConvert.StatusStrs[i-1]</option>}
+                      <option value="@i">@Config.StatusStrs[i-1]</option>}
                         </InputSelect>
                       }
                       else

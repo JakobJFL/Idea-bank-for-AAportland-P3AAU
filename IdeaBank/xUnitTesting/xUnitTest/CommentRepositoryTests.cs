@@ -1,12 +1,7 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
-using DataBaseLib.DataAccess;
 using DataBaseLib.Models;
-using Microsoft.EntityFrameworkCore;
 using RepositoryLib.Implementations;
-using RepositoryLib.Interfaces;
 using Xunit;
 
 namespace XUnitTesting

@@ -1,8 +1,9 @@
 @page "/"
 @using BusinessLogicLib.Models
+@using BusinessLogicLib.Service
 @using DataBaseLib.Models
+@using DataBaseLib
 @using Microsoft.AspNetCore.Components.Authorization
-@using BusinessLogicLib;
 
 <div class="bgImg">
   <section class="py-4 text-center container">
@@ -100,36 +101,36 @@
                 <InputSelect class="btn form-select select-filter noFocus" @bind-Value="FilterIdea.BusinessUnit">
                   <option value="0" selected>Forretningsenhed</option>
                   @foreach (BusinessUnitsTbl bu in (BusinessUnits))
-                  {
-                    <option value="@bu.Id">@bu.Name</option>
-                  }
+          {
+          <option value="@bu.Id">@bu.Name</option>
+}
                 </InputSelect>
               </th>
               <th scope="col" style="width: 145px;" class="bg-primary text-white select-filter-text align-middle">
                 <InputSelect class="btn form-select select-filter noFocus" @bind-Value="FilterIdea.Department">
                   <option value="0" selected>Afdeling</option>
                   @foreach (DepartmentsTbl dep in (Departments))
-                    {
-                    <option value="@dep.Id">@dep.Name</option>
-                    }
+          {
+          <option value="@dep.Id">@dep.Name</option>
+}
                 </InputSelect>
               </th>
               <th scope="col" style="width: 120px;" class="bg-primary text-white select-filter-text align-middle">
                 <InputSelect class="btn form-select select-filter noFocus" @bind-Value="FilterIdea.Status">
                   <option value="0" selected>Status</option>
-                  @for (int i = 1; i < DBConvert.StatusStrs.Length+1; i++)
-                  {
-                    <option value="@i">@DBConvert.StatusStrs[i-1]</option>
-                  }
+                  @for (int i = 1; i < Config.StatusStrs.Length + 1; i++)
+          {
+          <option value="@i">@Config.StatusStrs[i - 1]</option>
+}
                 </InputSelect>
               </th>
               <th scope="col" style="width: 138px;" class="bg-primary text-white select-filter-text align-middle">
                 <InputSelect class="btn form-select select-filter noFocus" @bind-Value="FilterIdea.Priority">
                   <option value="0" selected>Prioritet</option>
-                  @for (int i = 1; i < DBConvert.PriorityStrs.Length+1; i++)
-                  {
-                    <option value="@i">@DBConvert.PriorityStrs[i-1]</option>
-                  }
+                  @for (int i = 1; i < Config.PriorityStrs.Length + 1; i++)
+          {
+          <option value="@i">@Config.PriorityStrs[i - 1]</option>
+}
                 </InputSelect>
               </th>
               <th scope="col" style="width: 115px;" class="sort-select bg-primary select-filter-text align-middle" @onclick="async () => await ChangeCreatedAtSort()">

@@ -8,6 +8,8 @@ using DataBaseLib.Models;
 using System;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.JSInterop;
+using DataBaseLib;
+using BusinessLogicLib;
 
 namespace IdeaBank.Pages
 {
@@ -19,7 +21,7 @@ namespace IdeaBank.Pages
         [Inject]
         public ICommentsDataAccess Comments { get; set; }
         [Inject]
-        public IConfig Config { get; set; }
+        public IConfig ConfigAccess { get; set; }
         [Inject]
         public AuthenticationStateProvider AuthState { get; set; }
         [Inject]
@@ -44,7 +46,7 @@ namespace IdeaBank.Pages
         {
             _editContext = new EditContext(FilterIdea);
             _editContext.OnFieldChanged += EditContext_OnFieldChanged;
-            await Config.ConfigureDBTables();
+            await ConfigAccess.ConfigureDBTables();
             BusinessUnits.Add(new BusinessUnitsTbl() { Name = "Indlæser", Id = 0 });
             Departments.Add(new DepartmentsTbl() { Name = "Indlæser", Id = 0 });
             BusinessUnits = await BusinessUnitsDataAccess.GetAll();

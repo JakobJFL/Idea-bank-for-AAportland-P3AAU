@@ -24,6 +24,7 @@ namespace DataBaseLib.Models
 
         [Required]
         public DateTime CreatedAt { get; set; } = DateTime.Now;
+        [Required]
         public IdeasTbl Idea { get; set; }
     }
 }

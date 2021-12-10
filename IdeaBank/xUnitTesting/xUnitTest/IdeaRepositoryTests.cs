@@ -1,15 +1,12 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
-using BusinessLogicLib;
-using DataBaseLib.DataAccess;
+using BusinessLogicLib.Service;
+using DataBaseLib;
 using DataBaseLib.Models;
 using Microsoft.EntityFrameworkCore;
 using RepositoryLib.Implementations;
-using RepositoryLib.Interfaces;
 using Xunit;
+using System.Threading.Tasks;
 
 namespace XUnitTesting
 {
@@ -77,7 +74,7 @@ namespace XUnitTesting
             };
 
             // act
-            for (int i = 1; i <= DBConvert.PriorityStrs.Length; i++)
+            for (int i = 1; i <= Config.PriorityStrs.Length; i++)
             {
                 filter.Priority = i;
                 result = (await repository.ListAsync(filter)).ToList();
@@ -121,7 +118,7 @@ namespace XUnitTesting
             };
 
             // act
-            for (int i = 1; i <= DBConvert.StatusStrs.Length; i++)
+            for (int i = 1; i <= Config.StatusStrs.Length; i++)
             {
                 filter.Status = i;
                 result = (await repository.ListAsync(filter)).ToList();
@@ -189,6 +186,64 @@ namespace XUnitTesting
             result = (await repository.ListAsync(filter)).ToList();
             int count = await repository.CountAsync(new FilterSortIdea());
             Assert.Equal(count, result.Count());
+        }
+
+        [Theory]
+        [InlineData("sdds", 1, 2)]
+        public async void AddAsync_IdeaWBuAndDep_IdeaAdded(string projectName, int buId, int depId)
+        {
+            // arrange
+            IdeaRepository repository = new(Utilities.GetRepositoryConnection());
+            IdeasTbl idea = new()
+            {
+                ProjectName = projectName,
+                Description = "Test description",
+                Initials = "test",
+                AuthorBusinessUnitId = buId,
+                AuthorDepartmentId = depId
+            };
+
+            // act
+            await repository.AddAsync(idea);
+
+            // assert
+            Assert.NotNull(await repository.FindByIdAsync(idea.Id));
+
+            // clean up
+            await repository.RemoveByIdAsync(idea.Id);
+        }
+
+        [Theory]
+        [InlineData("sdds", 50, 2)]
+        [InlineData("sdds", 2, 20)]
+        [InlineData("sdds", 50, 50)]
+        [InlineData("sdds ads adsasd as asd asd asd as dsa das a sd ad dsad jkhkjasdsaddsdukkkbk", 2, 2)]
+        public async Task AddAsync_Idea_throwsDbUpdateException(string projectName, int buId, int depId)
+        {
+            // arrange
+            IdeaRepository repository = new(Utilities.GetRepositoryConnection());
+            IdeasTbl idea = new()
+            {
+                ProjectName = projectName,
+                Description = "Test description",
+                Initials = "test",
+                AuthorBusinessUnitId = buId,
+                AuthorDepartmentId = depId
+            };
+
+            // act assert
+            await Assert.ThrowsAsync<DbUpdateException>(() => repository.AddAsync(idea));
+
+
+            // clean up
+            try
+            {
+                await repository.RemoveByIdAsync(idea.Id);
+            }
+            catch
+            {
+
+            }
         }
     }
 }

@@ -1,6 +1,8 @@
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using BusinessLogicLib;
+using BusinessLogicLib.Service;
 using DataBaseLib.Models;
 using RepositoryLib.Implementations;
 using Xunit;
@@ -29,8 +31,8 @@ namespace XUnitTesting
                     ProjectName = "Test " + i,
                     Description = "Test description " + i,
                     Initials = "Ini" + i,
-                    Priority = (i + 2) % DBConvert.PriorityStrs.Length + 1,
-                    Status = i % DBConvert.StatusStrs.Length + 1,
+                    Priority = Convert.ToByte((i + 2) % Config.PriorityStrs.Length + 1),
+                    Status = Convert.ToByte(i % Config.StatusStrs.Length + 1),
                     IsHidden = i % 5 == 0
                 };
                 await ideasRepository.AddAsync(idea);

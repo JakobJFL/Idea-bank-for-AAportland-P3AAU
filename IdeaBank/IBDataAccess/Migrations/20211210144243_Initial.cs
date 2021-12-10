@@ -75,9 +75,9 @@ namespace DataBaseLib.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false),
-                    Purpose = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    HomepageGuide = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    SubmitGuide = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Purpose = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: true),
+                    HomepageGuide = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: true),
+                    SubmitGuide = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -196,7 +196,7 @@ namespace DataBaseLib.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    ProjectName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    ProjectName = table.Column<string>(type: "nvarchar(75)", maxLength: 75, nullable: false),
                     Initials = table.Column<string>(type: "nvarchar(5)", maxLength: 5, nullable: false),
                     Description = table.Column<string>(type: "nvarchar(1500)", maxLength: 1500, nullable: false),
                     Risk = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true),
@@ -204,8 +204,8 @@ namespace DataBaseLib.Migrations
                     PlanDescription = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true),
                     ExpectedResults = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true),
                     IsHidden = table.Column<bool>(type: "bit", nullable: false),
-                    Priority = table.Column<int>(type: "int", nullable: false),
-                    Status = table.Column<int>(type: "int", nullable: false),
+                    Priority = table.Column<byte>(type: "tinyint", nullable: false),
+                    Status = table.Column<byte>(type: "tinyint", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     IdeaBusinessUnitId = table.Column<int>(type: "int", nullable: true),
@@ -251,7 +251,7 @@ namespace DataBaseLib.Migrations
                     Initials = table.Column<string>(type: "nvarchar(5)", maxLength: 5, nullable: false),
                     Message = table.Column<string>(type: "varchar(1500)", maxLength: 1500, nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    IdeaId = table.Column<int>(type: "int", nullable: true)
+                    IdeaId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -261,7 +261,7 @@ namespace DataBaseLib.Migrations
                         column: x => x.IdeaId,
                         principalTable: "IdeasTbl",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(

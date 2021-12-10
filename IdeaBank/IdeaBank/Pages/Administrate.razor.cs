@@ -8,6 +8,7 @@ using DataBaseLib.Models;
 using BusinessLogicLib.Models;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Identity;
+using DataBaseLib;
 
 namespace IdeaBank.Pages
 {

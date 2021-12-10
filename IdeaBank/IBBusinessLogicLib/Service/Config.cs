@@ -1,6 +1,5 @@
 using BusinessLogicLib.Interfaces;
 using BusinessLogicLib.Models;
-using DataBaseLib.DataAccess;
 using DataBaseLib.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -8,7 +7,7 @@ using RepositoryLib.Interfaces;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace BusinessLogicLib
+namespace BusinessLogicLib.Service
 {
     public class Config : IConfig
     {
@@ -23,8 +22,11 @@ namespace BusinessLogicLib
             DepDataAccess = depDataAccess;
         }
 
-        private readonly string[] _businessUnits = { "Ikke Angivet", "Aalborg Portland", "Unicon DK", "Unicon NO", "Kudsk & Dahl" };
-        private readonly string[] _departments = { "Ikke Angivet", "Salg", "SCM", "Produktion", "Vedligehold", "Finans", "HR", "PMO & Trans" };
+        private readonly string[] _businessUnits = { "Ikke Angivet", "Aalborg Portland", "Unicon DK", "Unicon NO", "Kudsk & Dahl" }; // Max length 255
+        private readonly string[] _departments = { "Ikke Angivet", "Salg", "SCM", "Produktion", "Vedligehold", "Finans", "HR", "PMO & Trans" }; // Max length 255
+
+        public static string[] PriorityStrs { get; } = new string[] { "Ikke angivet", "Lav", "Mellem", "Høj" }; // Max length 255
+        public static string[] StatusStrs { get; } = new string[] { "Oprettet", "Godkendt", "Arkiveret", "Afsluttet" }; // Max length 255
 
         /// <summary>
         /// Create tables DepartmentTbl and BusinessUnitTbl if empty

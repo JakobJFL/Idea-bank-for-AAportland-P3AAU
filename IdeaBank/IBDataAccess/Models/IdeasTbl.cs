@@ -31,9 +31,10 @@ namespace DataBaseLib.Models
         public string ExpectedResults { get; set; }
         [Required]
         public bool IsHidden { get; set; }
-        public int Priority { get; set; } = 1;
         [Required]
-        public int Status { get; set; } = 1;
+        public byte Priority { get; set; } = 1;
+        [Required]
+        public byte Status { get; set; } = 1;
         [Required]
         public DateTime CreatedAt { get; set; }
         [Required]

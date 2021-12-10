@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataBaseLib.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20211123102025_Initial")]
+    [Migration("20211210144243_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -46,7 +46,7 @@ namespace DataBaseLib.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("IdeaId")
+                    b.Property<int>("IdeaId")
                         .HasColumnType("int");
 
                     b.Property<string>("Initials")
@@ -87,13 +87,16 @@ namespace DataBaseLib.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("HomepageGuide")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
 
                     b.Property<string>("Purpose")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
 
                     b.Property<string>("SubmitGuide")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
 
                     b.HasKey("Id");
 
@@ -143,20 +146,20 @@ namespace DataBaseLib.Migrations
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
 
-                    b.Property<int>("Priority")
-                        .HasColumnType("int");
+                    b.Property<byte>("Priority")
+                        .HasColumnType("tinyint");
 
                     b.Property<string>("ProjectName")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasMaxLength(75)
+                        .HasColumnType("nvarchar(75)");
 
                     b.Property<string>("Risk")
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
 
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
+                    b.Property<byte>("Status")
+                        .HasColumnType("tinyint");
 
                     b.Property<string>("Team")
                         .HasMaxLength(75)
@@ -382,7 +385,9 @@ namespace DataBaseLib.Migrations
                 {
                     b.HasOne("DataBaseLib.Models.IdeasTbl", "Idea")
                         .WithMany("Comments")
-                        .HasForeignKey("IdeaId");
+                        .HasForeignKey("IdeaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Idea");
                 });

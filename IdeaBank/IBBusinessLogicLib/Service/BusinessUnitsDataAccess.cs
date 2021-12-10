@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace BusinessLogicLib
+namespace BusinessLogicLib.Service
 {
     public class BusinessUnitsDataAccess : IBusinessUnitsDataAccess
     {

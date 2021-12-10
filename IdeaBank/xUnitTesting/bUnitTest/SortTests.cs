@@ -1,20 +1,6 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Bunit;
-using Bunit.TestDoubles;
-using BusinessLogicLib;
-using BusinessLogicLib.Interfaces;
-using BusinessLogicLib.Models;
-using BusinessLogicLib.Service;
-using DataBaseLib.DataAccess;
-using Microsoft.Extensions.DependencyInjection;
-using RepositoryLib.Implementations;
-using RepositoryLib.Interfaces;
 using Xunit;
-using IdeaBank.Pages;
 using Microsoft.AspNetCore.Components.Web;
 
 namespace XUnitTesting.bUnitTest

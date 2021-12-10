@@ -12,6 +12,7 @@ namespace BusinessLogicLib.Models
         public string AuthorDepartmentStr { get; set; }
         public string IdeaBusinessUnitStr { get; set; }
         public string IdeaDepartmentStr { get; set; }
+        [StringLength(500)]
         public string Risk { get; set; }
         public string PriorityStr { get; set; }
         public string StatusStr { get; set; }

@@ -28,7 +28,7 @@
       <h3 class="text-center">Idébankens formål</h3>
       @if (IsEditing)
       {
-        <InputTextArea class="form-control" rows="3" maxlength=1500 @bind-Value="SettingsGuideText.Purpose"></InputTextArea>
+        <InputTextArea class="form-control" rows="3" maxlength=1000 @bind-Value="SettingsGuideText.Purpose"></InputTextArea>
       }
       else if (SettingsGuideText != null)
       {
@@ -43,7 +43,7 @@
           <h3 class="text-center">Forsiden</h3>
           @if (IsEditing)
           {
-            <InputTextArea class="form-control" rows="3" maxlength=1500 @bind-Value="SettingsGuideText.HomepageGuide"></InputTextArea>
+            <InputTextArea class="form-control" rows="3" maxlength=1000 @bind-Value="SettingsGuideText.HomepageGuide"></InputTextArea>
           }
           else if (SettingsGuideText != null)
           {
@@ -54,7 +54,7 @@
           <h3 class="text-center">Indsend idé</h3>
           @if (IsEditing)
           {
-            <InputTextArea class="form-control" rows="3" maxlength=1500 @bind-Value="SettingsGuideText.SubmitGuide"></InputTextArea>
+            <InputTextArea class="form-control" rows="3" maxlength=1000 @bind-Value="SettingsGuideText.SubmitGuide"></InputTextArea>
           }
           else if (SettingsGuideText != null)
           {
