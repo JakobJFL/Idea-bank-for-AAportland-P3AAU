@@ -5,7 +5,7 @@ using System;
 using System.Threading.Tasks;
 using DataBaseLib.Models;
 
-namespace XUnitTesting.bUnitTest
+namespace Testing.BUnitTest
 {
     [Collection("Test Database")]
     public class SubmitAndShowIdeaTest

@@ -1,13 +1,12 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using BusinessLogicLib;
 using BusinessLogicLib.Service;
 using DataBaseLib.Models;
 using RepositoryLib.Implementations;
 using Xunit;
 
-namespace XUnitTesting
+namespace Testing
 {
     public class DatabaseFixture : IAsyncLifetime
     {
@@ -43,7 +42,7 @@ namespace XUnitTesting
                     CommentsTbl comment = new()
                     {
                         Idea = idea,
-                        Message = "Test description " + c,
+                        Message = "Test description, CommentIndex: " + c + ", IdeaIndex: " + i,
                         Initials = "Ini" + c,
                     };
                     await commentsRepository.AddAsync(comment, idea.Id);

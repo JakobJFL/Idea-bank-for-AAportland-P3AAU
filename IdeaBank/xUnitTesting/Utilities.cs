@@ -15,7 +15,7 @@ using Microsoft.Extensions.DependencyInjection;
 using RepositoryLib.Implementations;
 using RepositoryLib.Interfaces;
 
-namespace XUnitTesting
+namespace Testing
 {
     public static class Utilities
     {

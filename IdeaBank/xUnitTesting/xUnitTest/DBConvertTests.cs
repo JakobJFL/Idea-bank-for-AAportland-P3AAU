@@ -1,8 +1,7 @@
-using System;
 using BusinessLogicLib;
 using Xunit;
 
-namespace XUnitTesting
+namespace Testing.XUnitTest
 
 {
     public class DBConvertTests

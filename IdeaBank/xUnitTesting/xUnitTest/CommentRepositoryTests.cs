@@ -4,9 +4,9 @@ using DataBaseLib.Models;
 using RepositoryLib.Implementations;
 using Xunit;
 
-namespace XUnitTesting
-
+namespace Testing.XUnitTest
 {
+    [Collection("Test Database")]
     public class CommentsRepositoryTests
     {
         [Fact]

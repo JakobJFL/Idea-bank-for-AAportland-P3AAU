@@ -3,7 +3,7 @@ using Bunit;
 using Xunit;
 using Microsoft.AspNetCore.Components.Web;
 
-namespace XUnitTesting.bUnitTest
+namespace Testing.BUnitTest
 {
     public class SortTests
     {

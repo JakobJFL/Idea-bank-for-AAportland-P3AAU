@@ -1,7 +1,7 @@
-﻿using Xunit;
+using Xunit;
 
-namespace XUnitTesting
+namespace Testing
 {
-    [CollectionDefinition("Test Database")]
+    [CollectionDefinition("Test Database", DisableParallelization = true)]
     public class DatabaseCollection : ICollectionFixture<DatabaseFixture>{}
 }

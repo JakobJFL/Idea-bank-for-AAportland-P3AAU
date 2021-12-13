@@ -3,7 +3,7 @@ using Bunit.TestDoubles;
 using Xunit;
 using IdeaBank.Shared;
 
-namespace XUnitTesting.bUnitTest
+namespace Testing.BUnitTest
 {
     public class NavMenuTests
     {

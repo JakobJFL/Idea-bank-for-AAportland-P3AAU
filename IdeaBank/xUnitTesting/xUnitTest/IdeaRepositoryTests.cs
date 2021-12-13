@@ -8,7 +8,7 @@ using RepositoryLib.Implementations;
 using Xunit;
 using System.Threading.Tasks;
 
-namespace XUnitTesting
+namespace Testing.XUnitTest
 {
     [Collection("Test Database")]
     public class IdeaRepositoryTests
@@ -214,10 +214,10 @@ namespace XUnitTesting
         }
 
         [Theory]
-        [InlineData("sdds", 50, 2)]
-        [InlineData("sdds", 2, 20)]
-        [InlineData("sdds", 50, 50)]
-        [InlineData("sdds ads adsasd as asd asd asd as dsa das a sd ad dsad jkhkjasdsaddsdukkkbk", 2, 2)]
+        [InlineData("business unit out of range", 300, 1)]
+        [InlineData("department out of range", 1, 300)]
+        [InlineData("both out of range", 300, 300)]
+        [InlineData("Text too long Text too long Text too long Text too long Text too long Text too long", 1, 1)]
         public async Task AddAsync_Idea_throwsDbUpdateException(string projectName, int buId, int depId)
         {
             // arrange
@@ -234,16 +234,8 @@ namespace XUnitTesting
             // act assert
             await Assert.ThrowsAsync<DbUpdateException>(() => repository.AddAsync(idea));
 
-
             // clean up
-            try
-            {
-                await repository.RemoveByIdAsync(idea.Id);
-            }
-            catch
-            {
-
-            }
+            await repository.RemoveByIdAsync(idea.Id);
         }
     }
 }

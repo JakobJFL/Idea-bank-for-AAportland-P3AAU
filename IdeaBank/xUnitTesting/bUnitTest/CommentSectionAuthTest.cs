@@ -3,7 +3,7 @@ using BusinessLogicLib.Models;
 using Xunit;
 using IdeaBank.Pages;
 
-namespace XUnitTesting.bUnitTest
+namespace Testing.BUnitTest
 {
     [Collection("Test Database")]
     public class CommentSectionAuthTest
