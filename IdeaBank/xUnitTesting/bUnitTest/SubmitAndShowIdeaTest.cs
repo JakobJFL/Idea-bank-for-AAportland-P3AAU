@@ -20,7 +20,7 @@ namespace Testing.BUnitTest
             // act
             IdeasTbl idea = new()
             {
-                ProjectName = "testMega",
+                ProjectName = ".UnitTest SubmitIdeaAndShowIdeaInOverview",
                 Description = "Test description",
                 Initials = "TEST",
                 Priority = 1,

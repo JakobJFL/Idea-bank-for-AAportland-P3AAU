@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Components.Web;
 
 namespace Testing.BUnitTest
 {
+    [Collection("Test Database")]
     public class SortTests
     {
         [Fact]

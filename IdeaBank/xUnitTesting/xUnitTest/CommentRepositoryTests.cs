@@ -17,7 +17,7 @@ namespace Testing.XUnitTest
             CommentsRepository commentsRepository = new(Utilities.GetRepositoryConnection());
             IdeasTbl idea = new()
             {
-                ProjectName = "test",
+                ProjectName = ".UnitTest AddAsync_Comment_IdeaWComment",
                 Description = "test description",
                 Initials = "TEST"
             };
@@ -26,7 +26,7 @@ namespace Testing.XUnitTest
                 CreatedAt = DateTime.Now,
                 Idea = idea,
                 Initials = "TEST",
-                Message = "Test comment."
+                Message = ".UnitTest Test comment."
             };
 
             // act
@@ -48,7 +48,7 @@ namespace Testing.XUnitTest
             CommentsRepository commentsRepository = new(Utilities.GetRepositoryConnection());
             IdeasTbl idea = new()
             {
-                ProjectName = "test",
+                ProjectName = ".UnitTest RemoveByIdAsync_RemoveComment_IdeaWNoComments",
                 Description = "test description",
                 Initials = "TEST"
             };
@@ -57,7 +57,7 @@ namespace Testing.XUnitTest
                 CreatedAt = DateTime.Now,
                 Idea = idea,
                 Initials = "TEST",
-                Message = "Test comment."
+                Message = ".UnitTest Test comment."
             };
 
             // act

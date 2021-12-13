@@ -5,15 +5,15 @@ using Microsoft.EntityFrameworkCore;
 using RepositoryLib.Interfaces;
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace RepositoryLib.Implementations
 {
     public class IdeaRepository : IIdeaRepository, IRepository<IdeasTbl>
     {
+        private string _sortingLanguage = "Danish_Norwegian_CI_AS";
+
         public IdeaRepository(Context context)
         {
             Context = context;
@@ -81,10 +81,10 @@ namespace RepositoryLib.Implementations
             switch (filter.Sorting)
             {
                 case Sort.ProjectNameAsc:
-                    ideas = ideas.OrderBy(s => EF.Functions.Collate(s.ProjectName, "Danish_Norwegian_CI_AS"));
+                    ideas = ideas.OrderBy(s => EF.Functions.Collate(s.ProjectName, _sortingLanguage));
                     break;
                 case Sort.ProjectNameDesc:
-                    ideas = ideas.OrderByDescending(s => EF.Functions.Collate(s.ProjectName, "Danish_Norwegian_CI_AS"));
+                    ideas = ideas.OrderByDescending(s => EF.Functions.Collate(s.ProjectName, _sortingLanguage));
                     break;
                 case Sort.CreatedAtAsc:
                     ideas = ideas.OrderBy(s => s.CreatedAt);
