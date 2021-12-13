@@ -37,6 +37,10 @@ namespace RepositoryLib.Implementations
         {
             return !(await Context.DepartmentsTbl.AnyAsync() && await Context.BusinessUnitsTbl.AnyAsync());
         }
+        /// <summary>
+        /// Updates the text on the guide page
+        /// </summary>
+        /// <param name="model"></param>
         public async Task UpdateGuideText(GuideTextTbl model)
         {
             GuideTextTbl guideTextToUpdate = Context.GuideTextTbl.SingleOrDefault(g => g.Id == _guideTextID);

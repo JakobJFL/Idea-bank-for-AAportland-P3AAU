@@ -51,6 +51,10 @@ namespace IdeaBank.Pages
                 await JsRuntime.InvokeVoidAsync("alert", _dbUpdateExceptionText);
             }
         }
+        /// <summary>
+        /// Prompts the user if they are sure to leave submit idea page
+        /// after having filled in information
+        /// </summary>
         private async void RegretSubmit() // please new name
         {
             if (string.IsNullOrEmpty(_idea.ProjectName) &&

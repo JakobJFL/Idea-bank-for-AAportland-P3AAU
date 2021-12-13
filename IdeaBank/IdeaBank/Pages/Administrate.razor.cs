@@ -14,7 +14,7 @@ namespace IdeaBank.Pages
 {
     public partial class Administrate : ComponentBase
     {
-        public readonly int MaxIdesInCSVFile = 5000;
+        public readonly int MaxIdeasInCSVFile = 5000;
 
         [Inject]
         private IJSRuntime JS { get; set; }
@@ -38,7 +38,7 @@ namespace IdeaBank.Pages
         {
             FilterSortIdea filterIdea = new();
             filterIdea.CurrentPage = 1;
-            filterIdea.IdeasShownCount = MaxIdesInCSVFile;
+            filterIdea.IdeasShownCount = MaxIdeasInCSVFile;
             List<ViewIdea> ideaList = await Ideas.GetWFilter(filterIdea);
              
             string csvContext = "Projekt navn;" +

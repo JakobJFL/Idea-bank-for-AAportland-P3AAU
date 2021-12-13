@@ -25,7 +25,7 @@ namespace RepositoryLib.Implementations
         /// Filter and sort ideas
         /// </summary>
         /// <param name="id"></param>
-        /// <returns></returns>
+        /// <returns>Returns a list of ideas</returns>
         public async Task<IEnumerable<IdeasTbl>> ListAsync(FilterSortIdea filterSort)
         {
             IQueryable<IdeasTbl> ideas = Context.IdeasTbl
@@ -50,7 +50,7 @@ namespace RepositoryLib.Implementations
         /// </summary>
         /// <param name="ideas"></param>
         /// <param name="filter"></param>
-        /// <returns>Returns a filltered list</returns>
+        /// <returns>Returns a filtered list</returns>
         private Task<IQueryable<IdeasTbl>> Filter(IQueryable<IdeasTbl> ideas, FilterSortIdea filter)
         {
             return Task.FromResult(ideas.Where(f => filter.ShowHidden || !f.IsHidden)
@@ -59,10 +59,22 @@ namespace RepositoryLib.Implementations
                 .Where(i => filter.Priority == 0 || filter.Priority == i.Priority)
                 .Where(i => filter.Status == 0 || filter.Status == i.Status));
         }
+        /// <summary>
+        /// Search for an idea
+        /// </summary>
+        /// <param name="ideas"></param>
+        /// <param name="filter"></param>
+        /// <returns>Returns the idea that was searched for</returns>
         private Task<IQueryable<IdeasTbl>> Search(IQueryable<IdeasTbl> ideas, FilterSortIdea filter)
         {
             return Task.FromResult(ideas = ideas.Where(f => f.ProjectName.Contains(filter.SearchStr)));
         }
+        /// <summary>
+        /// Sorts the ideas
+        /// </summary>
+        /// <param name="ideas"></param>
+        /// <param name="filter"></param>
+        /// <returns>Returns the table of sorted ideas</returns>
         private Task<IQueryable<IdeasTbl>> Sorting(IQueryable<IdeasTbl> ideas, FilterSortIdea filter)
         {
             switch (filter.Sorting)
@@ -96,7 +108,10 @@ namespace RepositoryLib.Implementations
             await Context.IdeasTbl.AddAsync(model);
             await Context.SaveChangesAsync();
         }
-
+        /// <summary>
+        /// Removes an idea by id
+        /// </summary>
+        /// <param name="ideaId"></param>
         public async Task RemoveByIdAsync(int ideaId)
         {
             IdeasTbl ideaToRemove = Context.IdeasTbl.SingleOrDefault(x => x.Id == ideaId);
@@ -111,6 +126,10 @@ namespace RepositoryLib.Implementations
                 await Context.SaveChangesAsync();
             }
         }
+        /// <summary>
+        /// Updates an idea
+        /// </summary>
+        /// <param name="model"></param>
         public async Task UpdateAsync(IdeasTbl model)
         {
             IdeasTbl ideaToUpdate = Context.IdeasTbl.SingleOrDefault(b => b.Id == model.Id);
@@ -122,6 +141,11 @@ namespace RepositoryLib.Implementations
             else
                 throw new ArgumentNullException("Idea not found");
         }
+        /// <summary>
+        /// Counts amount of ideas
+        /// </summary>
+        /// <param name="filter"></param>
+        /// <returns></returns>
         public Task<int> CountAsync(FilterSortIdea filter)
         {
             return Context.IdeasTbl
@@ -129,6 +153,11 @@ namespace RepositoryLib.Implementations
                 .Where(i => filter.Status == 0 || i.Status == filter.Status)
                 .CountAsync();
         }
+        /// <summary>
+        /// Finds an idea by id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>The found idea</returns>
         public async Task<IdeasTbl> FindByIdAsync(int id)
         {
             return await Context.IdeasTbl

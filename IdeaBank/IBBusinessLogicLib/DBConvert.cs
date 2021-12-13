@@ -142,6 +142,11 @@ namespace BusinessLogicLib
             newIdea.UpdatedAt = DateTime.Now;
             return newIdea;
         }
+        /// <summary>
+        /// Converts the newGuideText to GuideTextTbl so it can be inserted in database
+        /// </summary>
+        /// <param name="setting"></param>
+        /// <returns>The new guide text of type GuideTextTbl</returns>
         public static GuideTextTbl SettingsToGuideTbl(Settings setting)
         {
             GuideTextTbl newGuideText = new();

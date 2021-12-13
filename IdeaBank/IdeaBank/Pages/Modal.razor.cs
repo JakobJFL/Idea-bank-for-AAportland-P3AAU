@@ -24,6 +24,11 @@ namespace IdeaBank.Pages
         private readonly string _confirmCancel = "Er du sikker på, at du vil slette dine ændringer?";
         private readonly string _dbUpdateExceptionText = "Der skete en fejl under ændringen af idén. Prøv igen senere";
 
+        /// <summary>
+        /// Opens a pop-up for an idea
+        /// </summary>
+        /// <param name="idea"></param>
+        /// <param name="indexView"></param>
         public async Task Open(ViewIdea idea, Index indexView)
         {
             StateHasChanged();

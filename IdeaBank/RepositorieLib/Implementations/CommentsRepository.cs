@@ -17,6 +17,11 @@ namespace RepositoryLib.Implementations
             Context = context;
         }
         public Context Context { get; }
+        /// <summary>
+        /// Gets comments, orders by descending, converts to a list
+        /// </summary>
+        /// <param name="ideaId"></param>
+        /// <returns>A list of comments ordered by descending</returns>
         public async Task<IEnumerable<CommentsTbl>> ListAsync(int ideaId)
         {
             return await Context.CommentsTbl
@@ -24,6 +29,11 @@ namespace RepositoryLib.Implementations
                 .OrderByDescending(s => s.Id)
                 .ToListAsync();
         }
+        /// <summary>
+        /// Adds a comment to an idea
+        /// </summary>
+        /// <param name="model"></param>
+        /// <param name="ideaId"></param>
         public async Task AddAsync(CommentsTbl model, int ideaId)
         {
             model.Idea = await Context.IdeasTbl
@@ -33,6 +43,10 @@ namespace RepositoryLib.Implementations
             await Context.SaveChangesAsync();
         }
 
+        /// <summary>
+        /// Removes a specific comment by id
+        /// </summary>
+        /// <param name="id"></param>
         public async Task RemoveByIdAsync(int id)
         {
             CommentsTbl c = await Context.CommentsTbl.FindAsync(id);
@@ -40,6 +54,10 @@ namespace RepositoryLib.Implementations
             await Context.SaveChangesAsync();
         }
 
+        /// <summary>
+        /// Counts amount of comments
+        /// </summary>
+        /// <param name="ideaId"></param>
         public async Task<int> CountAsync(int ideaId)
         {
             return await Context.CommentsTbl
