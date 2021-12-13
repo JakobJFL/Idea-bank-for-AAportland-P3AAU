@@ -8,13 +8,12 @@ using RepositoryLib.Implementations;
 using Xunit;
 using System.Threading.Tasks;
 
-namespace XUnitTesting
+namespace Testing.xUnitTest
 {
-    [Collection("Test Database")]
     public class IdeaRepositoryTests
     {
         [Fact]
-        public async void AddAsync_Idea_IdeaAdded()
+        public async Task AddAsync_Idea_IdeaAdded()
         {
             // arrange
             IdeaRepository repository = new(Utilities.GetRepositoryConnection());
@@ -38,7 +37,7 @@ namespace XUnitTesting
         }
 
         [Fact]
-        public async void RemoveById_RemoveIdea_IdeaRemoved()
+        public async Task RemoveById_RemoveIdea_IdeaRemoved()
         {
             // arrange
             IdeaRepository ideasRepository = new(Utilities.GetRepositoryConnection());
@@ -62,7 +61,7 @@ namespace XUnitTesting
         }
 
         [Fact]
-        public async void Filter_FilterByPriority_PrioritisedIdeas()
+        public async Task Filter_FilterByPriority_PrioritisedIdeas()
         {
             // arrange
             IdeaRepository repository = new(Utilities.GetRepositoryConnection());
@@ -87,26 +86,36 @@ namespace XUnitTesting
         }
 
         [Fact]
-        public async void Filter_FilterByZeroPriority_AllIdeas()
+        public async Task Filter_FilterByZeroPriority_AllIdeas()
         {
             // arrange
             IdeaRepository repository = new(Utilities.GetRepositoryConnection());
-            List<IdeasTbl> result;
-            FilterSortIdea filter = new()
+            FilterSortIdea filterListAsync = new()
             {
                 ShowHidden = true,
                 IdeasShownCount = 0,
-                Priority = 0
+                Priority = 0,
+                Status = 0,
+                BusinessUnit = 0,
+                Department = 0
+            };
+            FilterSortIdea filterCountAsync = new()
+            {
+                Status = 0,                
+                OnlyNewIdeas = false
             };
 
             // act
-            result = (await repository.ListAsync(filter)).ToList();
-            int count = await repository.CountAsync(new FilterSortIdea());
-            Assert.Equal(count, result.Count());
+            int count = await repository.CountAsync(filterCountAsync);
+            int filterResult = (await repository.ListAsync(filterListAsync)).ToList().Count;
+
+            //Assert
+            Assert.Equal(count, filterResult);
+
         }
 
         [Fact]
-        public async void Filter_FilterByStatus_IdeasWCorrectStatus()
+        public async Task Filter_FilterByStatus_IdeasWCorrectStatus()
         {
             // arrange
             IdeaRepository repository = new(Utilities.GetRepositoryConnection());
@@ -131,7 +140,7 @@ namespace XUnitTesting
         }
 
         [Fact]
-        public async void Filter_FilterByZeroStatus_AllIdeas()
+        public async Task Filter_FilterByZeroStatus_AllIdeas()
         {
             // arrange
             IdeaRepository repository = new(Utilities.GetRepositoryConnection());
@@ -150,7 +159,7 @@ namespace XUnitTesting
         }
 
         [Fact]
-        public async void Filter_FilterByIsHidden_OnlyPublicIdeas()
+        public async Task Filter_FilterByIsHidden_OnlyPublicIdeas()
         {
             // arrange
             IdeaRepository repository = new(Utilities.GetRepositoryConnection());
@@ -171,7 +180,7 @@ namespace XUnitTesting
         }
 
         [Fact]
-        public async void Filter_FilterByShowHidden_AllIdeas()
+        public async Task Filter_FilterByShowHidden_AllIdeas()
         {
             // arrange
             IdeaRepository repository = new(Utilities.GetRepositoryConnection());
@@ -190,7 +199,7 @@ namespace XUnitTesting
 
         [Theory]
         [InlineData("sdds", 1, 2)]
-        public async void AddAsync_IdeaWBuAndDep_IdeaAdded(string projectName, int buId, int depId)
+        public async Task AddAsync_IdeaWBuAndDep_IdeaAdded(string projectName, int buId, int depId)
         {
             // arrange
             IdeaRepository repository = new(Utilities.GetRepositoryConnection());
@@ -214,10 +223,10 @@ namespace XUnitTesting
         }
 
         [Theory]
-        [InlineData("sdds", 50, 2)]
-        [InlineData("sdds", 2, 20)]
-        [InlineData("sdds", 50, 50)]
-        [InlineData("sdds ads adsasd as asd asd asd as dsa das a sd ad dsad jkhkjasdsaddsdukkkbk", 2, 2)]
+        [InlineData("business unit number out of range ", 300, 1)]
+        [InlineData("department number out of range", 1, 300)]
+        [InlineData("both out of range", 300, 300)]
+        [InlineData("text too long text too long text too long text too long text too long text too long", 1, 1)]
         public async Task AddAsync_Idea_throwsDbUpdateException(string projectName, int buId, int depId)
         {
             // arrange
@@ -234,16 +243,6 @@ namespace XUnitTesting
             // act assert
             await Assert.ThrowsAsync<DbUpdateException>(() => repository.AddAsync(idea));
 
-
-            // clean up
-            try
-            {
-                await repository.RemoveByIdAsync(idea.Id);
-            }
-            catch
-            {
-
-            }
         }
     }
 }

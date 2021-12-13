@@ -1,11 +1,11 @@
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 using DataBaseLib.Models;
 using RepositoryLib.Implementations;
 using Xunit;
 
-namespace XUnitTesting
-
+namespace Testing.xUnitTest
 {
     public class CommentsRepositoryTests
     {
@@ -41,7 +41,7 @@ namespace XUnitTesting
         }
 
         [Fact]
-        public async void RemoveByIdAsync_RemoveComment_IdeaWNoComments()
+        public async Task RemoveByIdAsync_RemoveComment_IdeaWNoComments()
         {
             // arrange
             IdeaRepository ideaRepository = new(Utilities.GetRepositoryConnection());

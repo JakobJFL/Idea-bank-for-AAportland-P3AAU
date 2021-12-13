@@ -22,9 +22,9 @@ namespace RepositoryLib.Implementations
         public Context Context { get; }
         
         /// <summary>
-        /// Filter and sort ideas
+        /// 
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="filterSort"></param>
         /// <returns></returns>
         public async Task<IEnumerable<IdeasTbl>> ListAsync(FilterSortIdea filterSort)
         {
@@ -136,7 +136,7 @@ namespace RepositoryLib.Implementations
                 .Include(d => d.IdeaDepartment)
                 .Include(b => b.AuthorBusinessUnit)
                 .Include(d => d.AuthorDepartment)
-                .Where(i => i.Id == id).FirstAsync();
+                .Where(i => i.Id == id).FirstOrDefaultAsync();
         }
 
         public Task<IEnumerable<IdeasTbl>> ListAsync(int id)

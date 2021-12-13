@@ -5,13 +5,12 @@ using System;
 using System.Threading.Tasks;
 using DataBaseLib.Models;
 
-namespace XUnitTesting.bUnitTest
+namespace Testing.bUnitTest
 {
-    [Collection("Test Database")]
     public class SubmitAndShowIdeaTest
     {
         [Fact]
-        public async void SubmitIdeaAndShowIdeaInOverview()
+        public async Task SubmitIdeaAndShowIdeaInOverview()
         {
             // arrange
             var ctx = Utilities.InitializeTestContext();

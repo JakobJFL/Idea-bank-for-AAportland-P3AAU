@@ -3,12 +3,12 @@ using Bunit;
 using Xunit;
 using Microsoft.AspNetCore.Components.Web;
 
-namespace XUnitTesting.bUnitTest
+namespace Testing.bUnitTest
 {
     public class SortTests
     {
         [Fact]
-        public async void SortIconShouldShowDescWhenClicked()
+        public async Task SortIconShouldShowDescWhenClicked()
         {
             // arrange
             using var ctx = Utilities.InitializeTestContext();
@@ -27,7 +27,7 @@ namespace XUnitTesting.bUnitTest
         }
 
         [Fact]
-        public async void SortIconShouldShowAscWhenClickedTwice()
+        public async Task SortIconShouldShowAscWhenClickedTwice()
         {
             // arrange
             using var ctx = Utilities.InitializeTestContext();

@@ -2,10 +2,10 @@ using Bunit;
 using BusinessLogicLib.Models;
 using Xunit;
 using IdeaBank.Pages;
+using System.Threading.Tasks;
 
-namespace XUnitTesting.bUnitTest
+namespace Testing.bUnitTest
 {
-    [Collection("Test Database")]
     public class CommentSectionAuthTest
     {
         [Fact]

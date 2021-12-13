@@ -2,8 +2,7 @@ using System;
 using BusinessLogicLib;
 using Xunit;
 
-namespace XUnitTesting
-
+namespace Testing.xUnitTest
 {
     public class DBConvertTests
     {

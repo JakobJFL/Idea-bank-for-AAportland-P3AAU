@@ -1,6 +1,6 @@
-﻿using Xunit;
+using Xunit;
 
-namespace XUnitTesting
+namespace Testing
 {
     [CollectionDefinition("Test Database")]
     public class DatabaseCollection : ICollectionFixture<DatabaseFixture>{}

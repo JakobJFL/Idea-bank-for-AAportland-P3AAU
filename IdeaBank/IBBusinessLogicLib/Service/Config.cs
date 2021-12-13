@@ -12,18 +12,18 @@ namespace BusinessLogicLib.Service
     public class Config : IConfig
     {
         public IConfigurationRepository ConfigeRpository { get; }
-        public IBusinessUnitsDataAccess BUDataAccess { get; }
+        public IBusinessUnitsDataAccess BuDataAccess { get; }
         public IDepartmentsDataAccess DepDataAccess { get; }
 
-        public Config(IConfigurationRepository configeRpository, IBusinessUnitsDataAccess bUDataAccess, IDepartmentsDataAccess depDataAccess)
+        public Config(IConfigurationRepository configeRpository, IBusinessUnitsDataAccess buDataAccess, IDepartmentsDataAccess depDataAccess)
         {
             ConfigeRpository = configeRpository;
-            BUDataAccess = bUDataAccess;
+            BuDataAccess = buDataAccess;
             DepDataAccess = depDataAccess;
         }
 
-        private readonly string[] _businessUnits = { "Ikke Angivet", "Aalborg Portland", "Unicon DK", "Unicon NO", "Kudsk & Dahl" }; // Max length 255
-        private readonly string[] _departments = { "Ikke Angivet", "Salg", "SCM", "Produktion", "Vedligehold", "Finans", "HR", "PMO & Trans" }; // Max length 255
+        private readonly string[] _businessUnits = { "Ikke Angivet", "Aalborg Portland", "Unicon DK", "Unicon NO", "Kudsk & Dahl" }; // string length max 50.
+        private readonly string[] _departments = { "Ikke Angivet", "Salg", "SCM", "Produktion", "Vedligehold", "Finans", "HR", "PMO & Trans" }; // string length max 50.
 
         public static string[] PriorityStrs { get; } = new string[] { "Ikke angivet", "Lav", "Mellem", "Høj" }; // Max length 255
         public static string[] StatusStrs { get; } = new string[] { "Oprettet", "Godkendt", "Arkiveret", "Afsluttet" }; // Max length 255
@@ -58,13 +58,13 @@ namespace BusinessLogicLib.Service
                     BusinessUnitsTbl bu = new();
                     bu.Id = i + 1;
                     bu.Name = _businessUnits[i];
-                    await BUDataAccess.Insert(bu);
+                    await BuDataAccess.Insert(bu);
                 }
-            }
-            catch (DbUpdateException ex)
+            } catch (DbUpdateException)
             {
-                throw new DbUpdateException("Updating tables in database failed." + ex.Message);
+                throw new DbUpdateException("Please reload page");
             }
+            
         }
         public async Task<List<IdentityUser>> GetUsers()
         {

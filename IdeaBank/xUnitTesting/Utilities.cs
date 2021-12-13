@@ -14,8 +14,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using RepositoryLib.Implementations;
 using RepositoryLib.Interfaces;
+using Xunit;
 
-namespace XUnitTesting
+namespace Testing
 {
     public static class Utilities
     {

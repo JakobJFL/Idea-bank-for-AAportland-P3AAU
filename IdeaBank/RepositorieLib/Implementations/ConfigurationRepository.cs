@@ -35,7 +35,7 @@ namespace RepositoryLib.Implementations
         }
         public async Task<bool> IsBuAndDepEmpty()
         {
-            return !(await Context.DepartmentsTbl.AnyAsync() && await Context.BusinessUnitsTbl.AnyAsync());
+            return !(await Context.DepartmentsTbl.AnyAsync() || await Context.BusinessUnitsTbl.AnyAsync());
         }
         public async Task UpdateGuideText(GuideTextTbl model)
         {
