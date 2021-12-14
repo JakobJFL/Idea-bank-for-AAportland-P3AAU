@@ -29,19 +29,17 @@ namespace Testing.BUnitTest
             };
             await repository.AddAsync(idea);
             var cut = ctx.RenderComponent<IdeaBank.Pages.Index>();
-            await Task.Delay(Utilities.WaitForDBDelay);
             var firstTableCell = cut.Find("td");
 
             //assert
             cut.WaitForAssertion(() =>
                 {
-                    cut.Render();
                     firstTableCell.MarkupMatches("<td style=\"min-width: 150px;\" class=\"select-filter-text\" >" +
-                                             "<div class=\"d-flex\">" +
-                                                 idea.ProjectName +
-                                             "</div>" +
-                                         "</td>");
-                }, TimeSpan.FromSeconds(5));
+                                                     "<div class=\"d-flex\">" +
+                                                         idea.ProjectName +
+                                                     "</div>" +
+                                                 "</td>");
+                });
             // clean up
             await repository.RemoveByIdAsync(idea.Id);
         }
