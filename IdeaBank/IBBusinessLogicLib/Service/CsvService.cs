@@ -64,8 +64,8 @@ namespace BusinessLogicLib.Service
                 Append(idea.UpdatedAt).Append('\n');
             }
 
-            using MemoryStream stream = new MemoryStream();
-            UnicodeEncoding uniEncoding = new UnicodeEncoding();
+            using MemoryStream stream = new();
+            UnicodeEncoding uniEncoding = new();
             await stream.WriteAsync(uniEncoding.GetBytes(sb.ToString()));
             return stream;
         }

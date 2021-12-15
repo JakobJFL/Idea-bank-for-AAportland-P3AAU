@@ -14,13 +14,13 @@ namespace IdeaBank.Pages
     public partial class Administrate : ComponentBase
     {
         [Inject]
-        private ICsvService Service { get; set; }
+        private ICsvService CsvService { get; set; }
         [Inject]
         private IJSRuntime JS { get; set; }
         [Inject]
-        public IConfig Config { get; set; }
+        private IConfig Config { get; set; }
         [Inject]
-        public Settings Settings { get; set; }
+        private Settings Settings { get; set; }
         public List<IdentityUser> UserList {get; set;}
         private MemoryStream CsvStream { get; set; }
         private string DisableStr { get; set; } = "";
@@ -35,7 +35,7 @@ namespace IdeaBank.Pages
         private async Task DownloadIdeasToCSV()
         {
             DisableStr = "disabled"; // Disabled download btn
-            CsvStream = await Service.CreateCsvFileAsync();
+            CsvStream = await CsvService.CreateCsvFileAsync();
             await JS.SaveAs("Ideer.csv", CsvStream.ToArray());
             DisableStr = ""; // Enable download btn
         }
@@ -46,5 +46,6 @@ namespace IdeaBank.Pages
         {
             return js.InvokeAsync<object>("saveAsFile", filename, Convert.ToBase64String(data));
         }
+ 
     }
 }
