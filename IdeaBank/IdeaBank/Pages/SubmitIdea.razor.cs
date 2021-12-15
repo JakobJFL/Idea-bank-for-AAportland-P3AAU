@@ -59,7 +59,7 @@ namespace IdeaBank.Pages
         /// Prompts the user if they are sure to leave submit idea page
         /// after having filled in information
         /// </summary>
-        private async void RegretSubmit() // please new name
+        private async void CancelSubmit()
         {
             if (string.IsNullOrEmpty(_idea.ProjectName) &&
                 string.IsNullOrEmpty(_idea.Description) &&

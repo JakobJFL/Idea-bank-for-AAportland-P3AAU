@@ -22,12 +22,8 @@ namespace IdeaBank.Pages
         [Inject]
         public Settings Settings { get; set; }
         public List<IdentityUser> UserList {get; set;}
-        private MemoryStream _csvStream;
-
-        private string _disableStr = "";
-
-        private readonly string _errorMessageDownload = "Stop den er ved at Downloade okay";
-
+        private MemoryStream CsvStream { get; set; }
+        private string DisableStr { get; set; } = "";
         protected override async Task OnInitializedAsync()
         {
             UserList = await Config.GetUsers();
@@ -38,10 +34,10 @@ namespace IdeaBank.Pages
         /// </summary>
         private async Task DownloadIdeasToCSV()
         {
-            _disableStr = "disabled";
-            _csvStream = await Service.CreateCsvFileAsync();
-            await JS.SaveAs("Ideer.csv", _csvStream.ToArray());
-            _disableStr = "";
+            DisableStr = "disabled"; // Disabled download btn
+            CsvStream = await Service.CreateCsvFileAsync();
+            await JS.SaveAs("Ideer.csv", CsvStream.ToArray());
+            DisableStr = ""; // Enable download btn
         }
     }
     public static class FileUtils
