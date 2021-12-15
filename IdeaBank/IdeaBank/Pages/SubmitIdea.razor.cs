@@ -50,6 +50,10 @@ namespace IdeaBank.Pages
             {
                 await JsRuntime.InvokeVoidAsync("alert", _dbUpdateExceptionText);
             }
+            catch (InvalidOperationException)
+            {
+                await JsRuntime.InvokeVoidAsync("alert", _dbUpdateExceptionText);
+            }
         }
         /// <summary>
         /// Prompts the user if they are sure to leave submit idea page

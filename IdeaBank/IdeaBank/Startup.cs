@@ -9,7 +9,6 @@ using BusinessLogicLib.Interfaces;
 using RepositoryLib.Interfaces;
 using RepositoryLib.Implementations;
 using BusinessLogicLib.Service;
-using BusinessLogicLib;
 using BusinessLogicLib.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Components.Authorization;
@@ -44,6 +43,7 @@ namespace IdeaBank
             services.AddTransient<ICommentsDataAccess, CommentsDataAccess>();
             services.AddTransient<IBusinessUnitsDataAccess, BusinessUnitsDataAccess>();
             services.AddTransient<IDepartmentsDataAccess, DepartmentsDataAccess>();
+            services.AddTransient<ICsvService, CsvService>();
             services.AddSingleton<Settings>();
 
             services.AddDbContext<Context>(options =>

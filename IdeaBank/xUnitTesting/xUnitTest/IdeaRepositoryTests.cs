@@ -14,6 +14,8 @@ namespace Testing.XUnitTest
     [Collection("Test Database")]
     public class IdeaRepositoryTests
     {
+        private const int BU_DEP_OVER_RANGE = 300;
+
         [Fact]
         public async void AddAsync_CanAddIdea_IdeaAdded()
         {
@@ -239,10 +241,10 @@ namespace Testing.XUnitTest
         }
 
         [Theory]
-        [InlineData(".UnitTest business unit out of range", 300, 1)]
-        [InlineData(".UnitTest department out of range", 1, 300)]
-        [InlineData(".UnitTest both out of range", 300, 300)]
-        [InlineData(".UnitTest both out of range", 0, 1)]
+        [InlineData(".UnitTest business unit over range", BU_DEP_OVER_RANGE, 1)]
+        [InlineData(".UnitTest department over range", 1, BU_DEP_OVER_RANGE)]
+        [InlineData(".UnitTest both over range", BU_DEP_OVER_RANGE, BU_DEP_OVER_RANGE)]
+        [InlineData(".UnitTest business under range", 0, 1)]
         [InlineData(".UnitTest Text too long Text too long Text too long Text too long Text too long", 1, 1)]
         public async Task AddAsync_IdeaWIncorrectBuDepAndProjectName_ThrowsDbUpdateException(string projectName, int buId, int depId)
         {
@@ -307,6 +309,9 @@ namespace Testing.XUnitTest
 
             //assert
             Assert.Equal(updatedIdea, updatedIdeaFromDB);
+
+            // clean up
+            await repository.RemoveByIdAsync(idea.Id);
         }
     }
 }
