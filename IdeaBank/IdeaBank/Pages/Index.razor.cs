@@ -139,5 +139,10 @@ namespace IdeaBank.Pages
             FilterIdea.Sorting = Sort.CreatedAtDesc;
             await Update();
         }
+
+        private async void ScrollToTable()
+        {
+            await JsRuntime.InvokeVoidAsync("ScrollToTable");
+        }
     }
 }
