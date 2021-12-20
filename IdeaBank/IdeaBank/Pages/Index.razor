@@ -34,7 +34,7 @@
   <div class="container p-0">
     <div class="row mb-5">
       <div class="col-sm">
-        <div class="d-flex flex-row justify-content-between card card-body rounded-cos border-0" role="button" @onclick="ScrollToTable">
+        <div class="d-flex flex-row justify-content-between card card-body rounded-cos border-0" role="button" @onclick="async () => {ResetBtn(); ScrollToTable(); }">
           <div>
             <h6 class="text-muted">Idéer i alt</h6>
             <h4 class="mb-0 text-primary">@Dashboard.AllIdeas</h4>
@@ -43,7 +43,7 @@
         </div>
       </div>
       <div class="col-sm">
-        <div class="d-flex flex-row justify-content-between card card-body rounded-cos border-0">
+        <div class="d-flex flex-row justify-content-between card card-body rounded-cos border-0" role="button" @onclick="async () => { ResetFilterAll(); FilterIdea.OnlyNewIdeas = true; await Update(); ScrollToTable(); }">
           <div>
             <h6 class="text-muted">Nye idéer</h6>
             <h4 class="mb-0 text-primary">@Dashboard.NewIdeas</h4>
@@ -61,7 +61,7 @@
         </div>
       </div>
       <div class="col-sm">
-        <div class="d-flex flex-row justify-content-between card card-body rounded-cos border-0" role="button" @onclick="async () => { FilterIdea.Status = 2; await Update(); }">
+        <div class="d-flex flex-row justify-content-between card card-body rounded-cos border-0" role="button" @onclick="async () => { ResetFilterAll(); FilterIdea.Status = 2; await Update(); ScrollToTable(); }">
           <div>
             <h6 class="text-muted">Godkendt idéer</h6>
             <h4 class="mb-0 text-primary">@Dashboard.ApprovedIdeas</h4>
@@ -79,10 +79,10 @@
           <button class="btn btn-outline-secondary rounded-cos" type="submit">Søg</button>
         </div>
       </EditForm>
-      <button class="btn btn-secondary mb-1 rounded-cos" @onclick="Reset">Nulstil</button>
+      <button class="btn btn-secondary mb-1 rounded-cos" @onclick="ResetBtn">Nulstil</button>
     </div>
     <Modal @ref="Modal"></Modal>
-    <EditForm EditContext="@_editContext">
+    <EditForm EditContext="@_editFilterContext">
       <div class="table-responsive rounded-cos">
         <table class="table my-0 table-primary table-striped table-hover" id="table">
           <thead>

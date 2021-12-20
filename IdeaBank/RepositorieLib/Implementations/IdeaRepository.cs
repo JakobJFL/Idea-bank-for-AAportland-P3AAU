@@ -58,7 +58,9 @@ namespace RepositoryLib.Implementations
                 .Where(i => filter.BusinessUnit == 0 || filter.BusinessUnit == i.IdeaBusinessUnit.Id)
                 .Where(i => filter.Department == 0 || filter.Department == i.IdeaDepartment.Id)
                 .Where(i => filter.Priority == 0 || filter.Priority == i.Priority)
-                .Where(i => filter.Status == 0 || filter.Status == i.Status));
+                .Where(i => filter.Status == 0 || filter.Status == i.Status)
+                .Where(i => !filter.OnlyNewIdeas || i.CreatedAt.Millisecond == i.UpdatedAt.Millisecond));
+
         }
         /// <summary>
         /// Search for an idea

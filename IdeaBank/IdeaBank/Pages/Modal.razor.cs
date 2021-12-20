@@ -80,7 +80,6 @@ namespace IdeaBank.Pages
                 }
                 await Close();
                 await IndexView.Update();
-                StateHasChanged();
             }
         }
         private void EditIdea()
@@ -110,7 +109,7 @@ namespace IdeaBank.Pages
             try
             {
                 await IndexView.Ideas.Edit(_editIdea);
-                _idea = (await IndexView.Ideas.GetByIdAsync(_editIdea.Id));
+                _idea = await IndexView.Ideas.GetByIdAsync(_editIdea.Id);
                 await IndexView.Update();
             }
             catch (DbUpdateException)

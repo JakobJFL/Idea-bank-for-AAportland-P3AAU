@@ -18,3 +18,7 @@ function saveAsFile(filename, bytesBase64) {
     document.body.removeChild(link);
   }
 }
+
+function ScrollTo(id) {
+  document.getElementById(id).scrollIntoView();
+}

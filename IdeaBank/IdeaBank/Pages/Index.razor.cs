@@ -33,7 +33,7 @@ namespace IdeaBank.Pages
         public List<BusinessUnitsTbl> BusinessUnits { get; set; } = new();
         public List<DepartmentsTbl> Departments { get; set; } = new();
 
-        private EditContext _editContext;
+        private EditContext _editFilterContext;
         private List<ViewIdea> _ideaList;
         private Modal Modal { get; set; }
         public FilterSortIdea FilterIdea { get; set; } = new();
@@ -41,14 +41,15 @@ namespace IdeaBank.Pages
         public int CurrentPage { get; set; } = 1;
         public Dashboard Dashboard { get; set; } = new Dashboard();
         private readonly string _generalExceptionText = "Der skete en fejl. Prøv igen";
+        private readonly string _placeholderName = "Indlæser";
 
         protected override async Task OnInitializedAsync()
         {
-            _editContext = new EditContext(FilterIdea);
-            _editContext.OnFieldChanged += EditContext_OnFieldChanged;
+            _editFilterContext = new EditContext(FilterIdea);
+            _editFilterContext.OnFieldChanged += EditContext_OnFieldChanged;
             await ConfigAccess.ConfigureDBTables();
-            BusinessUnits.Add(new BusinessUnitsTbl() { Name = "Indlæser", Id = 0 });
-            Departments.Add(new DepartmentsTbl() { Name = "Indlæser", Id = 0 });
+            BusinessUnits.Add(new BusinessUnitsTbl() { Name = _placeholderName, Id = 0 });
+            Departments.Add(new DepartmentsTbl() { Name = _placeholderName, Id = 0 });
             BusinessUnits = await BusinessUnitsDataAccess.GetAll();
             Departments = await DepartmentsDataAccess.GetAll();
             await SetDashboard();
@@ -60,7 +61,8 @@ namespace IdeaBank.Pages
                 await Update();
             }
         }
-        private async Task SetDashboard()
+
+        public async Task SetDashboard()
         {
             try
             {
@@ -80,16 +82,17 @@ namespace IdeaBank.Pages
 
         }
 
-        // Note: The OnFieldChanged event is raised for each field in the model
         private async void EditContext_OnFieldChanged(object sender, FieldChangedEventArgs e)
         {
             await Update();
         }
+
         private async Task ChangeProjectNameSort()
         {
             FilterIdea.Sorting = FilterIdea.Sorting == Sort.ProjectNameAsc ? Sort.ProjectNameDesc : Sort.ProjectNameAsc;
             await Update();
         }
+
         private async Task ChangeCreatedAtSort()
         {
             FilterIdea.Sorting = FilterIdea.Sorting == Sort.CreatedAtDesc ? Sort.CreatedAtAsc : Sort.CreatedAtDesc;
@@ -129,20 +132,26 @@ namespace IdeaBank.Pages
         /// <summary>
         /// Reset all filters to default values.
         /// </summary>
-        private async void Reset()
+        private async void ResetBtn()
+        {
+            ResetFilterAll();
+            await Update();
+        }
+
+        private void ResetFilterAll()
         {
             FilterIdea.BusinessUnit = 0;
             FilterIdea.Department = 0;
             FilterIdea.Priority = 0;
             FilterIdea.Status = 0;
             FilterIdea.SearchStr = "";
+            FilterIdea.OnlyNewIdeas = false;
             FilterIdea.Sorting = Sort.CreatedAtDesc;
-            await Update();
         }
 
         private async void ScrollToTable()
         {
-            await JsRuntime.InvokeVoidAsync("ScrollToTable");
+            await JsRuntime.InvokeVoidAsync("ScrollTo", "table");
         }
     }
 }
