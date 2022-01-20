@@ -19,7 +19,6 @@ namespace DataBaseLib.Models
 
         [Required]
         [MaxLength(1500)]
-        [Column(TypeName = "varchar(1000)")]
         public string Message { get; set; }
 
         [Required]
